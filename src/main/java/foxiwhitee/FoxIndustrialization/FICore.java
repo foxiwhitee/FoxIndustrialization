@@ -15,7 +15,7 @@ import static foxiwhitee.FoxIndustrialization.FICore.*;
 @Mod(modid = MODID, name = MODNAME, version = VERSION, dependencies = DEPEND)
 public class FICore {
     public static final String
-        MODID = "FoxIndustrialization",
+        MODID = "foxindustrialization",
         MODNAME = "FoxIndustrialization",
         VERSION = "1.0.0",
         DEPEND = "required-after:IC2;";

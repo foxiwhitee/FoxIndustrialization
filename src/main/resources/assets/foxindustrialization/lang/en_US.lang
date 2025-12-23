@@ -1,0 +1,15 @@
+FOX_INDUSTRIALIZATION_TAB=Fox Industrialization
+
+# Blocks
+
+# Items
+item.speedUpgrade.Advanced.name=Advanced Speed Upgrade
+item.speedUpgrade.Nano.name=Nano Speed Upgrade
+item.speedUpgrade.Quantum.name=Quantum Speed Upgrade
+item.storageUpgrade.Advanced.name=Advanced Energy Storage Upgrade
+item.storageUpgrade.Nano.name=Nano Energy Storage Upgrade
+item.storageUpgrade.Quantum.name=Quantum Energy Storage Upgrade
+
+# Tooltips
+tooltip.upgrade.addPerOp=Number of items recycled per operation %s
+tooltip.upgrade.storageMult=Increases the amount of energy stored by %s times

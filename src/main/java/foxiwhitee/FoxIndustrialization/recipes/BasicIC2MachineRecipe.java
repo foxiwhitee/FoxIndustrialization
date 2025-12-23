@@ -1,11 +1,9 @@
 package foxiwhitee.FoxIndustrialization.recipes;
 
-import foxiwhitee.FoxIndustrialization.utils.StackOreDict;
 import foxiwhitee.FoxLib.recipes.IFoxRecipe;
 import foxiwhitee.FoxLib.utils.helpers.OreDictUtil;
+import foxiwhitee.FoxLib.utils.helpers.StackOreDict;
 import net.minecraft.item.ItemStack;
-
-import java.util.List;
 
 public class BasicIC2MachineRecipe implements IRecipeIC2 {
     private final Object input;

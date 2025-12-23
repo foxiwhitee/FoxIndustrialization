@@ -67,6 +67,14 @@ public abstract class TileIC2 extends FoxBaseTile implements IEnergySink {
         }
     }
 
+    public double getEnergy() {
+        return energy;
+    }
+
+    public double getMaxEnergy() {
+        return maxEnergy;
+    }
+
     @Override
     public boolean acceptsEnergyFrom(TileEntity tileEntity, ForgeDirection forgeDirection) {
         return true;

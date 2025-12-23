@@ -1,7 +1,7 @@
 package foxiwhitee.FoxIndustrialization.helper;
 
 import foxiwhitee.FoxIndustrialization.recipes.BasicIC2MachineRecipe;
-import foxiwhitee.FoxIndustrialization.utils.StackOreDict;
+import foxiwhitee.FoxLib.utils.helpers.StackOreDict;
 import ic2.api.recipe.IRecipeInput;
 import ic2.api.recipe.RecipeInputOreDict;
 import ic2.api.recipe.RecipeOutput;

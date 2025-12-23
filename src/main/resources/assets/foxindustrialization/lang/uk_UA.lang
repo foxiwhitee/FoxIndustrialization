@@ -1,0 +1,14 @@
+
+# Blocks
+
+# Items
+item.speedUpgrade.Advanced.name=Розширене поліпшення швидкості
+item.speedUpgrade.Nano.name=Нано поліпшення швидкості
+item.speedUpgrade.Quantum.name=Квантове поліпшення швидкості
+item.storageUpgrade.Advanced.name=Розширене поліпшення сховища енергії
+item.storageUpgrade.Nano.name=Нано поліпшення сховища енергії
+item.storageUpgrade.Quantum.name=Покращення поліпшення сховища енергії
+
+# Tooltips
+tooltip.upgrade.addPerOp=Кількість предметів що перетворюються за одну операцію %s
+tooltip.upgrade.storageMult=Збільшує кількість накопиченої енергії у %s разів
