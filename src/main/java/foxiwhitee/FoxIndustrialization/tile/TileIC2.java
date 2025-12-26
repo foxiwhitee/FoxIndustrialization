@@ -3,14 +3,18 @@ package foxiwhitee.FoxIndustrialization.tile;
 import foxiwhitee.FoxLib.tile.FoxBaseTile;
 import foxiwhitee.FoxLib.tile.event.TileEvent;
 import foxiwhitee.FoxLib.tile.event.TileEventType;
+import ic2.api.energy.event.EnergyTileLoadEvent;
+import ic2.api.energy.event.EnergyTileUnloadEvent;
 import ic2.api.energy.tile.IEnergySink;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public abstract class TileIC2 extends FoxBaseTile implements IEnergySink {
     protected double maxEnergy = 5000, energy;
+    public boolean loaded, addedToEnergyNet, initialized;
 
     public TileIC2() {
 
@@ -18,7 +22,9 @@ public abstract class TileIC2 extends FoxBaseTile implements IEnergySink {
 
     @TileEvent(TileEventType.TICK)
     public void tick() {
-
+        if (!this.initialized && super.worldObj != null) {
+            this.initialize();
+        }
     }
 
     @TileEvent(TileEventType.SERVER_NBT_WRITE)
@@ -47,6 +53,54 @@ public abstract class TileIC2 extends FoxBaseTile implements IEnergySink {
         return oldEnergy != energy || oldMaxEnergy != maxEnergy;
     }
 
+    public void validate() {
+        super.validate();
+        if (!this.isInvalid() && super.worldObj.blockExists(super.xCoord, super.yCoord, super.zCoord)) {
+            this.onLoaded();
+        }
+    }
+
+    public void invalidate() {
+        if (this.loaded) {
+            this.onUnloaded();
+        }
+
+        super.invalidate();
+    }
+
+    public void onLoaded() {
+        if (!super.worldObj.isRemote) {
+            MinecraftForge.EVENT_BUS.post(new EnergyTileLoadEvent(this));
+            this.addedToEnergyNet = true;
+        }
+
+        this.loaded = true;
+    }
+
+    public void onChunkUnload() {
+        if (this.loaded) {
+            this.onUnloaded();
+        }
+
+        super.onChunkUnload();
+    }
+
+    public void onUnloaded() {
+        if (!super.worldObj.isRemote && this.addedToEnergyNet) {
+            MinecraftForge.EVENT_BUS.post(new EnergyTileUnloadEvent(this));
+            this.addedToEnergyNet = false;
+        }
+
+        this.loaded = false;
+    }
+
+    public void initialize() {
+        this.initialized = true;
+        if (!this.addedToEnergyNet) {
+            this.onLoaded();
+        }
+    }
+
     @Override
     public double getDemandedEnergy() {
         return this.maxEnergy - this.energy;
@@ -63,6 +117,7 @@ public abstract class TileIC2 extends FoxBaseTile implements IEnergySink {
             return amount;
         } else {
             this.energy += amount;
+            markForUpdate();
             return (double)0.0F;
         }
     }

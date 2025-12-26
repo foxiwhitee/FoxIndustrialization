@@ -79,7 +79,6 @@ public abstract class TileBaseMachine extends TileIC2Inv {
             updateAdjacentCache();
             scanTimer = 20;
         }
-
         if (hasEjector) pushIfCan();
         if (hasPuller) pullIfCan();
 
@@ -114,7 +113,10 @@ public abstract class TileBaseMachine extends TileIC2Inv {
     }
 
     protected void getRecipe(ItemStack stack, int idx) {
-        if (stack == null) return;
+        if (stack == null) {
+            currentRecipes[idx] = null;
+            return;
+        }
         stack = stack.copy();
         for (IRecipeIC2 recipe : getRecipes()) {
             if (ItemStackUtil.matchesStackAndOther(stack, recipe.getInput()) && stack.stackSize >= getCountOfInput(recipe.getInput())) {
