@@ -3,6 +3,7 @@ package foxiwhitee.FoxIndustrialization.items;
 import foxiwhitee.FoxIndustrialization.api.IAdvancedUpgradeItem;
 import foxiwhitee.FoxIndustrialization.config.FIConfig;
 import foxiwhitee.FoxIndustrialization.utils.MachineTier;
+import foxiwhitee.FoxLib.utils.helpers.EnergyUtility;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
@@ -11,8 +12,6 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 public class ItemSpeedUpgrade extends ItemWithMeta implements IAdvancedUpgradeItem {
-    private static final DecimalFormat decimalformat = new DecimalFormat("0.##");
-
     public ItemSpeedUpgrade(String name) {
         super(name, "upgrades/", "Advanced", "Nano", "Quantum");
     }
@@ -22,10 +21,10 @@ public class ItemSpeedUpgrade extends ItemWithMeta implements IAdvancedUpgradeIt
         if (FIConfig.enableTooltips) {
             int add = this.getItemsPerOpAdd(stack);
             if (add > 0) {
-                list.add(StatCollector.translateToLocalFormatted("tooltip.upgrade.addPerOp", decimalformat.format(add)));
+                list.add(StatCollector.translateToLocalFormatted("tooltip.upgrade.addPerOp", EnergyUtility.formatNumber(add)));
             }
-            list.add(StatCollector.translateToLocalFormatted("ic2.tooltip.upgrade.overclocker.time", decimalformat.format(this.getSpeedMultiplier(stack) * 100)));
-            list.add(StatCollector.translateToLocalFormatted("ic2.tooltip.upgrade.overclocker.power", decimalformat.format(this.getEnergyUseMultiplier(stack) * 100)));
+            list.add(StatCollector.translateToLocalFormatted("ic2.tooltip.upgrade.overclocker.time", EnergyUtility.formatNumber(this.getSpeedMultiplier(stack) * 100)));
+            list.add(StatCollector.translateToLocalFormatted("ic2.tooltip.upgrade.overclocker.power", EnergyUtility.formatNumber(this.getEnergyUseMultiplier(stack) * 100)));
         }
     }
 

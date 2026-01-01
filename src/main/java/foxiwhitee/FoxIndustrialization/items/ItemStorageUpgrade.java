@@ -3,6 +3,7 @@ package foxiwhitee.FoxIndustrialization.items;
 import foxiwhitee.FoxIndustrialization.api.IAdvancedUpgradeItem;
 import foxiwhitee.FoxIndustrialization.config.FIConfig;
 import foxiwhitee.FoxIndustrialization.utils.MachineTier;
+import foxiwhitee.FoxLib.utils.helpers.EnergyUtility;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
@@ -11,8 +12,6 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 public class ItemStorageUpgrade extends ItemWithMeta implements IAdvancedUpgradeItem {
-    private static final DecimalFormat decimalformat = new DecimalFormat("0.##");
-
     public ItemStorageUpgrade(String name) {
         super(name, "upgrades/", "Advanced", "Nano", "Quantum");
     }
@@ -20,7 +19,7 @@ public class ItemStorageUpgrade extends ItemWithMeta implements IAdvancedUpgrade
     @Override
     public void addInformation(ItemStack stack, EntityPlayer p_77624_2_, List<String> list, boolean p_77624_4_) {
         if (FIConfig.enableTooltips) {
-            list.add(StatCollector.translateToLocalFormatted("tooltip.upgrade.storageMult", decimalformat.format(this.getStorageEnergyMultiplier(stack) * (double)100)));
+            list.add(StatCollector.translateToLocalFormatted("tooltip.upgrade.storageMult", EnergyUtility.formatNumber(this.getStorageEnergyMultiplier(stack))));
         }
     }
 

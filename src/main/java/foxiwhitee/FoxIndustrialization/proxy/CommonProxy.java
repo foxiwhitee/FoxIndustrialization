@@ -7,6 +7,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import foxiwhitee.FoxIndustrialization.ModBlocks;
 import foxiwhitee.FoxIndustrialization.ModItems;
 import foxiwhitee.FoxIndustrialization.helper.RecipeHelper;
+import foxiwhitee.FoxIndustrialization.utils.FilterInitializer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.EnumHelper;
 
@@ -25,5 +26,6 @@ public class CommonProxy {
 
     public void postInit(FMLPostInitializationEvent event) {
         RecipeHelper.init();
+        FilterInitializer.initFilters();
     }
 }

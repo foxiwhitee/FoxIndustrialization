@@ -12,3 +12,6 @@ item.storageUpgrade.Quantum.name=Покращення поліпшення сх�
 # Tooltips
 tooltip.upgrade.addPerOp=Кількість предметів що перетворюються за одну операцію %s
 tooltip.upgrade.storageMult=Збільшує кількість накопиченої енергії у %s разів
+tooltip.energyStorage.output=Вихід: %s EU/t
+tooltip.energyStorage.capacity=Сховище: %s EU
+tooltip.energyStorage.store=Зберігає: %s EU

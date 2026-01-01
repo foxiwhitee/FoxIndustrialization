@@ -101,6 +101,8 @@ public abstract class TileIC2 extends FoxBaseTile implements IEnergySink {
         }
     }
 
+
+
     @Override
     public double getDemandedEnergy() {
         return this.maxEnergy - this.energy;
@@ -113,12 +115,13 @@ public abstract class TileIC2 extends FoxBaseTile implements IEnergySink {
 
     @Override
     public double injectEnergy(ForgeDirection forgeDirection, double amount, double v1) {
-        if (this.energy >= (double)this.maxEnergy) {
+        if (this.energy >= this.maxEnergy) {
             return amount;
         } else {
-            this.energy += amount;
+            double add = Math.min(amount, maxEnergy - energy);
+            this.energy += add;
             markForUpdate();
-            return (double)0.0F;
+            return add;
         }
     }
 

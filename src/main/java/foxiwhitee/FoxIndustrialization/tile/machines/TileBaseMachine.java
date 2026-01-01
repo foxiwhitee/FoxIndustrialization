@@ -5,6 +5,7 @@ import foxiwhitee.FoxIndustrialization.recipes.IRecipeIC2;
 import foxiwhitee.FoxIndustrialization.tile.TileIC2Inv;
 import foxiwhitee.FoxIndustrialization.utils.MachineTier;
 import foxiwhitee.FoxIndustrialization.utils.UpgradesTypes;
+import foxiwhitee.FoxLib.tile.event.TickRateModulation;
 import foxiwhitee.FoxLib.tile.event.TileEvent;
 import foxiwhitee.FoxLib.tile.event.TileEventType;
 import foxiwhitee.FoxLib.tile.inventory.FoxInternalInventory;
@@ -47,6 +48,8 @@ public abstract class TileBaseMachine extends TileIC2Inv {
     private boolean mustHaveRedstoneSignal = false;
     private final int[] cachedAllSlots;
 
+    private boolean toSleepPush = true, toSleepPull = true;
+
     public TileBaseMachine(MachineTier tier, double maxEnergy, int itemsPerOp, double energyPerTick) {
         this.inventory = new FoxInternalInventory(this, tier.getInvInpSize());
         this.output = new FoxInternalInventory(this, tier.getInvOutSize());
@@ -79,37 +82,78 @@ public abstract class TileBaseMachine extends TileIC2Inv {
             updateAdjacentCache();
             scanTimer = 20;
         }
-        if (hasEjector) pushIfCan();
-        if (hasPuller) pullIfCan();
 
         if (canWork()) {
             for (int i = 0; i < ticks.length; i++) {
                 if (currentRecipes[i] == null) {
                     getRecipe(inventory.getStackInSlot(i), i);
                 }
-                if (currentRecipes[i] != null && energy >= energyPerTick && canInsert(output, currentRecipes[i].getOut(), i)) {
-                    ticks[i]++;
-                    energy -= energyPerTick;
-                    if (ticks[i] >= ticksNeed) {
-                        ticks[i] = 0;
-                        for (int j = 0; j < itemsPerOp; j++) {
-                            if (canInsert(output, currentRecipes[i].getOut().copy(), i) && inventory.getStackInSlot(i) != null && inventory.getStackInSlot(i).stackSize >= getCountOfInput(currentRecipes[i].getInput())) {
-                                inventory.getStackInSlot(i).stackSize -= getCountOfInput(currentRecipes[i].getInput());
-                                if (inventory.getStackInSlot(i).stackSize == 0) {
-                                    inventory.setInventorySlotContents(i, null);
-                                }
-                                ItemStack outputStack = currentRecipes[i].getOut().copy();
-                                insert(output, outputStack, i);
-                            } else {
-                                break;
-                            }
-                        }
-                        currentRecipes[i] = null;
-                    }
+
+                IRecipeIC2 recipe = currentRecipes[i];
+                if (recipe == null) continue;
+
+                if (energy < energyPerTick) continue;
+                if (!canInsert(output, recipe.getOut(), i)) continue;
+
+                ticks[i]++;
+                energy -= energyPerTick;
+
+                if (ticks[i] < ticksNeed) {
                     markForUpdate();
+                    continue;
                 }
+
+                ticks[i] = 0;
+
+                for (int j = 0; j < itemsPerOp; j++) {
+
+                    ItemStack in = inventory.getStackInSlot(i);
+                    if (in == null) break;
+
+                    int need = getCountOfInput(recipe.getInput());
+                    if (in.stackSize < need) break;
+
+                    if (!canInsert(output, recipe.getOut(), i)) break;
+
+                    in.stackSize -= need;
+                    if (in.stackSize == 0) {
+                        inventory.setInventorySlotContents(i, null);
+                    }
+
+                    insert(output, recipe.getOut().copy(), i);
+                }
+
+                currentRecipes[i] = null;
+
+                markForUpdate();
             }
         }
+    }
+
+    @TileEvent(TileEventType.TICK_SPEED)
+    public TickRateModulation tickPull() {
+        if (toSleepPull) {
+            toSleepPull = false;
+            return TickRateModulation.SLEEP;
+        }
+        if (hasPuller && pullIfCan()) {
+            return TickRateModulation.FASTER;
+        }
+
+        return TickRateModulation.IDLE;
+    }
+
+    @TileEvent(TileEventType.TICK_SPEED)
+    public TickRateModulation tickPush() {
+        if (toSleepPush) {
+            toSleepPush = false;
+            return TickRateModulation.SLEEP;
+        }
+        if (hasEjector && pushIfCan()) {
+            return TickRateModulation.FASTER;
+        }
+
+        return TickRateModulation.IDLE;
     }
 
     protected void getRecipe(ItemStack stack, int idx) {
@@ -138,13 +182,15 @@ public abstract class TileBaseMachine extends TileIC2Inv {
 
     private void updateAdjacentCache() {
         for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
-            TileEntity te = worldObj.getTileEntity(xCoord + dir.offsetX, yCoord + dir.offsetY, zCoord + dir.offsetZ);
-            adjacentInventories[dir.ordinal()] = (te instanceof IInventory) ? (IInventory) te : null;
+            if (worldObj.blockExists(xCoord + dir.offsetX, yCoord + dir.offsetY, zCoord + dir.offsetZ)) {
+                TileEntity te = worldObj.getTileEntity(xCoord + dir.offsetX, yCoord + dir.offsetY, zCoord + dir.offsetZ);
+                adjacentInventories[dir.ordinal()] = (te instanceof IInventory) ? (IInventory) te : null;
+            }
         }
     }
 
-    private void pullIfCan() {
-        if (!canInsert(inventory, someItem)) return;
+    private boolean pullIfCan() {
+        if (!canInsert(inventory, someItem)) return false;
 
         for (ForgeDirection side : pullSides) {
             IInventory neighbor = adjacentInventories[side.ordinal()];
@@ -158,14 +204,15 @@ public abstract class TileBaseMachine extends TileIC2Inv {
 
                         neighbor.setInventorySlotContents(slot, null);
                         neighbor.markDirty();
-                        return;
+                        return true;
                     }
                 }
             }
         }
+        return false;
     }
 
-    private void pushIfCan() {
+    private boolean pushIfCan() {
         for (ForgeDirection side : pushSides) {
             IInventory neighbor = adjacentInventories[side.ordinal()];
             if (neighbor == null || ((TileEntity)neighbor).isInvalid()) continue;
@@ -173,13 +220,15 @@ public abstract class TileBaseMachine extends TileIC2Inv {
             for (int i = 0; i < output.getSizeInventory(); i++) {
                 ItemStack stack = output.getStackInSlot(i);
                 if (stack != null) {
-                    tryPushStack(stack, i, neighbor);
+                    return tryPushStack(stack, i, neighbor);
                 }
             }
         }
+        return false;
     }
 
-    private void tryPushStack(ItemStack stackToPush, int mySlot, IInventory neighbor) {
+    private boolean tryPushStack(ItemStack stackToPush, int mySlot, IInventory neighbor) {
+        boolean changed = false;
         for (int targetSlot = 0; targetSlot < neighbor.getSizeInventory(); targetSlot++) {
             if (!neighbor.isItemValidForSlot(targetSlot, stackToPush)) continue;
 
@@ -188,6 +237,7 @@ public abstract class TileBaseMachine extends TileIC2Inv {
             if (stackInTarget == null) {
                 neighbor.setInventorySlotContents(targetSlot, stackToPush.copy());
                 output.setInventorySlotContents(mySlot, null);
+                changed = true;
                 neighbor.markDirty();
                 this.markDirty();
                 break;
@@ -200,12 +250,14 @@ public abstract class TileBaseMachine extends TileIC2Inv {
 
                     if (stackToPush.stackSize <= 0) output.setInventorySlotContents(mySlot, null);
 
+                    changed = true;
                     neighbor.markDirty();
                     this.markDirty();
                     if (output.getStackInSlot(mySlot) == null) break;
                 }
             }
         }
+        return changed;
     }
 
     protected boolean canInsert(FoxInternalInventory inv, ItemStack stack, int idx) {
@@ -383,6 +435,8 @@ public abstract class TileBaseMachine extends TileIC2Inv {
             this.energyPerTick = defaultEnergyPerTick;
             this.mustHaveRedstoneSignal = false;
             this.ticksNeed = 100;
+            this.toSleepPull = true;
+            this.toSleepPush = true;
 
             List<Integer> newPushRaw = new ArrayList<>();
             List<Integer> newPullRaw = new ArrayList<>();
@@ -435,12 +489,22 @@ public abstract class TileBaseMachine extends TileIC2Inv {
             this.hasPuller = pullSides.length > 0;
 
             if (this.ticksNeed < 1) {
-                this.itemsPerOp += (int) Math.ceil(64.0 / (100.0 * Math.max(this.ticksNeed, 1e-9)));
                 this.ticksNeed = 1;
             }
             this.itemsPerOp = (int) Math.max(this.itemsPerOp, defaultItemsPerOp);
+            this.itemsPerOp = (int) Math.min(this.itemsPerOp, 64);
+            this.maxEnergy = Math.max(this.maxEnergy, this.energyPerTick);
             if (this.maxEnergy < 0) this.maxEnergy = Double.MAX_VALUE;
             this.energy = Math.min(this.maxEnergy, energy);
+
+            if (toSleepPull && hasPuller) {
+                toSleepPull = false;
+                awakeTickableFunction("tickPull");
+            }
+            if (toSleepPush && hasEjector) {
+                toSleepPush = false;
+                awakeTickableFunction("tickPush");
+            }
 
             markForUpdate();
         } else if (iInv == inventory) {
@@ -462,13 +526,19 @@ public abstract class TileBaseMachine extends TileIC2Inv {
     }
 
     private ForgeDirection[] parseSides(List<Integer> raw) {
-        if (raw.isEmpty()) return new ForgeDirection[0];
+        if (raw.isEmpty()) return ForgeDirection.VALID_DIRECTIONS;
         if (raw.contains(0)) return ForgeDirection.VALID_DIRECTIONS;
 
         Set<ForgeDirection> dirs = new HashSet<>();
         for (int s : raw) {
-            dirs.add(ForgeDirection.getOrientation(s - 3));
-            //dirs.add(Direction.fromSideValue(s - 1).toForgeDirection());
+            switch (s) {
+                case 1: dirs.add(ForgeDirection.WEST); break;
+                case 2: dirs.add(ForgeDirection.EAST); break;
+                case 3: dirs.add(ForgeDirection.DOWN); break;
+                case 4: dirs.add(ForgeDirection.UP); break;
+                case 5: dirs.add(ForgeDirection.NORTH); break;
+                case 6: dirs.add(ForgeDirection.SOUTH); break;
+            }
         }
         return dirs.toArray(new ForgeDirection[0]);
     }

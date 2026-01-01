@@ -7,15 +7,15 @@ import foxiwhitee.FoxLib.registries.RegisterUtils;
 import net.minecraft.item.Item;
 
 public class ModItems {
-    public static final Item SPEED_UPGRADE = new ItemSpeedUpgrade("speedUpgrade");
-    public static final Item STORAGE_UPGRADE = new ItemStorageUpgrade("storageUpgrade");
+    public static final Item speedUpgrade = new ItemSpeedUpgrade("speedUpgrade");
+    public static final Item storageUpgrade = new ItemStorageUpgrade("storageUpgrade");
 
     public static void registerItems() {
         if (ContentConfig.enableSpeedUpgrades) {
-            RegisterUtils.registerItem(SPEED_UPGRADE);
+            RegisterUtils.registerItem(speedUpgrade);
         }
         if (ContentConfig.enableStorageUpgrades) {
-            RegisterUtils.registerItem(STORAGE_UPGRADE);
+            RegisterUtils.registerItem(storageUpgrade);
         }
     }
 }

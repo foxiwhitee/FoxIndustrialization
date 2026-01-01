@@ -13,3 +13,6 @@ item.storageUpgrade.Quantum.name=Quantum Energy Storage Upgrade
 # Tooltips
 tooltip.upgrade.addPerOp=Number of items recycled per operation %s
 tooltip.upgrade.storageMult=Increases the amount of energy stored by %s times
+tooltip.energyStorage.output=Output: %s EU/t
+tooltip.energyStorage.capacity=Capacity: %s EU
+tooltip.energyStorage.store=Store: %s EU
