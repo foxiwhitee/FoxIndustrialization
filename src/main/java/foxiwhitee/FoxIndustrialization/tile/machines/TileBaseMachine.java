@@ -22,6 +22,7 @@ import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import java.util.*;
@@ -48,7 +49,7 @@ public abstract class TileBaseMachine extends TileIC2Inv {
     private boolean mustHaveRedstoneSignal = false;
     private final int[] cachedAllSlots;
 
-    private boolean toSleepPush = true, toSleepPull = true;
+    private boolean toSleepPush = false, toSleepPull = false;
 
     public TileBaseMachine(MachineTier tier, double maxEnergy, int itemsPerOp, double energyPerTick) {
         this.inventory = new FoxInternalInventory(this, tier.getInvInpSize());
@@ -165,9 +166,10 @@ public abstract class TileBaseMachine extends TileIC2Inv {
         for (IRecipeIC2 recipe : getRecipes()) {
             if (ItemStackUtil.matchesStackAndOther(stack, recipe.getInput()) && stack.stackSize >= getCountOfInput(recipe.getInput())) {
                 currentRecipes[idx] = recipe;
-                break;
+                return;
             }
         }
+        currentRecipes[idx] = null;
     }
 
     private int getCountOfInput(Object o) {
@@ -541,6 +543,17 @@ public abstract class TileBaseMachine extends TileIC2Inv {
             }
         }
         return dirs.toArray(new ForgeDirection[0]);
+    }
+
+    @Override
+    public void getDrops(World w, int x, int y, int z, List<ItemStack> drops) {
+        super.getDrops(w, x, y, z, drops);
+        for (int i = 0; i < upgrades.getSizeInventory(); i++) {
+            ItemStack stack = upgrades.getStackInSlot(i);
+            if (stack != null) {
+                drops.add(stack);
+            }
+        }
     }
 
     public double getTicksNeed() {

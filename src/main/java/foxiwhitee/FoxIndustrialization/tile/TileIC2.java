@@ -101,8 +101,6 @@ public abstract class TileIC2 extends FoxBaseTile implements IEnergySink {
         }
     }
 
-
-
     @Override
     public double getDemandedEnergy() {
         return this.maxEnergy - this.energy;

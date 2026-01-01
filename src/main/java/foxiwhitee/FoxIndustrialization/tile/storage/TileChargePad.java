@@ -73,7 +73,7 @@ public abstract class TileChargePad extends TileEnergyStorage {
         }
     }
 
-    private void chargePlayerItems(EntityPlayer player) {
+    protected void chargePlayerItems(EntityPlayer player) {
         for(ItemStack current : player.inventory.armorInventory) {
             if (current != null) {
                 this.chargeItems(current);
@@ -92,6 +92,7 @@ public abstract class TileChargePad extends TileEnergyStorage {
     public void readFromNbt_(NBTTagCompound data) {
         super.readFromNbt_(data);
         meta = data.getInteger("meta");
+        setNewMeta(meta);
     }
 
     @TileEvent(TileEventType.SERVER_NBT_WRITE)

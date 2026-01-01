@@ -36,23 +36,23 @@ public abstract class TileEnergyStorage extends TileIC2Inv implements IEnergySou
             return;
         }
 
-        boolean needsInvUpdate = false;
+        boolean needUpdate = false;
         ItemStack chargeItem = inventory.getStackInSlot(1);
         ItemStack dischargeItem = inventory.getStackInSlot(0);
         if (this.energy >= 1 && chargeItem != null) {
             double sent = ElectricItem.manager.charge(chargeItem, energy, this.tier, false, false);
             this.energy -= sent;
-            needsInvUpdate = sent > 0;
+            needUpdate = sent > 0;
         }
 
         if (this.getDemandedEnergy() > 0 && dischargeItem != null) {
             double gain = discharge(dischargeItem);
 
             this.energy += gain;
-            needsInvUpdate = gain > 0;
+            needUpdate = gain > 0;
         }
 
-        if (needsInvUpdate) {
+        if (needUpdate) {
             this.markForUpdate();
         }
     }

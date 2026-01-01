@@ -1,5 +1,6 @@
 package foxiwhitee.FoxIndustrialization.utils;
 
+import foxiwhitee.FoxIndustrialization.api.energy.IDoubleEnergyContainerItem;
 import foxiwhitee.FoxLib.container.slots.SlotFiltered;
 import foxiwhitee.FoxLib.items.ItemProductivityCard;
 import ic2.api.item.IElectricItem;
@@ -13,7 +14,23 @@ import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityFurnace;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class FilterInitializer {
+    private static final List<Class<?>> filterUltimateEnergyStorageClasses = new ArrayList<>();
+    private static final List<Class<?>> filterQuantumEnergyStorageClasses = new ArrayList<>();
+    private static final List<Class<?>> filterSingularEnergyStorageClasses = new ArrayList<>();
+
+    static {
+        addClassToFilterUltimate(IElectricItem.class);
+        addClassToFilterUltimate(IDoubleEnergyContainerItem.class);
+        addClassToFilterQuantum(IElectricItem.class);
+        addClassToFilterQuantum(IDoubleEnergyContainerItem.class);
+        addClassToFilterSingular(IElectricItem.class);
+        addClassToFilterSingular(IDoubleEnergyContainerItem.class);
+    }
+
     public static final String FILTER_BASIC_ENERGY_STORAGE = "basicEnergyStorage";
     public static final String FILTER_ADVANCED_ENERGY_STORAGE = "advancedEnergyStorage";
     public static final String FILTER_HYBRID_ENERGY_STORAGE = "hybridEnergyStorage";
@@ -27,9 +44,21 @@ public class FilterInitializer {
         SlotFiltered.filters.put(FILTER_ADVANCED_ENERGY_STORAGE, stack -> itemInstanceof(stack, IElectricItem.class));
         SlotFiltered.filters.put(FILTER_HYBRID_ENERGY_STORAGE, stack -> itemInstanceof(stack, IElectricItem.class));
         SlotFiltered.filters.put(FILTER_NANO_ENERGY_STORAGE, stack -> itemInstanceof(stack, IElectricItem.class));
-        SlotFiltered.filters.put(FILTER_ULTIMATE_ENERGY_STORAGE, stack -> itemInstanceof(stack, IElectricItem.class));
-        SlotFiltered.filters.put(FILTER_QUANTUM_ENERGY_STORAGE, stack -> itemInstanceof(stack, IElectricItem.class));
-        SlotFiltered.filters.put(FILTER_SINGULAR_ENERGY_STORAGE, stack -> itemInstanceof(stack, IElectricItem.class));
+        SlotFiltered.filters.put(FILTER_ULTIMATE_ENERGY_STORAGE, stack -> itemInstanceof(stack, filterUltimateEnergyStorageClasses.toArray(new Class[0])));
+        SlotFiltered.filters.put(FILTER_QUANTUM_ENERGY_STORAGE, stack -> itemInstanceof(stack, filterQuantumEnergyStorageClasses.toArray(new Class[0])));
+        SlotFiltered.filters.put(FILTER_SINGULAR_ENERGY_STORAGE, stack -> itemInstanceof(stack, filterSingularEnergyStorageClasses.toArray(new Class[0])));
+    }
+
+    public static void addClassToFilterUltimate(Class<?> clazz) {
+        filterUltimateEnergyStorageClasses.add(clazz);
+    }
+
+    public static void addClassToFilterQuantum(Class<?> clazz) {
+        filterQuantumEnergyStorageClasses.add(clazz);
+    }
+
+    public static void addClassToFilterSingular(Class<?> clazz) {
+        filterSingularEnergyStorageClasses.add(clazz);
     }
 
     @SafeVarargs
