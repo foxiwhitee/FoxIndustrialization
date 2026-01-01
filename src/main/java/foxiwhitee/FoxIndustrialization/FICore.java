@@ -32,9 +32,12 @@ public class FICore {
     @SidedProxy(clientSide = "foxiwhitee.FoxIndustrialization.proxy.ClientProxy", serverSide = "foxiwhitee.FoxIndustrialization.proxy.CommonProxy")
     public static CommonProxy proxy;
 
+    public static boolean ifCoFHCoreIsLoaded;
+
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent e) {
         proxy.preInit(e);
+        ifCoFHCoreIsLoaded = cpw.mods.fml.common.Loader.isModLoaded("CoFHCore");
     }
 
     @Mod.EventHandler

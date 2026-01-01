@@ -23,8 +23,8 @@ public class ItemSpeedUpgrade extends ItemWithMeta implements IAdvancedUpgradeIt
             if (add > 0) {
                 list.add(StatCollector.translateToLocalFormatted("tooltip.upgrade.addPerOp", EnergyUtility.formatNumber(add)));
             }
-            list.add(StatCollector.translateToLocalFormatted("ic2.tooltip.upgrade.overclocker.time", EnergyUtility.formatNumber(this.getSpeedMultiplier(stack) * 100)));
-            list.add(StatCollector.translateToLocalFormatted("ic2.tooltip.upgrade.overclocker.power", EnergyUtility.formatNumber(this.getEnergyUseMultiplier(stack) * 100)));
+            list.add(StatCollector.translateToLocalFormatted("tooltip.upgrade.speed", EnergyUtility.formatNumber(this.getSpeedMultiplier(stack) * 100)));
+            list.add(StatCollector.translateToLocalFormatted("tooltip.upgrade.power", EnergyUtility.formatNumber(this.getEnergyUseMultiplier(stack) * 100)));
         }
     }
 

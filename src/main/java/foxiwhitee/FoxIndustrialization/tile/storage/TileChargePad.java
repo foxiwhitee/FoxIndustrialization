@@ -21,8 +21,10 @@ import net.minecraftforge.common.util.ForgeDirection;
 import java.util.Random;
 
 public abstract class TileChargePad extends TileEnergyStorage {
+    private final static int needTicks = 20;
     private boolean active = false;
     private EntityPlayer player = null;
+    private int tick;
     private int meta = -1;
 
     public TileChargePad(int tier, double storage, double output) {
@@ -42,28 +44,32 @@ public abstract class TileChargePad extends TileEnergyStorage {
         }
 
         boolean needUpdate = false;
-        if (this.player != null && this.energy >= (double)1.0F) {
-            if (!isActive()) {
-                active = true;
-                if (meta == 0) {
-                    meta = 1;
-                    setNewMeta(1);
+        if (tick++ >= needTicks) {
+            tick = 0;
+            if (this.player != null && this.energy >= (double)1.0F) {
+                if (!isActive()) {
+                    active = true;
+                    if (meta == 0) {
+                        meta = 1;
+                        setNewMeta(1);
+                    }
+                }
+
+                this.chargePlayerItems(this.player);
+                this.player = null;
+                needUpdate = true;
+            } else if (isActive()) {
+                active = false;
+                needUpdate = true;
+                if (meta == 1) {
+                    meta = 0;
+                    setNewMeta(0);
                 }
             }
 
-            this.chargePlayerItems(this.player);
-            this.player = null;
-            needUpdate = true;
-        } else if (isActive()) {
-            active = false;
-            needUpdate = true;
-            if (meta == 1) {
-                meta = 0;
-                setNewMeta(0);
+            if (needUpdate) {
+                this.markForUpdate();
             }
-        }
-        if (needUpdate) {
-            this.markForUpdate();
         }
     }
 

@@ -1,6 +1,21 @@
-FOX_INDUSTRIALIZATION_TAB=Fox Industrialization
+itemGroup.FOX_INDUSTRIALIZATION_TAB=Fox Industrialization
 
 # Blocks
+tile.basicEnergyStorage.name=Basic Energy Storage
+tile.advancedEnergyStorage.name=Advanced Energy Storage
+tile.hybridEnergyStorage.name=Hybrid Energy Storage
+tile.nanoEnergyStorage.name=Nano Energy Storage
+tile.ultimateEnergyStorage.name=Ultimate Energy Storage
+tile.quantumEnergyStorage.name=Quantum Energy Storage
+tile.singularEnergyStorage.name=Singular Energy Storage
+
+tile.basicChargePad.name=Basic Charge Pad
+tile.advancedChargePad.name=Advanced Charge Pad
+tile.hybridChargePad.name=Hybrid Charge Pad
+tile.nanoChargePad.name=Nano Charge Pad
+tile.ultimateChargePad.name=Ultimate Charge Pad
+tile.quantumChargePad.name=Quantum Charge Pad
+tile.singularChargePad.name=Singular Charge Pad
 
 # Items
 item.speedUpgrade.Advanced.name=Advanced Speed Upgrade
@@ -11,8 +26,11 @@ item.storageUpgrade.Nano.name=Nano Energy Storage Upgrade
 item.storageUpgrade.Quantum.name=Quantum Energy Storage Upgrade
 
 # Tooltips
-tooltip.upgrade.addPerOp=Number of items recycled per operation %s
-tooltip.upgrade.storageMult=Increases the amount of energy stored by %s times
-tooltip.energyStorage.output=Output: %s EU/t
-tooltip.energyStorage.capacity=Capacity: %s EU
-tooltip.energyStorage.store=Store: %s EU
+tooltip.upgrade.addPerOp=§7Number of items recycled per operation §3%s
+tooltip.upgrade.speed=§7Decrease process time to §3%S%%
+tooltip.upgrade.power=§7Increase power to §3%S%%
+tooltip.upgrade.storageMult=§7Increases the amount of energy stored by §3%s§7 times
+tooltip.energyStorage.output=§7Output: §3%s §7EU/t
+tooltip.energyStorage.capacity=§7Capacity: §3%s §7EU
+tooltip.energyStorage.store=§7Store: §3%s §7EU
+tooltip.energyStorage.supportsRF=§8This block supports RF energy (§31EU§8 = §3%sRF§8)

@@ -1,5 +1,6 @@
 package foxiwhitee.FoxIndustrialization.items;
 
+import foxiwhitee.FoxIndustrialization.FICore;
 import foxiwhitee.FoxIndustrialization.ModBlocks;
 import foxiwhitee.FoxIndustrialization.config.FIConfig;
 import foxiwhitee.FoxLib.utils.helpers.EnergyUtility;
@@ -50,16 +51,25 @@ public class ItemBlockEnergyStorage extends ModItemBlock {
                 list.add(LocalizationUtils.localize("tooltip.energyStorage.output", EnergyUtility.formatNumber(FIConfig.energyStorageUltimateOutput)));
                 list.add(LocalizationUtils.localize("tooltip.energyStorage.capacity", EnergyUtility.formatNumber(FIConfig.energyStorageUltimateStorage)));
                 list.add(LocalizationUtils.localize("tooltip.energyStorage.store", EnergyUtility.formatNumber(energy)));
+                if (FICore.ifCoFHCoreIsLoaded && FIConfig.energyStorageUltimateSupportsRF) {
+                    list.add(LocalizationUtils.localize("tooltip.energyStorage.supportsRF", FIConfig.rfInEu));
+                }
             }
             if (isBlock(ModBlocks.quantumEnergyStorage, ModBlocks.quantumChargePad)) {
                 list.add(LocalizationUtils.localize("tooltip.energyStorage.output", EnergyUtility.formatNumber(FIConfig.energyStorageQuantumOutput)));
                 list.add(LocalizationUtils.localize("tooltip.energyStorage.capacity", EnergyUtility.formatNumber(FIConfig.energyStorageQuantumStorage)));
                 list.add(LocalizationUtils.localize("tooltip.energyStorage.store", EnergyUtility.formatNumber(energy)));
+                if (FICore.ifCoFHCoreIsLoaded && FIConfig.energyStorageQuantumSupportsRF) {
+                    list.add(LocalizationUtils.localize("tooltip.energyStorage.supportsRF", FIConfig.rfInEu));
+                }
             }
             if (isBlock(ModBlocks.singularEnergyStorage, ModBlocks.singularChargePad)) {
                 list.add(LocalizationUtils.localize("tooltip.energyStorage.output", EnergyUtility.formatNumber(FIConfig.energyStorageSingularOutput)));
                 list.add(LocalizationUtils.localize("tooltip.energyStorage.capacity", EnergyUtility.formatNumber(FIConfig.energyStorageSingularStorage)));
                 list.add(LocalizationUtils.localize("tooltip.energyStorage.store", EnergyUtility.formatNumber(energy)));
+                if (FICore.ifCoFHCoreIsLoaded && FIConfig.energyStorageSingularSupportsRF) {
+                    list.add(LocalizationUtils.localize("tooltip.energyStorage.supportsRF", FIConfig.rfInEu));
+                }
             }
         }
     }

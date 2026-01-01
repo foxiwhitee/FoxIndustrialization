@@ -8,6 +8,9 @@ public class FIConfig {
     @ConfigValue(desc = "Enable tooltips?")
     public static boolean enableTooltips = true;
 
+    @ConfigValue(desc = "How many RF are equal to 1 EU?")
+    public static int rfInEu = 4;
+
     // Upgrades Advanced
     @ConfigValue(category = "Upgrades.Advanced", name = "storageMultiplier", desc = "How many times will the mechanism's storage be increased with each upgrade?")
     public static double storageUpgradeAdvancedMultiplier = 16;
@@ -104,6 +107,9 @@ public class FIConfig {
     @ConfigValue(category = "Storage.Ultimate", name = "output", desc = "How much energy does it transfer at a time?")
     public static double energyStorageUltimateOutput = 100_000_000_000D;
 
+    @ConfigValue(category = "Storage.Ultimate", name = "supportsRF", desc = "Does this block support RF energy?")
+    public static boolean energyStorageUltimateSupportsRF = true;
+
 
     // Energy Storage Quantum
     @ConfigValue(category = "Storage.Quantum", name = "tier", desc = "The energy level of the unit. Affects the speed of charging and discharging energy. For example, MFSU has level 4")
@@ -115,6 +121,9 @@ public class FIConfig {
     @ConfigValue(category = "Storage.Quantum", name = "output", desc = "How much energy does it transfer at a time?")
     public static double energyStorageQuantumOutput = 1_000_000_000_000D;
 
+    @ConfigValue(category = "Storage.Quantum", name = "supportsRF", desc = "Does this block support RF energy?")
+    public static boolean energyStorageQuantumSupportsRF = true;
+
 
     // Energy Storage Singular
     @ConfigValue(category = "Storage.Singular", name = "tier", desc = "The energy level of the unit. Affects the speed of charging and discharging energy. For example, MFSU has level 4")
@@ -125,4 +134,7 @@ public class FIConfig {
 
     @ConfigValue(category = "Storage.Singular", name = "output", desc = "How much energy does it transfer at a time?")
     public static double energyStorageSingularOutput = 15_000_000_000_000D;
+
+    @ConfigValue(category = "Storage.Singular", name = "supportsRF", desc = "Does this block support RF energy?")
+    public static boolean energyStorageSingularSupportsRF = true;
 }

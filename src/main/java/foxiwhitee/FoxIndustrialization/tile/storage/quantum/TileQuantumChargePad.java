@@ -19,4 +19,9 @@ public class TileQuantumChargePad extends TileQuantumChargePadLevel {
     public String getInventoryFilter() {
         return FilterInitializer.FILTER_QUANTUM_ENERGY_STORAGE;
     }
+
+    @Override
+    public boolean supportsRF() {
+        return FIConfig.energyStorageQuantumSupportsRF;
+    }
 }

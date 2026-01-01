@@ -19,4 +19,9 @@ public class TileUltimateChargePad extends TileQuantumChargePadLevel {
     public String getInventoryFilter() {
         return FilterInitializer.FILTER_ULTIMATE_ENERGY_STORAGE;
     }
+
+    @Override
+    public boolean supportsRF() {
+        return FIConfig.energyStorageUltimateSupportsRF;
+    }
 }

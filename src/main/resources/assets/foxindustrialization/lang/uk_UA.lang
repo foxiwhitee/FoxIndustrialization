@@ -1,5 +1,20 @@
 
 # Blocks
+tile.basicEnergyStorage.name=Базове сховище енергії
+tile.advancedEnergyStorage.name=Розширене сховище енергії
+tile.hybridEnergyStorage.name=Гібридне сховище енергії
+tile.nanoEnergyStorage.name=Нано сховище енергії
+tile.ultimateEnergyStorage.name=Ультимативне сховище енергії
+tile.quantumEnergyStorage.name=Квантове сховище енергії
+tile.singularEnergyStorage.name=Сингулярне сховище енергії
+
+tile.basicChargePad.name=Базова зарядна панель
+tile.advancedChargePad.name=Розширена зарядна панель
+tile.hybridChargePad.name=Гібридна зарядна панель
+tile.nanoChargePad.name=Нано зарядна панель
+tile.ultimateChargePad.name=Ультимативна зарядна панель
+tile.quantumChargePad.name=Квантова зарядна панель
+tile.singularChargePad.name=Сингулярна зарядна панель
 
 # Items
 item.speedUpgrade.Advanced.name=Розширене поліпшення швидкості
@@ -10,8 +25,11 @@ item.storageUpgrade.Nano.name=Нано поліпшення сховища ен�
 item.storageUpgrade.Quantum.name=Покращення поліпшення сховища енергії
 
 # Tooltips
-tooltip.upgrade.addPerOp=Кількість предметів що перетворюються за одну операцію %s
-tooltip.upgrade.storageMult=Збільшує кількість накопиченої енергії у %s разів
-tooltip.energyStorage.output=Вихід: %s EU/t
-tooltip.energyStorage.capacity=Сховище: %s EU
-tooltip.energyStorage.store=Зберігає: %s EU
+tooltip.upgrade.addPerOp=§7Кількість предметів що перетворюються за одну операцію §3%s
+tooltip.upgrade.speed=§7Зменшує час роботи до §3%s%%
+tooltip.upgrade.power=§7Збільшує споживання енергії до §3%s%%
+tooltip.upgrade.storageMult=§7Збільшує кількість накопиченої енергії у §3%s§7 разів
+tooltip.energyStorage.output=§7Вихід: §3%s§7 EU/t
+tooltip.energyStorage.capacity=§7Сховище: §3%s§7 EU
+tooltip.energyStorage.store=§7Зберігає: §3%s§7 EU
+tooltip.energyStorage.supportsRF=§8Цей блок підтримує RG енергію (§31EU§8 = §3%sRF§8)

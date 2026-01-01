@@ -19,4 +19,9 @@ public class TileSingularChargePad extends TileSingularChargePadLevel {
     public String getInventoryFilter() {
         return FilterInitializer.FILTER_SINGULAR_ENERGY_STORAGE;
     }
+
+    @Override
+    public boolean supportsRF() {
+        return FIConfig.energyStorageSingularSupportsRF;
+    }
 }
