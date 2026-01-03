@@ -13,7 +13,7 @@ public class ContainerEnergyStorage extends FoxBaseContainer {
 
         bindPlayerInventory(ip.inventory, 43, 173);
 
-        addSlotToContainer(new SlotFiltered(myTile.getInventoryFilter(), myTile.getInternalInventory(), 0, 86, 87, ip.inventory));
-        addSlotToContainer(new SlotFiltered(myTile.getInventoryFilter(), myTile.getInternalInventory(), 1, 160, 87, ip.inventory));
+        addSlotToContainer(new SlotFiltered(myTile.getInventoryFilter(), myTile.getInternalInventory(), 0, 160, 87, ip.inventory));
+        addSlotToContainer(new SlotFiltered(myTile.getInventoryFilter(), myTile.getInternalInventory(), 1, 86, 87, ip.inventory));
     }
 }

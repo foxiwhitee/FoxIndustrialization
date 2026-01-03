@@ -3,6 +3,7 @@ package foxiwhitee.FoxIndustrialization.tile.machines;
 import foxiwhitee.FoxIndustrialization.api.IAdvancedUpgradeItem;
 import foxiwhitee.FoxIndustrialization.recipes.IRecipeIC2;
 import foxiwhitee.FoxIndustrialization.tile.TileIC2Inv;
+import foxiwhitee.FoxIndustrialization.utils.ButtonInventoryMode;
 import foxiwhitee.FoxIndustrialization.utils.MachineTier;
 import foxiwhitee.FoxIndustrialization.utils.UpgradesTypes;
 import foxiwhitee.FoxLib.tile.event.TickRateModulation;
@@ -39,17 +40,21 @@ public abstract class TileBaseMachine extends TileIC2Inv {
     private int itemsPerOp, ticksNeed;
 
     private double energyPerTick;
-    private final double defaultMaxEnergy, defaultItemsPerOp, defaultEnergyPerTick;
+    private final double defaultMaxEnergy, defaultEnergyPerTick;
+
+    private final int defaultItemsPerOp;
 
     private ForgeDirection[] pushSides = {}, pullSides = {};
     private final IInventory[] adjacentInventories = new IInventory[6];
-    private int scanTimer = 0;
+    private int scanTimer = 0, fillTick;
     private boolean hasEjector = false;
     private boolean hasPuller = false;
     private boolean mustHaveRedstoneSignal = false;
     private final int[] cachedAllSlots;
 
-    private boolean toSleepPush = false, toSleepPull = false;
+    private boolean toSleepPush = false, toSleepPull = false, doInventoryUpdateByMode = true;
+
+    private ButtonInventoryMode inventoryMode = ButtonInventoryMode.NONE;
 
     public TileBaseMachine(MachineTier tier, double maxEnergy, int itemsPerOp, double energyPerTick) {
         this.inventory = new FoxInternalInventory(this, tier.getInvInpSize());
@@ -82,6 +87,17 @@ public abstract class TileBaseMachine extends TileIC2Inv {
         if (scanTimer-- <= 0) {
             updateAdjacentCache();
             scanTimer = 20;
+        }
+        if (doInventoryUpdateByMode) {
+            switch (inventoryMode) {
+                case MERGE:
+                    doMergeInventory();
+                    break;
+                case FILL:
+                    doFillInventory();
+                    break;
+            }
+            doInventoryUpdateByMode = false;
         }
 
         if (canWork()) {
@@ -131,6 +147,72 @@ public abstract class TileBaseMachine extends TileIC2Inv {
         }
     }
 
+    private void doMergeInventory() {
+        for (int i = 0; i < inventory.getSizeInventory(); i++) {
+            ItemStack currentStack = inventory.getStackInSlot(i);
+
+            if (currentStack != null && currentStack.stackSize < currentStack.getMaxStackSize()) {
+                for (int j = i + 1; j < inventory.getSizeInventory(); j++) {
+                    ItemStack nextStack = inventory.getStackInSlot(j);
+
+                    if (ItemStackUtil.stackEquals(currentStack, nextStack)) {
+                        int spaceLeft = currentStack.getMaxStackSize() - currentStack.stackSize;
+                        int amountToMove = Math.min(spaceLeft, nextStack.stackSize);
+
+                        currentStack.stackSize += amountToMove;
+                        nextStack.stackSize -= amountToMove;
+
+                        if (nextStack.stackSize <= 0) {
+                            inventory.setInventorySlotContents(j, null);
+                        }
+
+                        if (currentStack.stackSize >= currentStack.getMaxStackSize()) {
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void doFillInventory() {
+        for (int i = 0; i < inventory.getSizeInventory(); i++) {
+            ItemStack current = inventory.getStackInSlot(i);
+            if (current == null) continue;
+
+            List<Integer> targetSlots = new ArrayList<Integer>();
+            int totalAmount = 0;
+
+            for (int j = 0; j < inventory.getSizeInventory(); j++) {
+                ItemStack stack = inventory.getStackInSlot(j);
+                if (stack == null) {
+                    targetSlots.add(j);
+                } else if (ItemStackUtil.stackEquals(current, stack)) {
+                    targetSlots.add(j);
+                    totalAmount += stack.stackSize;
+                }
+            }
+
+            if (targetSlots.size() > 1 && totalAmount > 0) {
+                int countPerSlot = totalAmount / targetSlots.size();
+                int remainder = totalAmount % targetSlots.size();
+
+                for (int k = 0; k < targetSlots.size(); k++) {
+                    int slotIndex = targetSlots.get(k);
+                    int amountToSet = countPerSlot + (k < remainder ? 1 : 0);
+
+                    if (amountToSet > 0) {
+                        ItemStack newStack = current.copy();
+                        newStack.stackSize = amountToSet;
+                        inventory.setInventorySlotContents(slotIndex, newStack);
+                    } else {
+                        inventory.setInventorySlotContents(slotIndex, null);
+                    }
+                }
+            }
+        }
+    }
+
     @TileEvent(TileEventType.TICK_SPEED)
     public TickRateModulation tickPull() {
         if (toSleepPull) {
@@ -141,7 +223,7 @@ public abstract class TileBaseMachine extends TileIC2Inv {
             return TickRateModulation.FASTER;
         }
 
-        return TickRateModulation.IDLE;
+        return TickRateModulation.SLOWER;
     }
 
     @TileEvent(TileEventType.TICK_SPEED)
@@ -154,7 +236,7 @@ public abstract class TileBaseMachine extends TileIC2Inv {
             return TickRateModulation.FASTER;
         }
 
-        return TickRateModulation.IDLE;
+        return TickRateModulation.SLOWER;
     }
 
     protected void getRecipe(ItemStack stack, int idx) {
@@ -309,16 +391,21 @@ public abstract class TileBaseMachine extends TileIC2Inv {
         data.setInteger("ticksNeed", ticksNeed);
         data.setDouble("energyPerTick", energyPerTick);
         data.setInteger("itemsPerOp", itemsPerOp);
-        int[] pullSidesNbt = new int[pullSides.length];
-        for (int i = 0; i < pullSidesNbt.length; i++) {
-            pullSidesNbt[i] = pullSides[i].ordinal();
+        if (pullSides.length > 0) {
+            int[] pullSidesNbt = new int[pullSides.length];
+            for (int i = 0; i < pullSidesNbt.length; i++) {
+                pullSidesNbt[i] = pullSides[i].ordinal();
+            }
+            data.setIntArray("pullSides", pullSidesNbt);
         }
-        data.setIntArray("pullSides", pullSidesNbt);
-        int[] pushSidesNbt = new int[pushSides.length];
-        for (int i = 0; i < pullSidesNbt.length; i++) {
-            pushSidesNbt[i] = pushSides[i].ordinal();
+        if (pushSides.length > 0) {
+            int[] pushSidesNbt = new int[pushSides.length];
+            for (int i = 0; i < pushSides.length; i++) {
+                pushSidesNbt[i] = pushSides[i].ordinal();
+            }
+            data.setIntArray("pullSides", pushSidesNbt);
         }
-        data.setIntArray("pullSides", pushSidesNbt);
+        data.setByte("invMode", (byte) inventoryMode.ordinal());
     }
 
     @Override
@@ -341,6 +428,7 @@ public abstract class TileBaseMachine extends TileIC2Inv {
         for (int i = 0; i < pushSidesNbt.length; i++) {
             pushSides[i] = ForgeDirection.getOrientation(pushSidesNbt[i]);
         }
+        inventoryMode = ButtonInventoryMode.values()[data.getByte("invMode")];
     }
 
     @Override
@@ -351,6 +439,7 @@ public abstract class TileBaseMachine extends TileIC2Inv {
             data.writeInt(tick);
         }
         data.writeInt(ticksNeed);
+        data.writeByte(inventoryMode.ordinal());
     }
 
     @Override
@@ -359,11 +448,13 @@ public abstract class TileBaseMachine extends TileIC2Inv {
         boolean old = super.readFromStream(data);
         int[] oldTicks = Arrays.copyOf(ticks, ticks.length);
         int oldNeedTicks = ticksNeed;
+        ButtonInventoryMode oldInvMode = inventoryMode;
         for (int i = 0; i < ticks.length; i++) {
             ticks[i] = data.readInt();
         }
         ticksNeed = data.readInt();
-        return old || oldNeedTicks != ticksNeed || !Arrays.equals(oldTicks, ticks);
+        inventoryMode = ButtonInventoryMode.values()[data.readByte()];
+        return old || oldNeedTicks != ticksNeed || !Arrays.equals(oldTicks, ticks) || oldInvMode != inventoryMode;
     }
 
     @Override
@@ -433,7 +524,7 @@ public abstract class TileBaseMachine extends TileIC2Inv {
     public void onChangeInventory(IInventory iInv, int slot, InvOperation op, ItemStack removed, ItemStack added) {
         if (iInv == upgrades) {
             this.maxEnergy = defaultMaxEnergy;
-            this.itemsPerOp = 0;
+            this.itemsPerOp = defaultItemsPerOp;
             this.energyPerTick = defaultEnergyPerTick;
             this.mustHaveRedstoneSignal = false;
             this.ticksNeed = 100;
@@ -493,7 +584,6 @@ public abstract class TileBaseMachine extends TileIC2Inv {
             if (this.ticksNeed < 1) {
                 this.ticksNeed = 1;
             }
-            this.itemsPerOp = (int) Math.max(this.itemsPerOp, defaultItemsPerOp);
             this.itemsPerOp = (int) Math.min(this.itemsPerOp, 64);
             this.maxEnergy = Math.max(this.maxEnergy, this.energyPerTick);
             if (this.maxEnergy < 0) this.maxEnergy = Double.MAX_VALUE;
@@ -510,6 +600,7 @@ public abstract class TileBaseMachine extends TileIC2Inv {
 
             markForUpdate();
         } else if (iInv == inventory) {
+            doInventoryUpdateByMode = true;
             boolean needUpdate = false;
             for (int i = 0; i < currentRecipes.length; i++) {
                 IRecipeIC2 old = currentRecipes[i];
@@ -528,7 +619,7 @@ public abstract class TileBaseMachine extends TileIC2Inv {
     }
 
     private ForgeDirection[] parseSides(List<Integer> raw) {
-        if (raw.isEmpty()) return ForgeDirection.VALID_DIRECTIONS;
+        if (raw.isEmpty()) return new ForgeDirection[0];
         if (raw.contains(0)) return ForgeDirection.VALID_DIRECTIONS;
 
         Set<ForgeDirection> dirs = new HashSet<>();
@@ -556,6 +647,23 @@ public abstract class TileBaseMachine extends TileIC2Inv {
         }
     }
 
+    public void changeInventoryMode() {
+        int newID = inventoryMode.ordinal() + 1;
+        if (newID >= ButtonInventoryMode.values().length) {
+            newID -= ButtonInventoryMode.values().length;
+        }
+        inventoryMode = ButtonInventoryMode.values()[newID];
+        markForUpdate();
+    }
+
+    public ButtonInventoryMode getInventoryMode() {
+        return inventoryMode;
+    }
+
+    public MachineTier getTier() {
+        return tier;
+    }
+
     public double getTicksNeed() {
         return ticksNeed;
     }
@@ -564,7 +672,34 @@ public abstract class TileBaseMachine extends TileIC2Inv {
         return ticks;
     }
 
-    protected abstract UpgradesTypes[] getAvailableTypes();
+    public abstract UpgradesTypes[] getAvailableTypes();
 
     protected abstract List<? extends IRecipeIC2> getRecipes();
+
+    public abstract InfoGui getInfoAboutGui();
+
+    public static class InfoGui {
+        private final int yStart;
+        private final int xStart;
+        private final int length;
+
+        public InfoGui(int xStart, int yStart, int length) {
+            this.yStart = yStart;
+            this.xStart = xStart;
+            this.length = length;
+        }
+
+        public int getLength() {
+            return length;
+        }
+
+        public int getXStart() {
+            return xStart;
+        }
+
+        public int getYStart() {
+            return yStart;
+        }
+
+    }
 }

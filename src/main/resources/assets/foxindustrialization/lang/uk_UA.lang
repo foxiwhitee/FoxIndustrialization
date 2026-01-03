@@ -24,12 +24,36 @@ item.storageUpgrade.Advanced.name=Розширене поліпшення схо
 item.storageUpgrade.Nano.name=Нано поліпшення сховища енергії
 item.storageUpgrade.Quantum.name=Покращення поліпшення сховища енергії
 
-# Tooltips
-tooltip.upgrade.addPerOp=§7Кількість предметів що перетворюються за одну операцію §3%s
+# Tooltips 
+tooltip.upgrade.addPerOp=§7Збільшує кількість перероблених предметів за операцію на §3%s
 tooltip.upgrade.speed=§7Зменшує час роботи до §3%s%%
 tooltip.upgrade.power=§7Збільшує споживання енергії до §3%s%%
-tooltip.upgrade.storageMult=§7Збільшує кількість накопиченої енергії у §3%s§7 разів
+tooltip.upgrade.storageMult=§7Збільшує кількість зберігаємої енергії у §3%s§7 разів
+tooltip.upgrade.needsType=§7Поліпшення працює з рівня механізму: %s
+tooltip.upgrade.pc.storageMult=§7Збільшує кількість зберігаємої %s%s енергії§7 у §3%s§7 разів
+tooltip.upgrade.pc.outputMult=§7Збільшує швидкість виходу %s%s енергії§7 у §3%s§7 разів
+tooltip.level.advanced=§6Розширений
+tooltip.level.nano=§8Нано
+tooltip.level.quantum=§3Квантовий
 tooltip.energyStorage.output=§7Вихід: §3%s§7 EU/t
 tooltip.energyStorage.capacity=§7Сховище: §3%s§7 EU
 tooltip.energyStorage.store=§7Зберігає: §3%s§7 EU
 tooltip.energyStorage.supportsRF=§8Цей блок підтримує RG енергію (§31EU§8 = §3%sRF§8)
+tooltip.machine.capacity=§7Сховище: §3%s§7 EU
+tooltip.machine.addPerOp=§7Кількість предметів що перетворюються за одну операцію: §3%s
+tooltip.button.name.none=Без режиму
+tooltip.button.name.merge=Об'єднати
+tooltip.button.name.fill=Заповнити
+tooltip.button.name.auto=Автоматично
+tooltip.button.description.none=Нічого не виконує
+tooltip.button.description.merge=Збирає предмети з різних слотів в один
+tooltip.button.description.fill=Рівномірно розподіляє предмети по слотах
+tooltip.button.description.auto=Автоматично розподіляє та збирає предмети в слотах
+tooltip.convert.rf=Конвертувати в RF
+tooltip.convert.eu=Конвертувати в EU
+tooltip.output=Вихід: %s
+tooltip.powerConverter.description=§7Конвертує §3EU енергію§7 в §4RF енергію§7, і навпаки §8(§31EU§8 = §3%sRF§8)
+tooltip.powerConverter.storageEU=§7Сховище: §3%s §7EU
+tooltip.powerConverter.storageRF=§7Сховище: §3%s §7RF
+tooltip.powerConverter.outputEU=§7Вихід: §3%s §7EU/t
+tooltip.powerConverter.outputRF=§7Вихід: §3%s §7RF/t

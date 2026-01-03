@@ -7,8 +7,6 @@ import java.util.Collections;
 import java.util.List;
 
 public interface IRecipeIC2 extends IFoxRecipe {
-    double getEnergyPerTick();
-    double getRecipeLength();
     Object getInput();
     boolean matches(ItemStack input);
 

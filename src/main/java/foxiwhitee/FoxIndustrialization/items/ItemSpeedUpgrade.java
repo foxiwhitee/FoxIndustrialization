@@ -21,10 +21,15 @@ public class ItemSpeedUpgrade extends ItemWithMeta implements IAdvancedUpgradeIt
         if (FIConfig.enableTooltips) {
             int add = this.getItemsPerOpAdd(stack);
             if (add > 0) {
-                list.add(StatCollector.translateToLocalFormatted("tooltip.upgrade.addPerOp", EnergyUtility.formatNumber(add)));
+                list.add(StatCollector.translateToLocalFormatted("tooltip.upgrade.addPerOp", Math.min(add, 64)));
             }
             list.add(StatCollector.translateToLocalFormatted("tooltip.upgrade.speed", EnergyUtility.formatNumber(this.getSpeedMultiplier(stack) * 100)));
             list.add(StatCollector.translateToLocalFormatted("tooltip.upgrade.power", EnergyUtility.formatNumber(this.getEnergyUseMultiplier(stack) * 100)));
+            list.add(StatCollector.translateToLocalFormatted("tooltip.upgrade.needsType", StatCollector.translateToLocal(switch (getTier(stack)) {
+                case ADVANCED -> "tooltip.level.advanced";
+                case NANO -> "tooltip.level.nano";
+                case QUANTUM -> "tooltip.level.quantum";
+            })));
         }
     }
 

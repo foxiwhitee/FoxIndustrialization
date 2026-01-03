@@ -119,7 +119,7 @@ public abstract class TileIC2 extends FoxBaseTile implements IEnergySink {
             double add = Math.min(amount, maxEnergy - energy);
             this.energy += add;
             markForUpdate();
-            return add;
+            return 0;
         }
     }
 

@@ -53,6 +53,20 @@ public class FIConfig {
     public static double speedUpgradeQuantumUseMultiplier = 2.5;
 
 
+    // Upgrades Power Converter
+    @ConfigValue(category = "Upgrades.PowerConverter", name = "storageMultiplierEU", desc = "How many times will the mechanism's EU storage be increased with each upgrade?")
+    public static double powerConverterUpgradeEUStorageMultiplier = 2;
+
+    @ConfigValue(category = "Upgrades.PowerConverter", name = "storageMultiplierRF", desc = "How many times will the mechanism's RF storage be increased with each upgrade?")
+    public static double powerConverterUpgradeRFStorageMultiplier = 2;
+
+    @ConfigValue(category = "Upgrades.PowerConverter", name = "outputMultiplierEU", desc = "How many times will the rate of EU energy output increase?")
+    public static double powerConverterUpgradeEUOutputMultiplier = 8;
+
+    @ConfigValue(category = "Upgrades.PowerConverter", name = "outputMultiplierRF", desc = "How many times will the rate of RF energy output increase?")
+    public static double powerConverterUpgradeRFOutputMultiplier = 8;
+
+
     // Energy Storage Basic
     @ConfigValue(category = "Storage.Basic", name = "tier", desc = "The energy level of the unit. Affects the speed of charging and discharging energy. For example, MFSU has level 4")
     public static int energyStorageBasicTier = 8;
@@ -137,4 +151,203 @@ public class FIConfig {
 
     @ConfigValue(category = "Storage.Singular", name = "supportsRF", desc = "Does this block support RF energy?")
     public static boolean energyStorageSingularSupportsRF = true;
+
+
+    // Machines Advanced
+    // Compressor
+    @ConfigValue(category = "Machines.Advanced.Compressor", name = "storage", desc = "The maximum amount of energy that the block can hold")
+    public static double advancedCompressorStorage = 1_000_000;
+
+    @ConfigValue(category = "Machines.Advanced.Compressor", name = "itemsPerOp", desc = "How many items can this block process at a time according to the standard?")
+    public static int advancedCompressorItemsPerOp = 8;
+
+    @ConfigValue(category = "Machines.Advanced.Compressor", name = "energyPerTick", desc = "How much energy does the unit consume per tick during operation?")
+    public static double advancedCompressorEnergyPerTick = 10;
+
+    // Extractor
+    @ConfigValue(category = "Machines.Advanced.Extractor", name = "storage", desc = "The maximum amount of energy that the block can hold")
+    public static double advancedExtractorStorage = 1_000_000;
+
+    @ConfigValue(category = "Machines.Advanced.Extractor", name = "itemsPerOp", desc = "How many items can this block process at a time according to the standard?")
+    public static int advancedExtractorItemsPerOp = 8;
+
+    @ConfigValue(category = "Machines.Advanced.Extractor", name = "energyPerTick", desc = "How much energy does the unit consume per tick during operation?")
+    public static double advancedExtractorEnergyPerTick = 10;
+
+    // Furnace
+    @ConfigValue(category = "Machines.Advanced.Furnace", name = "storage", desc = "The maximum amount of energy that the block can hold")
+    public static double advancedFurnaceStorage = 1_000_000;
+
+    @ConfigValue(category = "Machines.Advanced.Furnace", name = "itemsPerOp", desc = "How many items can this block process at a time according to the standard?")
+    public static int advancedFurnaceItemsPerOp = 8;
+
+    @ConfigValue(category = "Machines.Advanced.Furnace", name = "energyPerTick", desc = "How much energy does the unit consume per tick during operation?")
+    public static double advancedFurnaceEnergyPerTick = 8;
+
+    // Macerator
+    @ConfigValue(category = "Machines.Advanced.Macerator", name = "storage", desc = "The maximum amount of energy that the block can hold")
+    public static double advancedMaceratorStorage = 1_000_000;
+
+    @ConfigValue(category = "Machines.Advanced.Macerator", name = "itemsPerOp", desc = "How many items can this block process at a time according to the standard?")
+    public static int advancedMaceratorItemsPerOp = 8;
+
+    @ConfigValue(category = "Machines.Advanced.Macerator", name = "energyPerTick", desc = "How much energy does the unit consume per tick during operation?")
+    public static double advancedMaceratorEnergyPerTick = 10;
+
+    // MetalFormer
+    @ConfigValue(category = "Machines.Advanced.MetalFormer", name = "storage", desc = "The maximum amount of energy that the block can hold")
+    public static double advancedMetalFormerStorage = 1_000_000;
+
+    @ConfigValue(category = "Machines.Advanced.MetalFormer", name = "itemsPerOp", desc = "How many items can this block process at a time according to the standard?")
+    public static int advancedMetalFormerItemsPerOp = 8;
+
+    @ConfigValue(category = "Machines.Advanced.MetalFormer", name = "energyPerTick", desc = "How much energy does the unit consume per tick during operation?")
+    public static double advancedMetalFormerEnergyPerTick = 12;
+
+    // Recycler
+    @ConfigValue(category = "Machines.Advanced.Recycler", name = "storage", desc = "The maximum amount of energy that the block can hold")
+    public static double advancedRecyclerStorage = 1_000_000;
+
+    @ConfigValue(category = "Machines.Advanced.Recycler", name = "itemsPerOp", desc = "How many items can this block process at a time according to the standard?")
+    public static int advancedRecyclerItemsPerOp = 8;
+
+    @ConfigValue(category = "Machines.Advanced.Recycler", name = "energyPerTick", desc = "How much energy does the unit consume per tick during operation?")
+    public static double advancedRecyclerEnergyPerTick = 8;
+
+
+    // Machines Nano
+    // Compressor
+    @ConfigValue(category = "Machines.Nano.Compressor", name = "storage", desc = "The maximum amount of energy that the block can hold")
+    public static double nanoCompressorStorage = 2_500_000;
+
+    @ConfigValue(category = "Machines.Nano.Compressor", name = "itemsPerOp", desc = "How many items can this block process at a time according to the standard?")
+    public static int nanoCompressorItemsPerOp = 16;
+
+    @ConfigValue(category = "Machines.Nano.Compressor", name = "energyPerTick", desc = "How much energy does the unit consume per tick during operation?")
+    public static double nanoCompressorEnergyPerTick = 15;
+
+    // Extractor
+    @ConfigValue(category = "Machines.Nano.Extractor", name = "storage", desc = "The maximum amount of energy that the block can hold")
+    public static double nanoExtractorStorage = 2_500_000;
+
+    @ConfigValue(category = "Machines.Nano.Extractor", name = "itemsPerOp", desc = "How many items can this block process at a time according to the standard?")
+    public static int nanoExtractorItemsPerOp = 16;
+
+    @ConfigValue(category = "Machines.Nano.Extractor", name = "energyPerTick", desc = "How much energy does the unit consume per tick during operation?")
+    public static double nanoExtractorEnergyPerTick = 15;
+
+    // Furnace
+    @ConfigValue(category = "Machines.Nano.Furnace", name = "storage", desc = "The maximum amount of energy that the block can hold")
+    public static double nanoFurnaceStorage = 2_500_000;
+
+    @ConfigValue(category = "Machines.Nano.Furnace", name = "itemsPerOp", desc = "How many items can this block process at a time according to the standard?")
+    public static int nanoFurnaceItemsPerOp = 16;
+
+    @ConfigValue(category = "Machines.Nano.Furnace", name = "energyPerTick", desc = "How much energy does the unit consume per tick during operation?")
+    public static double nanoFurnaceEnergyPerTick = 13;
+
+    // Macerator
+    @ConfigValue(category = "Machines.Nano.Macerator", name = "storage", desc = "The maximum amount of energy that the block can hold")
+    public static double nanoMaceratorStorage = 2_500_000;
+
+    @ConfigValue(category = "Machines.Nano.Macerator", name = "itemsPerOp", desc = "How many items can this block process at a time according to the standard?")
+    public static int nanoMaceratorItemsPerOp = 16;
+
+    @ConfigValue(category = "Machines.Nano.Macerator", name = "energyPerTick", desc = "How much energy does the unit consume per tick during operation?")
+    public static double nanoMaceratorEnergyPerTick = 15;
+
+    // MetalFormer
+    @ConfigValue(category = "Machines.Nano.MetalFormer", name = "storage", desc = "The maximum amount of energy that the block can hold")
+    public static double nanoMetalFormerStorage = 2_500_000;
+
+    @ConfigValue(category = "Machines.Nano.MetalFormer", name = "itemsPerOp", desc = "How many items can this block process at a time according to the standard?")
+    public static int nanoMetalFormerItemsPerOp = 16;
+
+    @ConfigValue(category = "Machines.Nano.MetalFormer", name = "energyPerTick", desc = "How much energy does the unit consume per tick during operation?")
+    public static double nanoMetalFormerEnergyPerTick = 17;
+
+    // Recycler
+    @ConfigValue(category = "Machines.Nano.Recycler", name = "storage", desc = "The maximum amount of energy that the block can hold")
+    public static double nanoRecyclerStorage = 2_500_000;
+
+    @ConfigValue(category = "Machines.Nano.Recycler", name = "itemsPerOp", desc = "How many items can this block process at a time according to the standard?")
+    public static int nanoRecyclerItemsPerOp = 16;
+
+    @ConfigValue(category = "Machines.Nano.Recycler", name = "energyPerTick", desc = "How much energy does the unit consume per tick during operation?")
+    public static double nanoRecyclerEnergyPerTick = 13;
+
+
+    // Machines Quantum
+    // Compressor
+    @ConfigValue(category = "Machines.Quantum.Compressor", name = "storage", desc = "The maximum amount of energy that the block can hold")
+    public static double quantumCompressorStorage = 5_000_000;
+
+    @ConfigValue(category = "Machines.Quantum.Compressor", name = "itemsPerOp", desc = "How many items can this block process at a time according to the standard?")
+    public static int quantumCompressorItemsPerOp = 32;
+
+    @ConfigValue(category = "Machines.Quantum.Compressor", name = "energyPerTick", desc = "How much energy does the unit consume per tick during operation?")
+    public static double quantumCompressorEnergyPerTick = 22;
+
+    // Extractor
+    @ConfigValue(category = "Machines.Quantum.Extractor", name = "storage", desc = "The maximum amount of energy that the block can hold")
+    public static double quantumExtractorStorage = 5_000_000;
+
+    @ConfigValue(category = "Machines.Quantum.Extractor", name = "itemsPerOp", desc = "How many items can this block process at a time according to the standard?")
+    public static int quantumExtractorItemsPerOp = 32;
+
+    @ConfigValue(category = "Machines.Quantum.Extractor", name = "energyPerTick", desc = "How much energy does the unit consume per tick during operation?")
+    public static double quantumExtractorEnergyPerTick = 22;
+
+    // Furnace
+    @ConfigValue(category = "Machines.Quantum.Furnace", name = "storage", desc = "The maximum amount of energy that the block can hold")
+    public static double quantumFurnaceStorage = 5_000_000;
+
+    @ConfigValue(category = "Machines.Quantum.Furnace", name = "itemsPerOp", desc = "How many items can this block process at a time according to the standard?")
+    public static int quantumFurnaceItemsPerOp = 32;
+
+    @ConfigValue(category = "Machines.Quantum.Furnace", name = "energyPerTick", desc = "How much energy does the unit consume per tick during operation?")
+    public static double quantumFurnaceEnergyPerTick = 20;
+
+    // Macerator
+    @ConfigValue(category = "Machines.Quantum.Macerator", name = "storage", desc = "The maximum amount of energy that the block can hold")
+    public static double quantumMaceratorStorage = 5_000_000;
+
+    @ConfigValue(category = "Machines.Quantum.Macerator", name = "itemsPerOp", desc = "How many items can this block process at a time according to the standard?")
+    public static int quantumMaceratorItemsPerOp = 32;
+
+    @ConfigValue(category = "Machines.Quantum.Macerator", name = "energyPerTick", desc = "How much energy does the unit consume per tick during operation?")
+    public static double quantumMaceratorEnergyPerTick = 22;
+
+    // MetalFormer
+    @ConfigValue(category = "Machines.Quantum.MetalFormer", name = "storage", desc = "The maximum amount of energy that the block can hold")
+    public static double quantumMetalFormerStorage = 5_000_000;
+
+    @ConfigValue(category = "Machines.Quantum.MetalFormer", name = "itemsPerOp", desc = "How many items can this block process at a time according to the standard?")
+    public static int quantumMetalFormerItemsPerOp = 32;
+
+    @ConfigValue(category = "Machines.Quantum.MetalFormer", name = "energyPerTick", desc = "How much energy does the unit consume per tick during operation?")
+    public static double quantumMetalFormerEnergyPerTick = 24;
+
+    // Recycler
+    @ConfigValue(category = "Machines.Quantum.Recycler", name = "storage", desc = "The maximum amount of energy that the block can hold")
+    public static double quantumRecyclerStorage = 5_000_000;
+
+    @ConfigValue(category = "Machines.Quantum.Recycler", name = "itemsPerOp", desc = "How many items can this block process at a time according to the standard?")
+    public static int quantumRecyclerItemsPerOp = 32;
+
+    @ConfigValue(category = "Machines.Quantum.Recycler", name = "energyPerTick", desc = "How much energy does the unit consume per tick during operation?")
+    public static double quantumRecyclerEnergyPerTick = 20;
+
+    // Power Converter
+    @ConfigValue(category = "PowerConverter", name = "storageEU", desc = "The maximum amount of EU energy that the block can hold")
+    public static double powerConverterEUStorage = 1_000_000;
+
+    @ConfigValue(category = "PowerConverter", name = "storageRF", desc = "The maximum amount of RF energy that the block can hold")
+    public static double powerConverterRFStorage = 4_000_000;
+
+    @ConfigValue(category = "PowerConverter", name = "outputEU", desc = "How much EU energy does it transfer at a time?")
+    public static double powerConverterEUPerTick = 1024;
+
+    @ConfigValue(category = "PowerConverter", name = "outputRF", desc = "How much RF energy does it transfer at a time?")
+    public static double powerConverterRFPerTick = 4096;
 }

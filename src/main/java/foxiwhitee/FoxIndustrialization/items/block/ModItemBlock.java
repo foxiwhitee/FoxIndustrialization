@@ -1,12 +1,8 @@
-package foxiwhitee.FoxIndustrialization.items;
+package foxiwhitee.FoxIndustrialization.items.block;
 
-import foxiwhitee.FoxLib.utils.helpers.LocalizationUtils;
 import net.minecraft.block.Block;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-
-import java.util.List;
 
 public class ModItemBlock extends ItemBlock {
     private final Block blockType;

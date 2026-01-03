@@ -27,13 +27,17 @@ public class GuiEnergyStorage extends FoxBaseGui {
         int x = 72 - (info.getLength() / 2);
         UtilGui.drawTexture(offsetX + 55 + x, offsetY + 6, info.getXStart(), info.getYStart(), info.getLength(), 7, info.getLength(), 7, 512, 512);
 
+    }
+
+    @Override
+    public void drawFG(int offsetX, int offsetY, int mouseX, int mouseY) {
         this.bindTexture(FICore.MODID, this.getBackground());
         double storedEnergy = tile.getEnergy();
         if (storedEnergy >= 0.0D) {
             double maxStoredEnergy = tile.getMaxEnergy();
             double y = ProductivityUtil.gauge(73, storedEnergy, maxStoredEnergy);
-            UtilGui.drawTexture(this.guiLeft + 123, this.guiTop + 132 - y, 272, 0, 16, y, 16, y, 512.0D, 512.0D);
-            drawIfInMouse(mouseX, mouseY, 120, 56, 21, 77, EnergyUtility.formatNumber(storedEnergy) + " / " + EnergyUtility.formatNumber(maxStoredEnergy) + " EU");
+            UtilGui.drawTexture(123, 132 - y, 272, 0, 16, y, 16, y, 512.0D, 512.0D);
+            drawIfInMouse(mouseX, mouseY, 120, 56, 20, 77, EnergyUtility.formatNumber(storedEnergy) + " / " + EnergyUtility.formatNumber(maxStoredEnergy) + " EU");
         }
     }
 

@@ -26,11 +26,35 @@ item.storageUpgrade.Nano.name=Nano Energy Storage Upgrade
 item.storageUpgrade.Quantum.name=Quantum Energy Storage Upgrade
 
 # Tooltips
-tooltip.upgrade.addPerOp=§7Number of items recycled per operation §3%s
+tooltip.upgrade.addPerOp=§7Increases the number of items processed per operation by §3%s
 tooltip.upgrade.speed=§7Decrease process time to §3%S%%
 tooltip.upgrade.power=§7Increase power to §3%S%%
 tooltip.upgrade.storageMult=§7Increases the amount of energy stored by §3%s§7 times
+tooltip.upgrade.needsType=§7The upgrade works from the mechanism level: %s
+tooltip.upgrade.pc.storageMult=§7Increases the amount of %s%s energy§7 stored by §3%s§7 times
+tooltip.upgrade.pc.outputMult=§7Increases the rate of %s%s energy§7 output by §3%s§7 times
+tooltip.level.advanced=§6Advanced
+tooltip.level.nano=§8Nano
+tooltip.level.quantum=§3Quantum
 tooltip.energyStorage.output=§7Output: §3%s §7EU/t
 tooltip.energyStorage.capacity=§7Capacity: §3%s §7EU
 tooltip.energyStorage.store=§7Store: §3%s §7EU
-tooltip.energyStorage.supportsRF=§8This block supports RF energy (§31EU§8 = §3%sRF§8)
+tooltip.energyStorage.supportsRF=§8This block supports §4RF energy§8 (§31EU§8 = §3%sRF§8)
+tooltip.machine.capacity=§7Capacity: §3%s §7EU
+tooltip.machine.addPerOp=§7Number of items recycled per operation: §3%s
+tooltip.button.name.none=None
+tooltip.button.name.merge=Merge
+tooltip.button.name.fill=Fill
+tooltip.button.name.auto=Auto
+tooltip.button.description.none=Does nothing
+tooltip.button.description.merge=Collects items from different varieties into one
+tooltip.button.description.fill=Evenly distributes items across slots
+tooltip.button.description.auto=Automatically distributes and collects items into slots
+tooltip.convert.rf=Convert to RF
+tooltip.convert.eu=Convert to EU
+tooltip.output=Output: %s
+tooltip.powerConverter.description=§7Converts §3EU energy§7 to §4RF energy§7 and vice versa §8(§31EU§8 = §3%sRF§8)
+tooltip.powerConverter.storageEU=§7Capacity: §3%s §7EU
+tooltip.powerConverter.storageRF=§7Capacity: §3%s §7RF
+tooltip.powerConverter.outputEU=§7Output: §3%s §7EU/t
+tooltip.powerConverter.outputRF=§7Output: §3%s §7RF/t

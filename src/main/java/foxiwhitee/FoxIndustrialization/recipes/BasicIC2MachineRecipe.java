@@ -8,23 +8,10 @@ import net.minecraft.item.ItemStack;
 public class BasicIC2MachineRecipe implements IRecipeIC2 {
     private final Object input;
     private final ItemStack output;
-    private final double energyPerTick, length;
 
-    public BasicIC2MachineRecipe(Object input, ItemStack output, double energyPerTick, double length) {
+    public BasicIC2MachineRecipe(Object input, ItemStack output) {
         this.input = input;
         this.output = output;
-        this.energyPerTick = energyPerTick;
-        this.length = length;
-    }
-
-    @Override
-    public double getEnergyPerTick() {
-        return energyPerTick;
-    }
-
-    @Override
-    public double getRecipeLength() {
-        return length;
     }
 
     @Override

@@ -37,19 +37,19 @@ public abstract class TileEnergyStorage extends TileIC2Inv implements IEnergySou
         }
 
         boolean needUpdate = false;
-        ItemStack chargeItem = inventory.getStackInSlot(1);
-        ItemStack dischargeItem = inventory.getStackInSlot(0);
+        ItemStack chargeItem = inventory.getStackInSlot(0);
+        ItemStack dischargeItem = inventory.getStackInSlot(1);
         if (this.energy >= 1 && chargeItem != null) {
             double sent = ElectricItem.manager.charge(chargeItem, energy, this.tier, false, false);
             this.energy -= sent;
-            needUpdate = sent > 0;
+            needUpdate |= sent > 0;
         }
 
         if (this.getDemandedEnergy() > 0 && dischargeItem != null) {
             double gain = discharge(dischargeItem);
 
             this.energy += gain;
-            needUpdate = gain > 0;
+            needUpdate |= gain > 0;
         }
 
         if (needUpdate) {
@@ -58,7 +58,7 @@ public abstract class TileEnergyStorage extends TileIC2Inv implements IEnergySou
     }
 
     private double discharge(ItemStack dischargeItem) {
-        double realAmount = ElectricItem.manager.discharge(dischargeItem, energy, this.tier, false, true, false);
+        double realAmount = ElectricItem.manager.discharge(dischargeItem, maxEnergy - energy, this.tier, false, true, false);
         if (realAmount <= 0) {
             realAmount = Info.itemEnergy.getEnergyValue(dischargeItem);
             if (realAmount <= 0) {
@@ -67,7 +67,7 @@ public abstract class TileEnergyStorage extends TileIC2Inv implements IEnergySou
 
             --dischargeItem.stackSize;
             if (dischargeItem.stackSize <= 0) {
-                this.inventory.setInventorySlotContents(0, null);
+                this.inventory.setInventorySlotContents(1, null);
             }
         }
 
@@ -96,7 +96,7 @@ public abstract class TileEnergyStorage extends TileIC2Inv implements IEnergySou
 
     @Override
     public double getOfferedEnergy() {
-        return !(energy >= output) ? 0 : Math.min(energy, output);
+        return Math.min(energy, output);
     }
 
     @Override

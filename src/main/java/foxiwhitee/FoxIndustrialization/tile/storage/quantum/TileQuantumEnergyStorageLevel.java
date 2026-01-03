@@ -33,8 +33,8 @@ public abstract class TileQuantumEnergyStorageLevel extends TileNanoEnergyStorag
             pushEnergy();
 
             boolean needUpdate = false;
-            ItemStack chargeItem = getInternalInventory().getStackInSlot(1);
-            ItemStack dischargeItem = getInternalInventory().getStackInSlot(0);
+            ItemStack chargeItem = getInternalInventory().getStackInSlot(0);
+            ItemStack dischargeItem = getInternalInventory().getStackInSlot(1);
 
             if (chargeItem != null && chargeItem.getItem() instanceof IDoubleEnergyContainerItem item) {
                 needUpdate |= chargeDoubleRFItem(chargeItem);

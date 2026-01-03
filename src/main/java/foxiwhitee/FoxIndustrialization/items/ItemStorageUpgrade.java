@@ -20,6 +20,11 @@ public class ItemStorageUpgrade extends ItemWithMeta implements IAdvancedUpgrade
     public void addInformation(ItemStack stack, EntityPlayer p_77624_2_, List<String> list, boolean p_77624_4_) {
         if (FIConfig.enableTooltips) {
             list.add(StatCollector.translateToLocalFormatted("tooltip.upgrade.storageMult", EnergyUtility.formatNumber(this.getStorageEnergyMultiplier(stack))));
+            list.add(StatCollector.translateToLocalFormatted("tooltip.upgrade.needsType", StatCollector.translateToLocal(switch (getTier(stack)) {
+                case ADVANCED -> "tooltip.level.advanced";
+                case NANO -> "tooltip.level.nano";
+                case QUANTUM -> "tooltip.level.quantum";
+            })));
         }
     }
 

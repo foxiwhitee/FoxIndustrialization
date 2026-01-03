@@ -1,16 +1,25 @@
 package foxiwhitee.FoxIndustrialization;
 
-import foxiwhitee.FoxIndustrialization.blocks.BlockTestNanoCompressor;
+import foxiwhitee.FoxIndustrialization.blocks.machines.advanced.BlockAdvancedFurnace;
+import foxiwhitee.FoxIndustrialization.blocks.machines.nano.BlockNanoFurnace;
+import foxiwhitee.FoxIndustrialization.blocks.machines.quantum.BlockQuantumFurnace;
 import foxiwhitee.FoxIndustrialization.blocks.storage.*;
 import foxiwhitee.FoxIndustrialization.config.ContentConfig;
-import foxiwhitee.FoxIndustrialization.items.ItemBlockEnergyStorage;
-import foxiwhitee.FoxIndustrialization.tile.machines.TIleTestNanoCompressor;
+import foxiwhitee.FoxIndustrialization.items.block.ItemBlockEnergyStorage;
+import foxiwhitee.FoxIndustrialization.items.block.ItemBlockMachine;
+import foxiwhitee.FoxIndustrialization.tile.machines.advanced.TileAdvancedFurnace;
+import foxiwhitee.FoxIndustrialization.tile.machines.nano.TileNanoFurnace;
+import foxiwhitee.FoxIndustrialization.tile.machines.quantum.TileQuantumFurnace;
 import foxiwhitee.FoxLib.registries.RegisterUtils;
 import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;
 
 public class ModBlocks {
-    public static final Block test = new BlockTestNanoCompressor();
+    public static final Block advancedFurnace = new BlockAdvancedFurnace("advancedFurnace");
+
+    public static final Block nanoFurnace = new BlockNanoFurnace("nanoFurnace");
+
+    public static final Block quantumFurnace = new BlockQuantumFurnace("quantumFurnace");
 
     public static final Block basicEnergyStorage = new BlockBasicEnergyStorage("basicEnergyStorage");
     public static final Block advancedEnergyStorage = new BlockAdvancedEnergyStorage("advancedEnergyStorage");
@@ -29,9 +38,18 @@ public class ModBlocks {
     public static final Block singularChargePad = new BlockSingularChargePad("singularChargePad");
 
     public static void registerBlocks() {
-        RegisterUtils.registerBlock(test);
-        RegisterUtils.registerTile(TIleTestNanoCompressor.class);
-
+        if (ContentConfig.enableAdvancedFurnace) {
+            RegisterUtils.registerBlock(advancedFurnace, ItemBlockMachine.class);
+            RegisterUtils.registerTile(TileAdvancedFurnace.class);
+        }
+        if (ContentConfig.enableNanoFurnace) {
+            RegisterUtils.registerBlock(nanoFurnace, ItemBlockMachine.class);
+            RegisterUtils.registerTile(TileNanoFurnace.class);
+        }
+        if (ContentConfig.enableQuantumFurnace) {
+            RegisterUtils.registerBlock(quantumFurnace, ItemBlockMachine.class);
+            RegisterUtils.registerTile(TileQuantumFurnace.class);
+        }
         if (ContentConfig.enableNewEnergyStorages) {
             RegisterUtils.registerBlocks(ItemBlockEnergyStorage.class, basicEnergyStorage, advancedEnergyStorage, hybridEnergyStorage, nanoEnergyStorage, ultimateEnergyStorage, quantumEnergyStorage, singularEnergyStorage);
             RegisterUtils.registerBlocks(ItemBlockEnergyStorage.class, basicChargePad, advancedChargePad, hybridChargePad, nanoChargePad, ultimateChargePad, quantumChargePad, singularChargePad);

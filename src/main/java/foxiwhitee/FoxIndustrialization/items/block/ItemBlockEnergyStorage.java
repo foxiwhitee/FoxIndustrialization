@@ -1,4 +1,4 @@
-package foxiwhitee.FoxIndustrialization.items;
+package foxiwhitee.FoxIndustrialization.items.block;
 
 import foxiwhitee.FoxIndustrialization.FICore;
 import foxiwhitee.FoxIndustrialization.ModBlocks;
