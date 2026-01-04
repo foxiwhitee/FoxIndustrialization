@@ -1,25 +1,40 @@
 package foxiwhitee.FoxIndustrialization;
 
-import foxiwhitee.FoxIndustrialization.blocks.machines.advanced.BlockAdvancedFurnace;
-import foxiwhitee.FoxIndustrialization.blocks.machines.nano.BlockNanoFurnace;
-import foxiwhitee.FoxIndustrialization.blocks.machines.quantum.BlockQuantumFurnace;
+import foxiwhitee.FoxIndustrialization.blocks.machines.advanced.*;
+import foxiwhitee.FoxIndustrialization.blocks.machines.nano.*;
+import foxiwhitee.FoxIndustrialization.blocks.machines.quantum.*;
 import foxiwhitee.FoxIndustrialization.blocks.storage.*;
 import foxiwhitee.FoxIndustrialization.config.ContentConfig;
 import foxiwhitee.FoxIndustrialization.items.block.ItemBlockEnergyStorage;
 import foxiwhitee.FoxIndustrialization.items.block.ItemBlockMachine;
-import foxiwhitee.FoxIndustrialization.tile.machines.advanced.TileAdvancedFurnace;
-import foxiwhitee.FoxIndustrialization.tile.machines.nano.TileNanoFurnace;
-import foxiwhitee.FoxIndustrialization.tile.machines.quantum.TileQuantumFurnace;
+import foxiwhitee.FoxIndustrialization.tile.machines.advanced.*;
+import foxiwhitee.FoxIndustrialization.tile.machines.nano.*;
+import foxiwhitee.FoxIndustrialization.tile.machines.quantum.*;
 import foxiwhitee.FoxLib.registries.RegisterUtils;
 import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;
 
 public class ModBlocks {
+    public static final Block advancedCompressor = new BlockAdvancedCompressor("advancedCompressor");
+    public static final Block advancedExtractor = new BlockAdvancedExtractor("advancedExtractor");
     public static final Block advancedFurnace = new BlockAdvancedFurnace("advancedFurnace");
+    public static final Block advancedMacerator = new BlockAdvancedMacerator("advancedMacerator");
+    public static final Block advancedMetalFormer = new BlockAdvancedMetalFormer("advancedMetalFormer");
+    public static final Block advancedRecycler = new BlockAdvancedRecycler("advancedRecycler");
 
+    public static final Block nanoCompressor = new BlockNanoCompressor("nanoCompressor");
+    public static final Block nanoExtractor = new BlockNanoExtractor("nanoExtractor");
     public static final Block nanoFurnace = new BlockNanoFurnace("nanoFurnace");
+    public static final Block nanoMacerator = new BlockNanoMacerator("nanoMacerator");
+    public static final Block nanoMetalFormer = new BlockNanoMetalFormer("nanoMetalFormer");
+    public static final Block nanoRecycler = new BlockNanoRecycler("nanoRecycler");
 
+    public static final Block quantumCompressor = new BlockQuantumCompressor("quantumCompressor");
+    public static final Block quantumExtractor = new BlockQuantumExtractor("quantumExtractor");
     public static final Block quantumFurnace = new BlockQuantumFurnace("quantumFurnace");
+    public static final Block quantumMacerator = new BlockQuantumMacerator("quantumMacerator");
+    public static final Block quantumMetalFormer = new BlockQuantumMetalFormer("quantumMetalFormer");
+    public static final Block quantumRecycler = new BlockQuantumRecycler("quantumRecycler");
 
     public static final Block basicEnergyStorage = new BlockBasicEnergyStorage("basicEnergyStorage");
     public static final Block advancedEnergyStorage = new BlockAdvancedEnergyStorage("advancedEnergyStorage");
@@ -38,18 +53,10 @@ public class ModBlocks {
     public static final Block singularChargePad = new BlockSingularChargePad("singularChargePad");
 
     public static void registerBlocks() {
-        if (ContentConfig.enableAdvancedFurnace) {
-            RegisterUtils.registerBlock(advancedFurnace, ItemBlockMachine.class);
-            RegisterUtils.registerTile(TileAdvancedFurnace.class);
-        }
-        if (ContentConfig.enableNanoFurnace) {
-            RegisterUtils.registerBlock(nanoFurnace, ItemBlockMachine.class);
-            RegisterUtils.registerTile(TileNanoFurnace.class);
-        }
-        if (ContentConfig.enableQuantumFurnace) {
-            RegisterUtils.registerBlock(quantumFurnace, ItemBlockMachine.class);
-            RegisterUtils.registerTile(TileQuantumFurnace.class);
-        }
+        registerAdvancedMachines();
+        registerNanoMachines();
+        registerQuantumMachines();
+
         if (ContentConfig.enableNewEnergyStorages) {
             RegisterUtils.registerBlocks(ItemBlockEnergyStorage.class, basicEnergyStorage, advancedEnergyStorage, hybridEnergyStorage, nanoEnergyStorage, ultimateEnergyStorage, quantumEnergyStorage, singularEnergyStorage);
             RegisterUtils.registerBlocks(ItemBlockEnergyStorage.class, basicChargePad, advancedChargePad, hybridChargePad, nanoChargePad, ultimateChargePad, quantumChargePad, singularChargePad);
@@ -57,6 +64,87 @@ public class ModBlocks {
             RegisterUtils.findClasses("foxiwhitee.FoxIndustrialization.tile.storage.nano", TileEntity.class).forEach(RegisterUtils::registerTile);
             RegisterUtils.findClasses("foxiwhitee.FoxIndustrialization.tile.storage.quantum", TileEntity.class).forEach(RegisterUtils::registerTile);
             RegisterUtils.findClasses("foxiwhitee.FoxIndustrialization.tile.storage.singular", TileEntity.class).forEach(RegisterUtils::registerTile);
+        }
+    }
+
+    private static void registerAdvancedMachines() {
+        if (ContentConfig.enableAdvancedCompressor) {
+            RegisterUtils.registerBlock(advancedCompressor, ItemBlockMachine.class);
+            RegisterUtils.registerTile(TileAdvancedCompressor.class);
+        }
+        if (ContentConfig.enableAdvancedExtractor) {
+            RegisterUtils.registerBlock(advancedExtractor, ItemBlockMachine.class);
+            RegisterUtils.registerTile(TileAdvancedExtractor.class);
+        }
+        if (ContentConfig.enableAdvancedFurnace) {
+            RegisterUtils.registerBlock(advancedFurnace, ItemBlockMachine.class);
+            RegisterUtils.registerTile(TileAdvancedFurnace.class);
+        }
+        if (ContentConfig.enableAdvancedMacerator) {
+            RegisterUtils.registerBlock(advancedMacerator, ItemBlockMachine.class);
+            RegisterUtils.registerTile(TileAdvancedMacerator.class);
+        }
+        if (ContentConfig.enableAdvancedMetalFormer) {
+            RegisterUtils.registerBlock(advancedMetalFormer, ItemBlockMachine.class);
+            RegisterUtils.registerTile(TileAdvancedMetalFormer.class);
+        }
+        if (ContentConfig.enableAdvancedRecycler) {
+            RegisterUtils.registerBlock(advancedRecycler, ItemBlockMachine.class);
+            RegisterUtils.registerTile(TileAdvancedRecycler.class);
+        }
+    }
+
+    private static void registerNanoMachines() {
+        if (ContentConfig.enableNanoCompressor) {
+            RegisterUtils.registerBlock(nanoCompressor, ItemBlockMachine.class);
+            RegisterUtils.registerTile(TileNanoCompressor.class);
+        }
+        if (ContentConfig.enableNanoExtractor) {
+            RegisterUtils.registerBlock(nanoExtractor, ItemBlockMachine.class);
+            RegisterUtils.registerTile(TileNanoExtractor.class);
+        }
+        if (ContentConfig.enableNanoFurnace) {
+            RegisterUtils.registerBlock(nanoFurnace, ItemBlockMachine.class);
+            RegisterUtils.registerTile(TileNanoFurnace.class);
+        }
+        if (ContentConfig.enableNanoMacerator) {
+            RegisterUtils.registerBlock(nanoMacerator, ItemBlockMachine.class);
+            RegisterUtils.registerTile(TileNanoMacerator.class);
+        }
+        if (ContentConfig.enableNanoMetalFormer) {
+            RegisterUtils.registerBlock(nanoMetalFormer, ItemBlockMachine.class);
+            RegisterUtils.registerTile(TileNanoMetalFormer.class);
+        }
+        if (ContentConfig.enableNanoRecycler) {
+            RegisterUtils.registerBlock(nanoRecycler, ItemBlockMachine.class);
+            RegisterUtils.registerTile(TileNanoRecycler.class);
+        }
+    }
+
+    private static void registerQuantumMachines() {
+        if (ContentConfig.enableQuantumCompressor) {
+            RegisterUtils.registerBlock(quantumCompressor, ItemBlockMachine.class);
+            RegisterUtils.registerTile(TileQuantumCompressor.class);
+        }
+        if (ContentConfig.enableQuantumExtractor) {
+            RegisterUtils.registerBlock(quantumExtractor, ItemBlockMachine.class);
+            RegisterUtils.registerTile(TileQuantumExtractor.class);
+        }
+        if (ContentConfig.enableQuantumFurnace) {
+            RegisterUtils.registerBlock(quantumFurnace, ItemBlockMachine.class);
+            RegisterUtils.registerTile(TileQuantumFurnace.class);
+        }
+        if (ContentConfig.enableQuantumMacerator) {
+            RegisterUtils.registerBlock(quantumMacerator, ItemBlockMachine.class);
+            RegisterUtils.registerTile(TileQuantumMacerator.class);
+        }
+        if (ContentConfig.enableQuantumMetalFormer) {
+            RegisterUtils.registerBlock(quantumMetalFormer, ItemBlockMachine.class);
+            RegisterUtils.registerTile(TileQuantumMetalFormer.class);
+        }
+        if (ContentConfig.enableQuantumRecycler) {
+            RegisterUtils.registerBlock(quantumRecycler, ItemBlockMachine.class);
+            RegisterUtils.registerTile(TileQuantumRecycler.class);
         }
     }
 }

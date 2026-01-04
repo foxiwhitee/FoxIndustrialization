@@ -14,6 +14,9 @@ public class ContentConfig {
     @ConfigValue(category = "Content", desc = "Enable New Energy Storages?")
     public static boolean enableNewEnergyStorages = true;
 
+    @ConfigValue(category = "Content", desc = "Enable Energy Crystals?")
+    public static boolean enableEnergyCrystals = true;
+
 
     // Machines Advanced
     @ConfigValue(category = "Content.Machines.Advanced", desc = "Enable Advanced Compressor?")

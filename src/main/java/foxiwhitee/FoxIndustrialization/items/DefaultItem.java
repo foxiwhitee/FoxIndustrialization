@@ -5,23 +5,23 @@ import net.minecraft.item.Item;
 public class DefaultItem extends Item {
     protected final String name;
 
-    public DefaultItem(String name, String texture, int maxStackSize) {
+    public DefaultItem(String name, String folder, int maxStackSize) {
         this.setUnlocalizedName(name);
-        this.setTextureName(FICore.MODID + ":" + texture);
+        this.setTextureName(FICore.MODID + ":" + folder + name);
         this.setCreativeTab(FICore.TAB);
         this.maxStackSize = maxStackSize;
         this.name = name;
     }
 
-    public DefaultItem(String name, String texture) {
-        this(name, texture, 64);
+    public DefaultItem(String name, String folder) {
+        this(name, folder, 64);
     }
 
     public DefaultItem(String name) {
-        this(name, name);
+        this(name, "");
     }
 
     public DefaultItem(String name, int maxStackSize) {
-        this(name, name, maxStackSize);
+        this(name, "", maxStackSize);
     }
 }

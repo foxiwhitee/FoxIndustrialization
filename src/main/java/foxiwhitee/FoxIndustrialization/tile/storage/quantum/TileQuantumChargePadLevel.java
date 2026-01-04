@@ -7,9 +7,9 @@ import cpw.mods.fml.common.Optional;
 import foxiwhitee.FoxIndustrialization.FICore;
 import foxiwhitee.FoxIndustrialization.api.energy.IDoubleEnergyContainerItem;
 import foxiwhitee.FoxIndustrialization.api.energy.IDoubleEnergyHandler;
+import foxiwhitee.FoxIndustrialization.api.energy.IDoubleEnergyReceiver;
 import foxiwhitee.FoxIndustrialization.config.FIConfig;
 import foxiwhitee.FoxIndustrialization.tile.storage.nano.TileNanoChargePadLevel;
-import foxiwhitee.FoxIndustrialization.tile.storage.nano.TileNanoEnergyStorageLevel;
 import foxiwhitee.FoxLib.tile.event.TileEvent;
 import foxiwhitee.FoxLib.tile.event.TileEventType;
 import net.minecraft.entity.player.EntityPlayer;
@@ -37,9 +37,9 @@ public abstract class TileQuantumChargePadLevel extends TileNanoChargePadLevel i
             ItemStack chargeItem = getInternalInventory().getStackInSlot(0);
             ItemStack dischargeItem = getInternalInventory().getStackInSlot(1);
 
-            if (chargeItem != null && chargeItem.getItem() instanceof IDoubleEnergyContainerItem item) {
+            if (chargeItem != null && chargeItem.getItem() instanceof IDoubleEnergyContainerItem item && item.canWorkWithEnergy(chargeItem)) {
                 needUpdate |= chargeDoubleRFItem(chargeItem);
-            } else if (dischargeItem != null && dischargeItem.getItem() instanceof IDoubleEnergyContainerItem item) {
+            } else if (dischargeItem != null && dischargeItem.getItem() instanceof IDoubleEnergyContainerItem item && item.canWorkWithEnergy(dischargeItem)) {
                 needUpdate |= dischargeDoubleRFItem(dischargeItem);
             } else if (FICore.ifCoFHCoreIsLoaded) {
                 needUpdate |= handleCoFHItems(chargeItem, dischargeItem);
@@ -55,7 +55,7 @@ public abstract class TileQuantumChargePadLevel extends TileNanoChargePadLevel i
     protected void chargePlayerItems(EntityPlayer player) {
         for(ItemStack current : player.inventory.armorInventory) {
             if (current != null) {
-                if (current.getItem() instanceof IDoubleEnergyContainerItem) {
+                if (current.getItem() instanceof IDoubleEnergyContainerItem item && item.canWorkWithEnergy(current)) {
                     chargeDoubleRFItem(current);
                 } else if (FICore.ifCoFHCoreIsLoaded) {
                     if (!tryChargeRFItem(current)) {
@@ -69,7 +69,7 @@ public abstract class TileQuantumChargePadLevel extends TileNanoChargePadLevel i
 
         for(ItemStack current : player.inventory.mainInventory) {
             if (current != null) {
-                if (current.getItem() instanceof IDoubleEnergyContainerItem) {
+                if (current.getItem() instanceof IDoubleEnergyContainerItem item && item.canWorkWithEnergy(current)) {
                     chargeDoubleRFItem(current);
                 } else if (FICore.ifCoFHCoreIsLoaded) {
                     if (!tryChargeRFItem(current)) {
@@ -83,12 +83,11 @@ public abstract class TileQuantumChargePadLevel extends TileNanoChargePadLevel i
     }
 
     protected boolean tryChargeRFItem(ItemStack chargeItem) {
-        boolean charged = chargeRFItem(chargeItem);
-        return charged;
+        return chargeRFItem(chargeItem);
     }
 
     protected boolean chargeDoubleRFItem(ItemStack chargeItem) {
-        if (this.energy > 0 && chargeItem != null && chargeItem.getItem() instanceof IDoubleEnergyContainerItem item) {
+        if (this.energy > 0 && chargeItem != null && chargeItem.getItem() instanceof IDoubleEnergyContainerItem item && item.canWorkWithEnergy(chargeItem)) {
             double toSend = Math.min(this.energy, this.getOutput() * FIConfig.rfInEu);
             double accepted = item.receiveDoubleEnergy(chargeItem, toSend, false);
 
@@ -100,7 +99,7 @@ public abstract class TileQuantumChargePadLevel extends TileNanoChargePadLevel i
 
     protected boolean dischargeDoubleRFItem(ItemStack dischargeItem) {
         double demand = this.maxEnergy - this.energy;
-        if (demand > 0 && dischargeItem != null && dischargeItem.getItem() instanceof IDoubleEnergyContainerItem item) {
+        if (demand > 0 && dischargeItem != null && dischargeItem.getItem() instanceof IDoubleEnergyContainerItem item && item.canWorkWithEnergy(dischargeItem)) {
             double toExtract = Math.min(demand, this.getOutput() * FIConfig.rfInEu);
             double extracted = item.extractDoubleEnergy(dischargeItem, toExtract, false);
 
@@ -122,7 +121,7 @@ public abstract class TileQuantumChargePadLevel extends TileNanoChargePadLevel i
             int toSend = (int) Math.min(this.energy, this.getOutput() * FIConfig.rfInEu);
             int accepted = item.receiveEnergy(chargeItem, toSend, false);
 
-            this.energy -= accepted / FIConfig.rfInEu;
+            this.energy -= (double) accepted / FIConfig.rfInEu;
             return accepted > 0;
         }
         return false;
@@ -135,7 +134,7 @@ public abstract class TileQuantumChargePadLevel extends TileNanoChargePadLevel i
             int toExtract = (int) Math.min(demand, this.getOutput() * FIConfig.rfInEu);
             int extracted = item.extractEnergy(dischargeItem, toExtract, false);
 
-            this.energy += extracted / FIConfig.rfInEu;
+            this.energy += (double) extracted / FIConfig.rfInEu;
             return extracted > 0;
         }
         return false;
@@ -147,7 +146,7 @@ public abstract class TileQuantumChargePadLevel extends TileNanoChargePadLevel i
         ForgeDirection side = getForward();
         TileEntity tile = worldObj.getTileEntity(xCoord + side.offsetX, yCoord + side.offsetY, zCoord + side.offsetZ);
 
-        if (tile instanceof IDoubleEnergyHandler receiver) {
+        if (tile instanceof IDoubleEnergyReceiver receiver) {
             double energyToPush =  Math.min(this.energy * FIConfig.rfInEu, this.getOutput());
             double accepted = receiver.receiveDoubleEnergy(side.getOpposite(), energyToPush, false) / FIConfig.rfInEu;
             this.energy -= accepted;

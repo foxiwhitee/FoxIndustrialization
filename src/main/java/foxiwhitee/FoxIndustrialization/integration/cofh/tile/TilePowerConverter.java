@@ -2,10 +2,10 @@ package foxiwhitee.FoxIndustrialization.integration.cofh.tile;
 
 import cofh.api.energy.IEnergyHandler;
 import cofh.api.energy.IEnergyReceiver;
-import foxiwhitee.FoxIndustrialization.FICore;
 import foxiwhitee.FoxIndustrialization.api.IAdvancedUpgradeItem;
 import foxiwhitee.FoxIndustrialization.api.IPowerConverterUpgradeItem;
 import foxiwhitee.FoxIndustrialization.api.energy.IDoubleEnergyHandler;
+import foxiwhitee.FoxIndustrialization.api.energy.IDoubleEnergyReceiver;
 import foxiwhitee.FoxIndustrialization.config.FIConfig;
 import foxiwhitee.FoxIndustrialization.integration.cofh.utils.ButtonConverterMode;
 import foxiwhitee.FoxIndustrialization.tile.TileIC2Inv;
@@ -69,7 +69,7 @@ public class TilePowerConverter extends TileIC2Inv implements IEnergyHandler, ID
         for (ForgeDirection side : ForgeDirection.VALID_DIRECTIONS) {
             TileEntity tile = worldObj.getTileEntity(xCoord + side.offsetX, yCoord + side.offsetY, zCoord + side.offsetZ);
 
-            if (tile instanceof IDoubleEnergyHandler receiver) {
+            if (tile instanceof IDoubleEnergyReceiver receiver) {
                 double energyToPush =  Math.min(this.energyRF, outputRF);
                 double accepted = receiver.receiveDoubleEnergy(side.getOpposite(), energyToPush, false);
                 this.energyRF -= accepted;

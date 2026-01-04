@@ -13,13 +13,10 @@ import foxiwhitee.FoxLib.tile.inventory.FoxInternalInventory;
 import foxiwhitee.FoxLib.tile.inventory.InvOperation;
 import foxiwhitee.FoxLib.utils.helpers.ItemStackUtil;
 import foxiwhitee.FoxLib.utils.helpers.StackOreDict;
-import ic2.api.Direction;
 import ic2.core.upgrade.IUpgradeItem;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -36,7 +33,7 @@ public abstract class TileBaseMachine extends TileIC2Inv {
     protected final MachineTier tier;
     protected final IRecipeIC2[] currentRecipes;
 
-    private int[] ticks;
+    protected int[] ticks;
     private int itemsPerOp, ticksNeed;
 
     private double energyPerTick;
@@ -46,7 +43,7 @@ public abstract class TileBaseMachine extends TileIC2Inv {
 
     private ForgeDirection[] pushSides = {}, pullSides = {};
     private final IInventory[] adjacentInventories = new IInventory[6];
-    private int scanTimer = 0, fillTick;
+    private int scanTimer = 0;
     private boolean hasEjector = false;
     private boolean hasPuller = false;
     private boolean mustHaveRedstoneSignal = false;
@@ -180,7 +177,7 @@ public abstract class TileBaseMachine extends TileIC2Inv {
             ItemStack current = inventory.getStackInSlot(i);
             if (current == null) continue;
 
-            List<Integer> targetSlots = new ArrayList<Integer>();
+            List<Integer> targetSlots = new ArrayList<>();
             int totalAmount = 0;
 
             for (int j = 0; j < inventory.getSizeInventory(); j++) {
@@ -544,14 +541,14 @@ public abstract class TileBaseMachine extends TileIC2Inv {
                 if (stack == null) continue;
 
                 if (stack.getItem() instanceof IAdvancedUpgradeItem upgrade) {
-                    this.ticksNeed *= upgrade.getSpeedMultiplier(stack);
+                    this.ticksNeed *= (int) upgrade.getSpeedMultiplier(stack);
                     this.itemsPerOp += upgrade.getItemsPerOpAdd(stack);
                     this.maxEnergy *= upgrade.getStorageEnergyMultiplier(stack);
                     this.energyPerTick *= upgrade.getEnergyUseMultiplier(stack);
                 } else if (stack.getItem() instanceof IUpgradeItem) {
                     switch (stack.getItemDamage()) {
                         case 0: // Speed
-                            this.ticksNeed *= Math.pow(0.7, stack.stackSize);
+                            this.ticksNeed *= (int) Math.pow(0.7, stack.stackSize);
                             this.energyPerTick *= Math.pow(1.6, stack.stackSize);
                             break;
                         case 2: // Energy Storage
@@ -584,7 +581,7 @@ public abstract class TileBaseMachine extends TileIC2Inv {
             if (this.ticksNeed < 1) {
                 this.ticksNeed = 1;
             }
-            this.itemsPerOp = (int) Math.min(this.itemsPerOp, 64);
+            this.itemsPerOp = Math.min(this.itemsPerOp, 64);
             this.maxEnergy = Math.max(this.maxEnergy, this.energyPerTick);
             if (this.maxEnergy < 0) this.maxEnergy = Double.MAX_VALUE;
             this.energy = Math.min(this.maxEnergy, energy);

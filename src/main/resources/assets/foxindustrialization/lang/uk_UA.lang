@@ -1,5 +1,28 @@
 
 # Blocks
+tile.advancedCompressor.name=Розширений компресор
+tile.advancedExtractor.name=Розширений екстрактор
+tile.advancedFurnace.name=Розширена електрична піч
+tile.advancedMacerator.name=Розширена дробарка
+tile.advancedMetalFormer.name=Розширений формувальник
+tile.advancedRecycler.name=Розширений переробник
+
+tile.nanoCompressor.name=Нано компресор
+tile.nanoExtractor.name=Нано екстрактор
+tile.nanoFurnace.name=Нано електрична піч
+tile.nanoMacerator.name=Нано дробарка
+tile.nanoMetalFormer.name=Нано формувальник
+tile.nanoRecycler.name=Нано переробник
+
+tile.quantumCompressor.name=Квантовий компресор
+tile.quantumExtractor.name=Квантовий екстрактор
+tile.quantumFurnace.name=Квантова електрична піч
+tile.quantumMacerator.name=Квантова дробарка
+tile.quantumMetalFormer.name=Квантовий формувальник
+tile.quantumRecycler.name=Квантовий переробник
+
+tile.powerConverter.name=Конвертер енергії
+
 tile.basicEnergyStorage.name=Базове сховище енергії
 tile.advancedEnergyStorage.name=Розширене сховище енергії
 tile.hybridEnergyStorage.name=Гібридне сховище енергії
@@ -22,7 +45,16 @@ item.speedUpgrade.Nano.name=Нано поліпшення швидкості
 item.speedUpgrade.Quantum.name=Квантове поліпшення швидкості
 item.storageUpgrade.Advanced.name=Розширене поліпшення сховища енергії
 item.storageUpgrade.Nano.name=Нано поліпшення сховища енергії
-item.storageUpgrade.Quantum.name=Покращення поліпшення сховища енергії
+item.storageUpgrade.Quantum.name=Квантове поліпшення сховища енергії
+
+item.advancedEnergyCrystal.name=Розшинений енергетичний кристал
+item.nanoEnergyCrystal.name=Нано енергетичний кристал
+item.quantumEnergyCrystal.name=Квантовий енергетичний кристал
+item.singularEnergyCrystal.name=Сингулярний енергетичний кристал
+
+item.baseUpgrade.name=Основа поліпшення
+item.powerConverterUpgrade.EU.name=§3Модуль EU
+item.powerConverterUpgrade.RF.name=§4Модуль RF
 
 # Tooltips 
 tooltip.upgrade.addPerOp=§7Збільшує кількість перероблених предметів за операцію на §3%s
@@ -38,9 +70,11 @@ tooltip.level.quantum=§3Квантовий
 tooltip.energyStorage.output=§7Вихід: §3%s§7 EU/t
 tooltip.energyStorage.capacity=§7Сховище: §3%s§7 EU
 tooltip.energyStorage.store=§7Зберігає: §3%s§7 EU
-tooltip.energyStorage.supportsRF=§8Цей блок підтримує RG енергію (§31EU§8 = §3%sRF§8)
+tooltip.energyStorage.supportsRF=§8Цей блок підтримує RF енергію (§31EU§8 = §3%sRF§8)
 tooltip.machine.capacity=§7Сховище: §3%s§7 EU
 tooltip.machine.addPerOp=§7Кількість предметів що перетворюються за одну операцію: §3%s
+tooltip.machine.supportsRF=§8Цей блок підтримує RF енергію (§31EU§8 = §3%sRF§8)
+tooltip.machine.recyclerGenerating=§8Генерує: §3%s
 tooltip.button.name.none=Без режиму
 tooltip.button.name.merge=Об'єднати
 tooltip.button.name.fill=Заповнити
@@ -57,3 +91,17 @@ tooltip.powerConverter.storageEU=§7Сховище: §3%s §7EU
 tooltip.powerConverter.storageRF=§7Сховище: §3%s §7RF
 tooltip.powerConverter.outputEU=§7Вихід: §3%s §7EU/t
 tooltip.powerConverter.outputRF=§7Вихід: §3%s §7RF/t
+tooltip.itemScrapName=Брухт
+tooltip.itemScrapBoxName=Коробка брухту
+tooltip.metalFormerMode.rolling=Прокатка
+tooltip.metalFormerMode.cutting=Різання
+tooltip.metalFormerMode.extruding=Екструдування
+tooltip.energyCrystal.charge=§7Зберігає: §3%s§7/§3%s§7 EU
+tooltip.energyCrystal.output=§7Швидкість заряджання: §3%s§7 EU/t
+tooltip.energyCrystal.supportsRF=§8Цей предмет підтримує §4RF енергію§8 (§31EU§8 = §3%sRF§8)
+tooltip.energyCrystal.modeIs=§7Режим зарядки: §3%s
+tooltip.energyCrystal.mode.disabled=Вимкнено
+tooltip.energyCrystal.mode.hot_bar=Хотбар
+tooltip.energyCrystal.mode.armor=Броня
+tooltip.energyCrystal.mode.hot_bar_and_armor=Хотбар і броня
+tooltip.energyCrystal.mode.all=Весь інвентар

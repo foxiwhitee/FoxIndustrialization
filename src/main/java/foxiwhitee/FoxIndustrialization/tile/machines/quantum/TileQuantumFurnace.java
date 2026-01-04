@@ -3,7 +3,6 @@ package foxiwhitee.FoxIndustrialization.tile.machines.quantum;
 import foxiwhitee.FoxIndustrialization.config.FIConfig;
 import foxiwhitee.FoxIndustrialization.helper.RecipeHelper;
 import foxiwhitee.FoxIndustrialization.recipes.IRecipeIC2;
-import foxiwhitee.FoxIndustrialization.tile.machines.advanced.TileAdvancedMachine;
 import foxiwhitee.FoxIndustrialization.utils.MachineTier;
 
 import java.util.List;
@@ -23,5 +22,10 @@ public class TileQuantumFurnace extends TileQuantumMachine {
     @Override
     public InfoGui getInfoAboutGui() {
         return info;
+    }
+
+    @Override
+    protected boolean supportsRF() {
+        return FIConfig.quantumFurnaceSupportsRF;
     }
 }

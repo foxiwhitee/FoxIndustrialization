@@ -1,6 +1,29 @@
 itemGroup.FOX_INDUSTRIALIZATION_TAB=Fox Industrialization
 
 # Blocks
+tile.advancedCompressor.name=Advanced Compressor
+tile.advancedExtractor.name=Advanced Extractor
+tile.advancedFurnace.name=Advanced Electric Furnace
+tile.advancedMacerator.name=Advanced Macerator
+tile.advancedMetalFormer.name=Advanced Metal Former
+tile.advancedRecycler.name=Advanced Recycler
+
+tile.nanoCompressor.name=Nano Compressor
+tile.nanoExtractor.name=Nano Extractor
+tile.nanoFurnace.name=Nano Electric Furnace
+tile.nanoMacerator.name=Nano Macerator
+tile.nanoMetalFormer.name=Nano Metal Former
+tile.nanoRecycler.name=Nano Recycler
+
+tile.quantumCompressor.name=Quantum Compressor
+tile.quantumExtractor.name=Quantum Extractor
+tile.quantumFurnace.name=Quantum Electric Furnace
+tile.quantumMacerator.name=Quantum Macerator
+tile.quantumMetalFormer.name=Quantum Metal Former
+tile.quantumRecycler.name=Quantum Recycler
+
+tile.powerConverter.name=Power Converter
+
 tile.basicEnergyStorage.name=Basic Energy Storage
 tile.advancedEnergyStorage.name=Advanced Energy Storage
 tile.hybridEnergyStorage.name=Hybrid Energy Storage
@@ -25,6 +48,15 @@ item.storageUpgrade.Advanced.name=Advanced Energy Storage Upgrade
 item.storageUpgrade.Nano.name=Nano Energy Storage Upgrade
 item.storageUpgrade.Quantum.name=Quantum Energy Storage Upgrade
 
+item.advancedEnergyCrystal.name=Advanced Energy Crystal
+item.nanoEnergyCrystal.name=Nano Energy Crystal
+item.quantumEnergyCrystal.name=Quantum Energy Crystal
+item.singularEnergyCrystal.name=Singular Energy Crystal
+
+item.baseUpgrade.name=Basis for upgrade
+item.powerConverterUpgrade.EU.name=§3Module EU
+item.powerConverterUpgrade.RF.name=§4Module RF
+
 # Tooltips
 tooltip.upgrade.addPerOp=§7Increases the number of items processed per operation by §3%s
 tooltip.upgrade.speed=§7Decrease process time to §3%S%%
@@ -42,6 +74,8 @@ tooltip.energyStorage.store=§7Store: §3%s §7EU
 tooltip.energyStorage.supportsRF=§8This block supports §4RF energy§8 (§31EU§8 = §3%sRF§8)
 tooltip.machine.capacity=§7Capacity: §3%s §7EU
 tooltip.machine.addPerOp=§7Number of items recycled per operation: §3%s
+tooltip.machine.supportsRF=§8This block supports §4RF energy§8 (§31EU§8 = §3%sRF§8)
+tooltip.machine.recyclerGenerating=§8Generates: §3%s
 tooltip.button.name.none=None
 tooltip.button.name.merge=Merge
 tooltip.button.name.fill=Fill
@@ -58,3 +92,17 @@ tooltip.powerConverter.storageEU=§7Capacity: §3%s §7EU
 tooltip.powerConverter.storageRF=§7Capacity: §3%s §7RF
 tooltip.powerConverter.outputEU=§7Output: §3%s §7EU/t
 tooltip.powerConverter.outputRF=§7Output: §3%s §7RF/t
+tooltip.itemScrapName=Scrap
+tooltip.itemScrapBoxName=Scrap Box
+tooltip.metalFormerMode.rolling=Rolling
+tooltip.metalFormerMode.cutting=Cutting
+tooltip.metalFormerMode.extruding=Extruding
+tooltip.energyCrystal.charge=§7Store: §3%s§7/§3%s§7 EU
+tooltip.energyCrystal.output=§7Charging speed: §3%s§7 EU/t
+tooltip.energyCrystal.supportsRF=§8This item supports §4RF energy§8 (§31EU§8 = §3%sRF§8)
+tooltip.energyCrystal.modeIs=§7Charging mode: §3%s
+tooltip.energyCrystal.mode.disabled=Disabled
+tooltip.energyCrystal.mode.hot_bar=Hot bar
+tooltip.energyCrystal.mode.armor=Armor
+tooltip.energyCrystal.mode.hot_bar_and_armor=Hot bar and armor
+tooltip.energyCrystal.mode.all=All inventory
