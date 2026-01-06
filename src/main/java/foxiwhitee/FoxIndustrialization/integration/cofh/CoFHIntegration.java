@@ -43,9 +43,10 @@ public class CoFHIntegration implements IIntegration {
     @Override
     public void init(FMLInitializationEvent fmlInitializationEvent) {
         FoxLibApi.instance.registries().registerPacket().register(C2SSetPowerConverterMode.class);
-        FilterInitializer.addClassToFilterUltimate(IEnergyContainerItem.class);
-        FilterInitializer.addClassToFilterQuantum(IEnergyContainerItem.class);
-        FilterInitializer.addClassToFilterSingular(IEnergyContainerItem.class);
+        FilterInitializer.addClassToFilterUltimateStorage(IEnergyContainerItem.class);
+        FilterInitializer.addClassToFilterQuantumStorage(IEnergyContainerItem.class);
+        FilterInitializer.addClassToFilterSingularStorage(IEnergyContainerItem.class);
+        FilterInitializer.addClassToFilterQuantumGenerator(IEnergyContainerItem.class);
     }
 
     @Override

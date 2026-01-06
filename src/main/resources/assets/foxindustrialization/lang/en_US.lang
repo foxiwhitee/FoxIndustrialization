@@ -40,6 +40,10 @@ tile.ultimateChargePad.name=Ultimate Charge Pad
 tile.quantumChargePad.name=Quantum Charge Pad
 tile.singularChargePad.name=Singular Charge Pad
 
+tile.advancedGenerator.name=Advanced Generator
+tile.nanoGenerator.name=Nano Generator
+tile.quantumGenerator.name=Quantum Generator
+
 # Items
 item.speedUpgrade.Advanced.name=Advanced Speed Upgrade
 item.speedUpgrade.Nano.name=Nano Speed Upgrade
@@ -106,3 +110,5 @@ tooltip.energyCrystal.mode.hot_bar=Hot bar
 tooltip.energyCrystal.mode.armor=Armor
 tooltip.energyCrystal.mode.hot_bar_and_armor=Hot bar and armor
 tooltip.energyCrystal.mode.all=All inventory
+tooltip.generator.generate=§7Generates: §3%s§7 EU/t
+tooltip.generator.output=§7Output: §3%s §7EU/t

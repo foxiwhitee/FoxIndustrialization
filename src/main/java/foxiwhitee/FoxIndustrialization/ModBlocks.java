@@ -1,12 +1,19 @@
 package foxiwhitee.FoxIndustrialization;
 
+import foxiwhitee.FoxIndustrialization.blocks.generator.fuel.BlockAdvancedGenerator;
+import foxiwhitee.FoxIndustrialization.blocks.generator.fuel.BlockNanoGenerator;
+import foxiwhitee.FoxIndustrialization.blocks.generator.fuel.BlockQuantumGenerator;
 import foxiwhitee.FoxIndustrialization.blocks.machines.advanced.*;
 import foxiwhitee.FoxIndustrialization.blocks.machines.nano.*;
 import foxiwhitee.FoxIndustrialization.blocks.machines.quantum.*;
 import foxiwhitee.FoxIndustrialization.blocks.storage.*;
 import foxiwhitee.FoxIndustrialization.config.ContentConfig;
 import foxiwhitee.FoxIndustrialization.items.block.ItemBlockEnergyStorage;
+import foxiwhitee.FoxIndustrialization.items.block.ItemBlockGenerator;
 import foxiwhitee.FoxIndustrialization.items.block.ItemBlockMachine;
+import foxiwhitee.FoxIndustrialization.tile.generator.fuel.TileAdvancedGenerator;
+import foxiwhitee.FoxIndustrialization.tile.generator.fuel.TileNanoGenerator;
+import foxiwhitee.FoxIndustrialization.tile.generator.fuel.TileQuantumGenerator;
 import foxiwhitee.FoxIndustrialization.tile.machines.advanced.*;
 import foxiwhitee.FoxIndustrialization.tile.machines.nano.*;
 import foxiwhitee.FoxIndustrialization.tile.machines.quantum.*;
@@ -52,19 +59,16 @@ public class ModBlocks {
     public static final Block quantumChargePad = new BlockQuantumChargePad("quantumChargePad");
     public static final Block singularChargePad = new BlockSingularChargePad("singularChargePad");
 
+    public static final Block advancedGenerator = new BlockAdvancedGenerator("advancedGenerator");
+    public static final Block nanoGenerator = new BlockNanoGenerator("nanoGenerator");
+    public static final Block quantumGenerator = new BlockQuantumGenerator("quantumGenerator");
+
     public static void registerBlocks() {
         registerAdvancedMachines();
         registerNanoMachines();
         registerQuantumMachines();
-
-        if (ContentConfig.enableNewEnergyStorages) {
-            RegisterUtils.registerBlocks(ItemBlockEnergyStorage.class, basicEnergyStorage, advancedEnergyStorage, hybridEnergyStorage, nanoEnergyStorage, ultimateEnergyStorage, quantumEnergyStorage, singularEnergyStorage);
-            RegisterUtils.registerBlocks(ItemBlockEnergyStorage.class, basicChargePad, advancedChargePad, hybridChargePad, nanoChargePad, ultimateChargePad, quantumChargePad, singularChargePad);
-            RegisterUtils.findClasses("foxiwhitee.FoxIndustrialization.tile.storage.advanced", TileEntity.class).forEach(RegisterUtils::registerTile);
-            RegisterUtils.findClasses("foxiwhitee.FoxIndustrialization.tile.storage.nano", TileEntity.class).forEach(RegisterUtils::registerTile);
-            RegisterUtils.findClasses("foxiwhitee.FoxIndustrialization.tile.storage.quantum", TileEntity.class).forEach(RegisterUtils::registerTile);
-            RegisterUtils.findClasses("foxiwhitee.FoxIndustrialization.tile.storage.singular", TileEntity.class).forEach(RegisterUtils::registerTile);
-        }
+        registerGenerators();
+        registerEnergyStorages();
     }
 
     private static void registerAdvancedMachines() {
@@ -145,6 +149,32 @@ public class ModBlocks {
         if (ContentConfig.enableQuantumRecycler) {
             RegisterUtils.registerBlock(quantumRecycler, ItemBlockMachine.class);
             RegisterUtils.registerTile(TileQuantumRecycler.class);
+        }
+    }
+
+    private static void registerEnergyStorages() {
+        if (ContentConfig.enableNewEnergyStorages) {
+            RegisterUtils.registerBlocks(ItemBlockEnergyStorage.class, basicEnergyStorage, advancedEnergyStorage, hybridEnergyStorage, nanoEnergyStorage, ultimateEnergyStorage, quantumEnergyStorage, singularEnergyStorage);
+            RegisterUtils.registerBlocks(ItemBlockEnergyStorage.class, basicChargePad, advancedChargePad, hybridChargePad, nanoChargePad, ultimateChargePad, quantumChargePad, singularChargePad);
+            RegisterUtils.findClasses("foxiwhitee.FoxIndustrialization.tile.storage.advanced", TileEntity.class).forEach(RegisterUtils::registerTile);
+            RegisterUtils.findClasses("foxiwhitee.FoxIndustrialization.tile.storage.nano", TileEntity.class).forEach(RegisterUtils::registerTile);
+            RegisterUtils.findClasses("foxiwhitee.FoxIndustrialization.tile.storage.quantum", TileEntity.class).forEach(RegisterUtils::registerTile);
+            RegisterUtils.findClasses("foxiwhitee.FoxIndustrialization.tile.storage.singular", TileEntity.class).forEach(RegisterUtils::registerTile);
+        }
+    }
+
+    private static void registerGenerators() {
+        if (ContentConfig.enableAdvancedGenerator) {
+            RegisterUtils.registerBlock(advancedGenerator, ItemBlockGenerator.class);
+            RegisterUtils.registerTile(TileAdvancedGenerator.class);
+        }
+        if (ContentConfig.enableNanoGenerator) {
+            RegisterUtils.registerBlock(nanoGenerator, ItemBlockGenerator.class);
+            RegisterUtils.registerTile(TileNanoGenerator.class);
+        }
+        if (ContentConfig.enableQuantumGenerator) {
+            RegisterUtils.registerBlock(quantumGenerator, ItemBlockGenerator.class);
+            RegisterUtils.registerTile(TileQuantumGenerator.class);
         }
     }
 }

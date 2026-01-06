@@ -5,13 +5,15 @@ import cofh.api.energy.IEnergyHandler;
 import cofh.api.energy.IEnergyReceiver;
 import cpw.mods.fml.common.Optional;
 import foxiwhitee.FoxIndustrialization.FICore;
-import foxiwhitee.FoxIndustrialization.api.energy.IDoubleEnergyContainerItem;
-import foxiwhitee.FoxIndustrialization.api.energy.IDoubleEnergyHandler;
-import foxiwhitee.FoxIndustrialization.api.energy.IDoubleEnergyReceiver;
+import foxiwhitee.FoxLib.api.energy.IDoubleEnergyContainerItem;
+import foxiwhitee.FoxLib.api.energy.IDoubleEnergyHandler;
+import foxiwhitee.FoxLib.api.energy.IDoubleEnergyReceiver;
 import foxiwhitee.FoxIndustrialization.config.FIConfig;
 import foxiwhitee.FoxIndustrialization.tile.storage.nano.TileNanoChargePadLevel;
+import foxiwhitee.FoxLib.config.FoxLibConfig;
 import foxiwhitee.FoxLib.tile.event.TileEvent;
 import foxiwhitee.FoxLib.tile.event.TileEventType;
+import foxiwhitee.FoxLib.utils.helpers.EnergyUtility;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -30,19 +32,21 @@ public abstract class TileQuantumChargePadLevel extends TileNanoChargePadLevel i
         if (this.worldObj.isRemote) {
             return;
         }
-        if (supportsRF()) {
-            pushEnergy();
+        if (supportsRF() && FICore.ifCoFHCoreIsLoaded) {
+            boolean needUpdate = pushEnergy();
 
-            boolean needUpdate = false;
             ItemStack chargeItem = getInternalInventory().getStackInSlot(0);
             ItemStack dischargeItem = getInternalInventory().getStackInSlot(1);
+            boolean doIf = supportsRF() && FICore.ifCoFHCoreIsLoaded;
 
-            if (chargeItem != null && chargeItem.getItem() instanceof IDoubleEnergyContainerItem item && item.canWorkWithEnergy(chargeItem)) {
-                needUpdate |= chargeDoubleRFItem(chargeItem);
-            } else if (dischargeItem != null && dischargeItem.getItem() instanceof IDoubleEnergyContainerItem item && item.canWorkWithEnergy(dischargeItem)) {
-                needUpdate |= dischargeDoubleRFItem(dischargeItem);
-            } else if (FICore.ifCoFHCoreIsLoaded) {
-                needUpdate |= handleCoFHItems(chargeItem, dischargeItem);
+            if (chargeItem != null) {
+                double temp = EnergyUtility.handleItemEnergy(chargeItem, energy, getOutput(), maxEnergy, true, doIf, true);
+                energy -= temp;
+                needUpdate |= temp > 0;
+            } else if (dischargeItem != null) {
+                double temp = EnergyUtility.handleItemEnergy(dischargeItem, energy, getOutput(), maxEnergy, false, doIf, true);
+                energy += temp;
+                needUpdate |= temp > 0;
             }
 
             if (needUpdate) {
@@ -53,15 +57,13 @@ public abstract class TileQuantumChargePadLevel extends TileNanoChargePadLevel i
 
     @Override
     protected void chargePlayerItems(EntityPlayer player) {
+        boolean doIf = supportsRF() && FICore.ifCoFHCoreIsLoaded;
+
         for(ItemStack current : player.inventory.armorInventory) {
             if (current != null) {
-                if (current.getItem() instanceof IDoubleEnergyContainerItem item && item.canWorkWithEnergy(current)) {
-                    chargeDoubleRFItem(current);
-                } else if (FICore.ifCoFHCoreIsLoaded) {
-                    if (!tryChargeRFItem(current)) {
-                        this.chargeItems(current);
-                    }
-                } else {
+                double temp = EnergyUtility.handleItemEnergy(current, energy, getOutput(), maxEnergy, true, doIf, true);
+                energy -= temp;
+                if (temp <= 0) {
                     this.chargeItems(current);
                 }
             }
@@ -69,101 +71,19 @@ public abstract class TileQuantumChargePadLevel extends TileNanoChargePadLevel i
 
         for(ItemStack current : player.inventory.mainInventory) {
             if (current != null) {
-                if (current.getItem() instanceof IDoubleEnergyContainerItem item && item.canWorkWithEnergy(current)) {
-                    chargeDoubleRFItem(current);
-                } else if (FICore.ifCoFHCoreIsLoaded) {
-                    if (!tryChargeRFItem(current)) {
-                        this.chargeItems(current);
-                    }
-                } else {
+                double temp = EnergyUtility.handleItemEnergy(current, energy, getOutput(), maxEnergy, true, doIf, true);
+                energy -= temp;
+                if (temp <= 0) {
                     this.chargeItems(current);
                 }
             }
         }
     }
 
-    protected boolean tryChargeRFItem(ItemStack chargeItem) {
-        return chargeRFItem(chargeItem);
-    }
-
-    protected boolean chargeDoubleRFItem(ItemStack chargeItem) {
-        if (this.energy > 0 && chargeItem != null && chargeItem.getItem() instanceof IDoubleEnergyContainerItem item && item.canWorkWithEnergy(chargeItem)) {
-            double toSend = Math.min(this.energy, this.getOutput() * FIConfig.rfInEu);
-            double accepted = item.receiveDoubleEnergy(chargeItem, toSend, false);
-
-            this.energy -= accepted / FIConfig.rfInEu;
-            return accepted > 0;
-        }
-        return false;
-    }
-
-    protected boolean dischargeDoubleRFItem(ItemStack dischargeItem) {
-        double demand = this.maxEnergy - this.energy;
-        if (demand > 0 && dischargeItem != null && dischargeItem.getItem() instanceof IDoubleEnergyContainerItem item && item.canWorkWithEnergy(dischargeItem)) {
-            double toExtract = Math.min(demand, this.getOutput() * FIConfig.rfInEu);
-            double extracted = item.extractDoubleEnergy(dischargeItem, toExtract, false);
-
-            this.energy += extracted / FIConfig.rfInEu;
-            return extracted > 0;
-        }
-        return false;
-    }
-
-    protected boolean handleCoFHItems(ItemStack chargeItem, ItemStack dischargeItem) {
-        boolean charged = chargeRFItem(chargeItem);
-        boolean discharged = dischargeRFItem(dischargeItem);
-        return charged || discharged;
-    }
-
-    @Optional.Method(modid = "CoFHCore")
-    protected boolean chargeRFItem(ItemStack chargeItem) {
-        if (this.energy > 0 && chargeItem != null && chargeItem.getItem() instanceof IEnergyContainerItem item) {
-            int toSend = (int) Math.min(this.energy, this.getOutput() * FIConfig.rfInEu);
-            int accepted = item.receiveEnergy(chargeItem, toSend, false);
-
-            this.energy -= (double) accepted / FIConfig.rfInEu;
-            return accepted > 0;
-        }
-        return false;
-    }
-
-    @Optional.Method(modid = "CoFHCore")
-    protected boolean dischargeRFItem(ItemStack dischargeItem) {
-        int demand = (int) (this.maxEnergy - this.energy);
-        if (demand > 0 && dischargeItem != null && dischargeItem.getItem() instanceof IEnergyContainerItem item) {
-            int toExtract = (int) Math.min(demand, this.getOutput() * FIConfig.rfInEu);
-            int extracted = item.extractEnergy(dischargeItem, toExtract, false);
-
-            this.energy += (double) extracted / FIConfig.rfInEu;
-            return extracted > 0;
-        }
-        return false;
-    }
-
-    private void pushEnergy() {
-        if (this.energy <= 0) return;
-
-        ForgeDirection side = getForward();
-        TileEntity tile = worldObj.getTileEntity(xCoord + side.offsetX, yCoord + side.offsetY, zCoord + side.offsetZ);
-
-        if (tile instanceof IDoubleEnergyReceiver receiver) {
-            double energyToPush =  Math.min(this.energy * FIConfig.rfInEu, this.getOutput());
-            double accepted = receiver.receiveDoubleEnergy(side.getOpposite(), energyToPush, false) / FIConfig.rfInEu;
-            this.energy -= accepted;
-            markForUpdate();
-        } else if (FICore.ifCoFHCoreIsLoaded) {
-            pushIntRFEnergy(tile, side);
-        }
-    }
-
-    @Optional.Method(modid = "CoFHCore")
-    protected void pushIntRFEnergy(TileEntity tile, ForgeDirection side) {
-        if (tile instanceof IEnergyReceiver receiver) {
-            int energyToPush = (int) Math.min(this.energy * FIConfig.rfInEu, this.getOutput());
-            int accepted = receiver.receiveEnergy(side.getOpposite(), energyToPush, false) / FIConfig.rfInEu;
-            this.energy -= accepted;
-            markForUpdate();
-        }
+    private boolean pushEnergy() {
+        double pushedEnergy = EnergyUtility.pushEnergy(getForward(), energy, getOutput(), this, supportsRF() && FICore.ifCoFHCoreIsLoaded, true);
+        this.energy -= pushedEnergy;
+        return pushedEnergy > 0;
     }
 
     @Override
@@ -198,45 +118,51 @@ public abstract class TileQuantumChargePadLevel extends TileNanoChargePadLevel i
 
     @Override
     public boolean canConnectDoubleEnergy(ForgeDirection direction) {
-        return supportsRF() && direction != ForgeDirection.UP;
+        return supportsRF() && direction != ForgeDirection.UP && FICore.ifCoFHCoreIsLoaded;
     }
 
     @Override
     public double receiveDoubleEnergy(ForgeDirection direction, double maxReceive, boolean simulate) {
-        if (direction == ForgeDirection.UP || direction == getForward()) {
+        if (direction == ForgeDirection.UP || direction == getForward() || !(supportsRF() && FICore.ifCoFHCoreIsLoaded)) {
             return 0;
         }
-        double energyReceived = Math.min(maxEnergy - energy, Math.min(getOutput() * FIConfig.rfInEu, maxReceive / FIConfig.rfInEu));
+        double energyReceived = Math.min(maxEnergy - energy, Math.min(getOutput() * FoxLibConfig.rfInEu, maxReceive / FoxLibConfig.rfInEu));
 
         if (!simulate) {
             energy += energyReceived;
             markForUpdate();
         }
-        return energyReceived * FIConfig.rfInEu;
+        return energyReceived * FoxLibConfig.rfInEu;
     }
 
     @Override
     public double extractDoubleEnergy(ForgeDirection direction, double maxExtract, boolean simulate) {
-        if (direction == ForgeDirection.UP || direction != getForward()) {
+        if (direction == ForgeDirection.UP || direction != getForward() || !(supportsRF() && FICore.ifCoFHCoreIsLoaded)) {
             return 0;
         }
-        double energyExtracted = Math.min(energy, Math.min(getOutput() * FIConfig.rfInEu, maxExtract / FIConfig.rfInEu));
+        double energyExtracted = Math.min(energy, Math.min(getOutput() * FoxLibConfig.rfInEu, maxExtract / FoxLibConfig.rfInEu));
 
         if (!simulate) {
             energy -= energyExtracted;
             markForUpdate();
         }
-        return energyExtracted * FIConfig.rfInEu;
+        return energyExtracted * FoxLibConfig.rfInEu;
     }
 
     @Override
     public double getDoubleEnergyStored(ForgeDirection direction) {
-        return getEnergy() * FIConfig.rfInEu;
+        if (!(supportsRF() && FICore.ifCoFHCoreIsLoaded)) {
+            return 0;
+        }
+        return getEnergy() * FoxLibConfig.rfInEu;
     }
 
     @Override
     public double getMaxDoubleEnergyStored(ForgeDirection direction) {
-        return getMaxEnergy() * FIConfig.rfInEu;
+        if (!(supportsRF() && FICore.ifCoFHCoreIsLoaded)) {
+            return 0;
+        }
+        return getMaxEnergy() * FoxLibConfig.rfInEu;
     }
 
     public abstract boolean supportsRF();

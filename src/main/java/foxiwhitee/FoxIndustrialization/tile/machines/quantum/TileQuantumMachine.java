@@ -2,13 +2,15 @@ package foxiwhitee.FoxIndustrialization.tile.machines.quantum;
 
 import cofh.api.energy.IEnergyReceiver;
 import cpw.mods.fml.common.Optional;
-import foxiwhitee.FoxIndustrialization.api.energy.IDoubleEnergyReceiver;
+import foxiwhitee.FoxIndustrialization.FICore;
+import foxiwhitee.FoxLib.api.energy.IDoubleEnergyReceiver;
 import foxiwhitee.FoxIndustrialization.config.FIConfig;
 import foxiwhitee.FoxIndustrialization.tile.machines.nano.TileNanoMachine;
 import foxiwhitee.FoxIndustrialization.utils.MachineTier;
+import foxiwhitee.FoxLib.config.FoxLibConfig;
 import net.minecraftforge.common.util.ForgeDirection;
 
-@Optional.Interface(iface = "cofh.api.energy.IEnergyHandler", modid = "CoFHCore")
+@Optional.Interface(iface = "cofh.api.energy.IEnergyReceiver", modid = "CoFHCore")
 public abstract class TileQuantumMachine extends TileNanoMachine implements IEnergyReceiver, IDoubleEnergyReceiver {
     public TileQuantumMachine(MachineTier tier, double maxEnergy, int itemsPerOp, double energyPerTick) {
         super(tier, maxEnergy, itemsPerOp, energyPerTick);
@@ -40,31 +42,37 @@ public abstract class TileQuantumMachine extends TileNanoMachine implements IEne
 
     @Override
     public boolean canConnectDoubleEnergy(ForgeDirection direction) {
-        return supportsRF();
+        return supportsRF() && FICore.ifCoFHCoreIsLoaded;
     }
 
     @Override
     public double receiveDoubleEnergy(ForgeDirection direction, double maxReceive, boolean simulate) {
-        if (direction == ForgeDirection.UP || direction == getForward()) {
+        if (direction == ForgeDirection.UP || direction == getForward() || !(supportsRF() && FICore.ifCoFHCoreIsLoaded)) {
             return 0;
         }
-        double energyReceived = Math.min(maxEnergy - energy, maxReceive / FIConfig.rfInEu);
+        double energyReceived = Math.min(maxEnergy - energy, maxReceive / FoxLibConfig.rfInEu);
 
         if (!simulate) {
             energy += energyReceived;
             markForUpdate();
         }
-        return energyReceived * FIConfig.rfInEu;
+        return energyReceived * FoxLibConfig.rfInEu;
     }
 
     @Override
     public double getDoubleEnergyStored(ForgeDirection direction) {
-        return getEnergy() * FIConfig.rfInEu;
+        if (!(supportsRF() && FICore.ifCoFHCoreIsLoaded)) {
+            return 0;
+        }
+        return getEnergy() * FoxLibConfig.rfInEu;
     }
 
     @Override
     public double getMaxDoubleEnergyStored(ForgeDirection direction) {
-        return getMaxEnergy() * FIConfig.rfInEu;
+        if (!(supportsRF() && FICore.ifCoFHCoreIsLoaded)) {
+            return 0;
+        }
+        return getMaxEnergy() * FoxLibConfig.rfInEu;
     }
 
     protected abstract boolean supportsRF();

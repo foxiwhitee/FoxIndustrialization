@@ -8,9 +8,6 @@ public class FIConfig {
     @ConfigValue(desc = "Enable tooltips?")
     public static boolean enableTooltips = true;
 
-    @ConfigValue(desc = "How many RF are equal to 1 EU?")
-    public static int rfInEu = 4;
-
     // Upgrades Advanced
     @ConfigValue(category = "Upgrades.Advanced", name = "storageMultiplier", desc = "How many times will the mechanism's storage be increased with each upgrade?")
     public static double storageUpgradeAdvancedMultiplier = 16;
@@ -416,4 +413,40 @@ public class FIConfig {
 
     @ConfigValue(category = "EnergyCrystals.Singular", name = "supportsRF", desc = "Does this item support RF energy?")
     public static boolean energyCrystalSingularSupportsRF = true;
+
+
+    // Generators
+    // Fuel
+    // Advanced
+    @ConfigValue(category = "Generator.Fuel.Advanced", name = "production", desc = "How much energy does the block generate per 1 tick of combustion?")
+    public static int generatorAdvancedProduction = 50;
+
+    @ConfigValue(category = "Generator.Fuel.Advanced", name = "output", desc = "How much energy does it transfer at a time?")
+    public static double generatorAdvancedOutput = 150;
+
+    @ConfigValue(category = "Generator.Fuel.Advanced", name = "storage", desc = "How much energy can this item hold?")
+    public static double generatorAdvancedStorage = 8_000;
+
+    // Nano
+    @ConfigValue(category = "Generator.Fuel.Nano", name = "production", desc = "How much energy does the block generate per 1 tick of combustion?")
+    public static int generatorNanoProduction = 100;
+
+    @ConfigValue(category = "Generator.Fuel.Nano", name = "output", desc = "How much energy does it transfer at a time?")
+    public static double generatorNanoOutput = 300;
+
+    @ConfigValue(category = "Generator.Fuel.Nano", name = "storage", desc = "How much energy can this item hold?")
+    public static double generatorNanoStorage = 50_000;
+
+    // Quantum
+    @ConfigValue(category = "Generator.Fuel.Quantum", name = "production", desc = "How much energy does the block generate per 1 tick of combustion?")
+    public static int generatorQuantumProduction = 200;
+
+    @ConfigValue(category = "Generator.Fuel.Quantum", name = "output", desc = "How much energy does it transfer at a time?")
+    public static double generatorQuantumOutput = 600;
+
+    @ConfigValue(category = "Generator.Fuel.Quantum", name = "storage", desc = "How much energy can this item hold?")
+    public static double generatorQuantumStorage = 100_000;
+
+    @ConfigValue(category = "Generator.Fuel.Quantum", name = "supportsRF", desc = "Does this item support RF energy?")
+    public static boolean generatorQuantumSupportsRF = true;
 }

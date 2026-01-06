@@ -135,4 +135,18 @@ public abstract class TileIC2 extends FoxBaseTile implements IEnergySink {
     public boolean acceptsEnergyFrom(TileEntity tileEntity, ForgeDirection forgeDirection) {
         return true;
     }
+
+    public static double safeMultiply(double a, double b) {
+        if (a == 0 || b == 0) return 0;
+        if (Double.isNaN(a) || Double.isNaN(b)) return Double.NaN;
+        if (Double.isInfinite(a) || Double.isInfinite(b)) {
+            return (a > 0 == b > 0) ? Double.MAX_VALUE : -Double.MAX_VALUE;
+        }
+
+        if (Math.abs(a) > Double.MAX_VALUE / Math.abs(b)) {
+            return (a > 0 == b > 0) ? Double.MAX_VALUE : -Double.MAX_VALUE;
+        }
+
+        return a * b;
+    }
 }

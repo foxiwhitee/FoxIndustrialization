@@ -2,17 +2,20 @@ package foxiwhitee.FoxIndustrialization.integration.cofh.tile;
 
 import cofh.api.energy.IEnergyHandler;
 import cofh.api.energy.IEnergyReceiver;
+import foxiwhitee.FoxIndustrialization.FICore;
 import foxiwhitee.FoxIndustrialization.api.IAdvancedUpgradeItem;
 import foxiwhitee.FoxIndustrialization.api.IPowerConverterUpgradeItem;
-import foxiwhitee.FoxIndustrialization.api.energy.IDoubleEnergyHandler;
-import foxiwhitee.FoxIndustrialization.api.energy.IDoubleEnergyReceiver;
+import foxiwhitee.FoxLib.api.energy.IDoubleEnergyHandler;
+import foxiwhitee.FoxLib.api.energy.IDoubleEnergyReceiver;
 import foxiwhitee.FoxIndustrialization.config.FIConfig;
 import foxiwhitee.FoxIndustrialization.integration.cofh.utils.ButtonConverterMode;
 import foxiwhitee.FoxIndustrialization.tile.TileIC2Inv;
+import foxiwhitee.FoxLib.config.FoxLibConfig;
 import foxiwhitee.FoxLib.tile.event.TileEvent;
 import foxiwhitee.FoxLib.tile.event.TileEventType;
 import foxiwhitee.FoxLib.tile.inventory.FoxInternalInventory;
 import foxiwhitee.FoxLib.tile.inventory.InvOperation;
+import foxiwhitee.FoxLib.utils.helpers.EnergyUtility;
 import ic2.api.energy.tile.IEnergySource;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.inventory.IInventory;
@@ -42,9 +45,9 @@ public class TilePowerConverter extends TileIC2Inv implements IEnergyHandler, ID
         }
         if (mode == ButtonConverterMode.EU) {
             double needEnergy = maxEnergy - energy;
-            if (needEnergy > 0 && energyRF > 0 && energyRF % FIConfig.rfInEu == 0) {
-                double canGetEnergy = energyRF / FIConfig.rfInEu;
-                energyRF -= Math.min(needEnergy, canGetEnergy) * FIConfig.rfInEu;
+            if (needEnergy > 0 && energyRF > 0 && energyRF % FoxLibConfig.rfInEu == 0) {
+                double canGetEnergy = energyRF / FoxLibConfig.rfInEu;
+                energyRF -= Math.min(needEnergy, canGetEnergy) * FoxLibConfig.rfInEu;
                 energy += Math.min(needEnergy, canGetEnergy);
                 markForUpdate();
             }
@@ -52,11 +55,11 @@ public class TilePowerConverter extends TileIC2Inv implements IEnergyHandler, ID
             pushEnergy();
             double needEnergy = maxEnergyRF - energyRF;
             if (needEnergy > 0 && energy > 0) {
-                if (needEnergy % FIConfig.rfInEu != 0) {
-                    needEnergy -= needEnergy % FIConfig.rfInEu;
+                if (needEnergy % FoxLibConfig.rfInEu != 0) {
+                    needEnergy -= needEnergy % FoxLibConfig.rfInEu;
                 }
-                double canGetEnergy = energy * FIConfig.rfInEu;
-                energy -= Math.min(needEnergy, canGetEnergy) / FIConfig.rfInEu;
+                double canGetEnergy = energy * FoxLibConfig.rfInEu;
+                energy -= Math.min(needEnergy, canGetEnergy) / FoxLibConfig.rfInEu;
                 energyRF += Math.min(needEnergy, canGetEnergy);
                 markForUpdate();
             }
@@ -64,22 +67,9 @@ public class TilePowerConverter extends TileIC2Inv implements IEnergyHandler, ID
     }
 
     private void pushEnergy() {
-        if (this.energyRF <= 0) return;
-
         for (ForgeDirection side : ForgeDirection.VALID_DIRECTIONS) {
-            TileEntity tile = worldObj.getTileEntity(xCoord + side.offsetX, yCoord + side.offsetY, zCoord + side.offsetZ);
-
-            if (tile instanceof IDoubleEnergyReceiver receiver) {
-                double energyToPush =  Math.min(this.energyRF, outputRF);
-                double accepted = receiver.receiveDoubleEnergy(side.getOpposite(), energyToPush, false);
-                this.energyRF -= accepted;
-                markForUpdate();
-            } else if (tile instanceof IEnergyReceiver receiver) {
-                int energyToPush = (int) Math.min(this.energyRF, outputRF);
-                int accepted = receiver.receiveEnergy(side.getOpposite(), energyToPush, false);
-                this.energyRF -= accepted;
-                markForUpdate();
-            }
+            double pushedEnergy = EnergyUtility.pushEnergy(side, energyRF, outputRF, this, true, false);
+            this.energyRF -= pushedEnergy;
         }
     }
 
@@ -154,11 +144,11 @@ public class TilePowerConverter extends TileIC2Inv implements IEnergyHandler, ID
                 ItemStack stack = inventory.getStackInSlot(j);
                 if (stack != null) {
                     if (stack.getItem() instanceof IAdvancedUpgradeItem item) {
-                        this.maxEnergy *= item.getStorageEnergyMultiplier(stack);
-                        this.maxEnergyRF *= item.getStorageEnergyMultiplier(stack);
+                        this.maxEnergy = safeMultiply(maxEnergy, item.getStorageEnergyMultiplier(stack));
+                        this.maxEnergyRF = safeMultiply(maxEnergyRF, item.getStorageEnergyMultiplier(stack));
                     } else if (stack.getItem() instanceof IPowerConverterUpgradeItem item) {
-                        this.maxEnergy *= item.getStorageEnergyEUMultiplier(stack);
-                        this.maxEnergyRF *= item.getStorageEnergyRFMultiplier(stack);
+                        this.maxEnergy = safeMultiply(maxEnergy, item.getStorageEnergyEUMultiplier(stack));
+                        this.maxEnergyRF = safeMultiply(maxEnergyRF, item.getStorageEnergyRFMultiplier(stack));
                         this.outputEU *= item.getOutputEnergyEUMultiplier(stack);
                         this.outputRF *= item.getOutputEnergyRFMultiplier(stack);
                     }

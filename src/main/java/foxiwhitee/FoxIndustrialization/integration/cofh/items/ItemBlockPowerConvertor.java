@@ -3,6 +3,7 @@ package foxiwhitee.FoxIndustrialization.integration.cofh.items;
 import foxiwhitee.FoxIndustrialization.config.FIConfig;
 import foxiwhitee.FoxIndustrialization.integration.cofh.CoFHIntegration;
 import foxiwhitee.FoxIndustrialization.items.block.ModItemBlock;
+import foxiwhitee.FoxLib.config.FoxLibConfig;
 import foxiwhitee.FoxLib.utils.helpers.EnergyUtility;
 import foxiwhitee.FoxLib.utils.helpers.LocalizationUtils;
 import net.minecraft.block.Block;
@@ -20,7 +21,7 @@ public class ItemBlockPowerConvertor extends ModItemBlock {
     public void addInformation(ItemStack stack, EntityPlayer p_77624_2_, List<String> list, boolean p_77624_4_) {
         if (FIConfig.enableTooltips) {
             if (isBlock(CoFHIntegration.powerConverter)) {
-                list.add(LocalizationUtils.localize("tooltip.powerConverter.description", FIConfig.rfInEu));
+                list.add(LocalizationUtils.localize("tooltip.powerConverter.description", FoxLibConfig.rfInEu));
                 list.add(LocalizationUtils.localize("tooltip.powerConverter.storageEU", EnergyUtility.formatNumber(FIConfig.powerConverterEUStorage)));
                 list.add(LocalizationUtils.localize("tooltip.powerConverter.storageRF", EnergyUtility.formatNumber(FIConfig.powerConverterRFStorage)));
                 list.add(LocalizationUtils.localize("tooltip.powerConverter.outputEU", EnergyUtility.formatNumber(FIConfig.powerConverterEUPerTick)));

@@ -2,8 +2,9 @@ package foxiwhitee.FoxIndustrialization.items.energy;
 
 import cofh.api.energy.IEnergyContainerItem;
 import cpw.mods.fml.common.Optional;
-import foxiwhitee.FoxIndustrialization.api.energy.IDoubleEnergyContainerItem;
 import foxiwhitee.FoxIndustrialization.config.FIConfig;
+import foxiwhitee.FoxLib.api.energy.IDoubleEnergyContainerItem;
+import foxiwhitee.FoxLib.config.FoxLibConfig;
 import foxiwhitee.FoxLib.utils.helpers.LocalizationUtils;
 import ic2.api.item.ElectricItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -22,7 +23,7 @@ public abstract class ItemEnergyCrystalWithRF extends ItemEnergyCrystal implemen
         super.addInformation(stack, player, list, b);
         if (FIConfig.enableTooltips) {
             if (hasRFEnergySupport()) {
-                list.add(LocalizationUtils.localize("tooltip.energyCrystal.supportsRF", FIConfig.rfInEu));
+                list.add(LocalizationUtils.localize("tooltip.energyCrystal.supportsRF", FoxLibConfig.rfInEu));
             }
         }
     }
@@ -35,11 +36,11 @@ public abstract class ItemEnergyCrystalWithRF extends ItemEnergyCrystal implemen
                 ItemStack target = (i >= 100) ? player.inventory.armorInventory[i - 100] : player.inventory.getStackInSlot(i);
                 if (target != null && target != charger && !(target.getItem() instanceof ItemEnergyCrystal)) {
                     if (target.getItem() instanceof IDoubleEnergyContainerItem electricItem) {
-                        double rfToGive = getOutput() * FIConfig.rfInEu;
+                        double rfToGive = getOutput() * FoxLibConfig.rfInEu;
                         double acceptedRF = electricItem.receiveDoubleEnergy(target, rfToGive, false);
 
                         if (acceptedRF > 0) {
-                            double euToRecord = acceptedRF / FIConfig.rfInEu;
+                            double euToRecord = acceptedRF / FoxLibConfig.rfInEu;
                             ElectricItem.manager.discharge(charger, euToRecord, getTier(), true, false, false);
                         }
                     } else {
@@ -53,11 +54,11 @@ public abstract class ItemEnergyCrystalWithRF extends ItemEnergyCrystal implemen
     @Optional.Method(modid = "CoFHCore")
     private void chargeRangeRF(ItemStack target, ItemStack charger) {
         if (target != null && target != charger && target.getItem() instanceof IEnergyContainerItem electricItem && !(target.getItem() instanceof ItemEnergyCrystal)) {
-            int rfToGive = (int) (getOutput() * FIConfig.rfInEu);
+            int rfToGive = (int) (getOutput() * FoxLibConfig.rfInEu);
             int acceptedRF = electricItem.receiveEnergy(target, rfToGive, false);
 
             if (acceptedRF > 0) {
-                double euToRecord = (double) acceptedRF / FIConfig.rfInEu;
+                double euToRecord = (double) acceptedRF / FoxLibConfig.rfInEu;
                 ElectricItem.manager.discharge(charger, euToRecord, getTier(), true, false, false);
             }
         }
@@ -94,9 +95,9 @@ public abstract class ItemEnergyCrystalWithRF extends ItemEnergyCrystal implemen
         }
         double energyStored = getDoubleEnergyStored(stack);
         double canReceive = Math.max(0, Math.min(Math.min(this.getMaxStorage() - energyStored, this.getOutput()), maxReceive));
-        canReceive -= canReceive % FIConfig.rfInEu;
+        canReceive -= canReceive % FoxLibConfig.rfInEu;
         if (!simulate) {
-            ElectricItem.manager.charge(stack, canReceive / FIConfig.rfInEu, getTier(), false, false);
+            ElectricItem.manager.charge(stack, canReceive / FoxLibConfig.rfInEu, getTier(), false, false);
         }
         return canReceive;
     }
@@ -108,9 +109,9 @@ public abstract class ItemEnergyCrystalWithRF extends ItemEnergyCrystal implemen
         }
         double energyStored = getDoubleEnergyStored(stack);
         double canExtract = Math.max(0, Math.min(Math.min(energyStored, this.getOutput()), maxExtract));
-        canExtract -= canExtract % FIConfig.rfInEu;
+        canExtract -= canExtract % FoxLibConfig.rfInEu;
         if (!simulate) {
-            ElectricItem.manager.discharge(stack, canExtract / FIConfig.rfInEu, getTier(), true, false, false);
+            ElectricItem.manager.discharge(stack, canExtract / FoxLibConfig.rfInEu, getTier(), true, false, false);
         }
         return canExtract;
     }
@@ -120,7 +121,7 @@ public abstract class ItemEnergyCrystalWithRF extends ItemEnergyCrystal implemen
         if (!hasRFEnergySupport()) {
             return 0;
         }
-        return ElectricItem.manager.getCharge(stack) * FIConfig.rfInEu;
+        return ElectricItem.manager.getCharge(stack) * FoxLibConfig.rfInEu;
     }
 
     @Override
@@ -128,7 +129,7 @@ public abstract class ItemEnergyCrystalWithRF extends ItemEnergyCrystal implemen
         if (!hasRFEnergySupport()) {
             return 0;
         }
-        return getMaxStorage() * FIConfig.rfInEu;
+        return getMaxStorage() * FoxLibConfig.rfInEu;
     }
 
     @Override

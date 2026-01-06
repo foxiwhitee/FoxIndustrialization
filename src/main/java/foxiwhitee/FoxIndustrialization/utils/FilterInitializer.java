@@ -1,6 +1,6 @@
 package foxiwhitee.FoxIndustrialization.utils;
 
-import foxiwhitee.FoxIndustrialization.api.energy.IDoubleEnergyContainerItem;
+import foxiwhitee.FoxLib.api.energy.IDoubleEnergyContainerItem;
 import foxiwhitee.FoxLib.container.slots.SlotFiltered;
 import foxiwhitee.FoxLib.items.ItemProductivityCard;
 import ic2.api.item.IElectricItem;
@@ -22,13 +22,17 @@ public class FilterInitializer {
     private static final List<Class<?>> filterQuantumEnergyStorageClasses = new ArrayList<>();
     private static final List<Class<?>> filterSingularEnergyStorageClasses = new ArrayList<>();
 
+    private static final List<Class<?>> filterQuantumGeneratorClasses = new ArrayList<>();
+
     static {
-        addClassToFilterUltimate(IElectricItem.class);
-        addClassToFilterUltimate(IDoubleEnergyContainerItem.class);
-        addClassToFilterQuantum(IElectricItem.class);
-        addClassToFilterQuantum(IDoubleEnergyContainerItem.class);
-        addClassToFilterSingular(IElectricItem.class);
-        addClassToFilterSingular(IDoubleEnergyContainerItem.class);
+        addClassToFilterUltimateStorage(IElectricItem.class);
+        addClassToFilterUltimateStorage(IDoubleEnergyContainerItem.class);
+        addClassToFilterQuantumStorage(IElectricItem.class);
+        addClassToFilterQuantumStorage(IDoubleEnergyContainerItem.class);
+        addClassToFilterSingularStorage(IElectricItem.class);
+        addClassToFilterSingularStorage(IDoubleEnergyContainerItem.class);
+        addClassToFilterQuantumGenerator(IElectricItem.class);
+        addClassToFilterQuantumGenerator(IDoubleEnergyContainerItem.class);
     }
 
     public static final String FILTER_BASIC_ENERGY_STORAGE = "basicEnergyStorage";
@@ -39,6 +43,11 @@ public class FilterInitializer {
     public static final String FILTER_QUANTUM_ENERGY_STORAGE = "quantumEnergyStorage";
     public static final String FILTER_SINGULAR_ENERGY_STORAGE = "singularEnergyStorage";
 
+    public static final String FILTER_ADVANCED_GENERATOR = "advancedGenerator";
+    public static final String FILTER_NANO_GENERATOR = "nanoGenerator";
+    public static final String FILTER_QUANTUM_GENERATOR = "quantumGenerator";
+    public static final String FILTER_FLAMMABLE_MATERIAL = "flammableMaterial";
+
     public static void initFilters() {
         SlotFiltered.filters.put(FILTER_BASIC_ENERGY_STORAGE, stack -> itemInstanceof(stack, IElectricItem.class));
         SlotFiltered.filters.put(FILTER_ADVANCED_ENERGY_STORAGE, stack -> itemInstanceof(stack, IElectricItem.class));
@@ -47,18 +56,27 @@ public class FilterInitializer {
         SlotFiltered.filters.put(FILTER_ULTIMATE_ENERGY_STORAGE, stack -> itemInstanceof(stack, filterUltimateEnergyStorageClasses.toArray(new Class[0])));
         SlotFiltered.filters.put(FILTER_QUANTUM_ENERGY_STORAGE, stack -> itemInstanceof(stack, filterQuantumEnergyStorageClasses.toArray(new Class[0])));
         SlotFiltered.filters.put(FILTER_SINGULAR_ENERGY_STORAGE, stack -> itemInstanceof(stack, filterSingularEnergyStorageClasses.toArray(new Class[0])));
+        SlotFiltered.filters.put(FILTER_ADVANCED_GENERATOR, stack -> itemInstanceof(stack, IElectricItem.class));
+        SlotFiltered.filters.put(FILTER_NANO_GENERATOR, stack -> itemInstanceof(stack, IElectricItem.class));
+        SlotFiltered.filters.put(FILTER_QUANTUM_GENERATOR, stack -> itemInstanceof(stack, filterQuantumGeneratorClasses.toArray(new Class[0])));
+
+        SlotFiltered.filters.put(FILTER_FLAMMABLE_MATERIAL, stack -> TileEntityFurnace.getItemBurnTime(stack) > 0);
     }
 
-    public static void addClassToFilterUltimate(Class<?> clazz) {
+    public static void addClassToFilterUltimateStorage(Class<?> clazz) {
         filterUltimateEnergyStorageClasses.add(clazz);
     }
 
-    public static void addClassToFilterQuantum(Class<?> clazz) {
+    public static void addClassToFilterQuantumStorage(Class<?> clazz) {
         filterQuantumEnergyStorageClasses.add(clazz);
     }
 
-    public static void addClassToFilterSingular(Class<?> clazz) {
+    public static void addClassToFilterSingularStorage(Class<?> clazz) {
         filterSingularEnergyStorageClasses.add(clazz);
+    }
+
+    public static void addClassToFilterQuantumGenerator(Class<?> clazz) {
+        filterQuantumGeneratorClasses.add(clazz);
     }
 
     @SafeVarargs

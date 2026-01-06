@@ -3,6 +3,7 @@ package foxiwhitee.FoxIndustrialization.items.block;
 import foxiwhitee.FoxIndustrialization.FICore;
 import foxiwhitee.FoxIndustrialization.ModBlocks;
 import foxiwhitee.FoxIndustrialization.config.FIConfig;
+import foxiwhitee.FoxLib.config.FoxLibConfig;
 import foxiwhitee.FoxLib.utils.helpers.EnergyUtility;
 import foxiwhitee.FoxLib.utils.helpers.LocalizationUtils;
 import net.minecraft.block.Block;
@@ -114,7 +115,7 @@ public class ItemBlockMachine extends ModItemBlock {
                 list.add(LocalizationUtils.localize("tooltip.machine.recyclerGenerating", LocalizationUtils.localize("tooltip." + recyclerItem)));
             }
             if (supportsRF && FICore.ifCoFHCoreIsLoaded) {
-                list.add(LocalizationUtils.localize("tooltip.machine.supportsRF", EnergyUtility.formatNumber(FIConfig.rfInEu)));
+                list.add(LocalizationUtils.localize("tooltip.machine.supportsRF", EnergyUtility.formatNumber(FoxLibConfig.rfInEu)));
             }
         }
     }

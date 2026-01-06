@@ -3,6 +3,7 @@ package foxiwhitee.FoxIndustrialization.items.block;
 import foxiwhitee.FoxIndustrialization.FICore;
 import foxiwhitee.FoxIndustrialization.ModBlocks;
 import foxiwhitee.FoxIndustrialization.config.FIConfig;
+import foxiwhitee.FoxLib.config.FoxLibConfig;
 import foxiwhitee.FoxLib.utils.helpers.EnergyUtility;
 import foxiwhitee.FoxLib.utils.helpers.LocalizationUtils;
 import net.minecraft.block.Block;
@@ -52,7 +53,7 @@ public class ItemBlockEnergyStorage extends ModItemBlock {
                 list.add(LocalizationUtils.localize("tooltip.energyStorage.capacity", EnergyUtility.formatNumber(FIConfig.energyStorageUltimateStorage)));
                 list.add(LocalizationUtils.localize("tooltip.energyStorage.store", EnergyUtility.formatNumber(energy)));
                 if (FICore.ifCoFHCoreIsLoaded && FIConfig.energyStorageUltimateSupportsRF) {
-                    list.add(LocalizationUtils.localize("tooltip.energyStorage.supportsRF", FIConfig.rfInEu));
+                    list.add(LocalizationUtils.localize("tooltip.energyStorage.supportsRF", FoxLibConfig.rfInEu));
                 }
             }
             if (isBlock(ModBlocks.quantumEnergyStorage, ModBlocks.quantumChargePad)) {
@@ -60,7 +61,7 @@ public class ItemBlockEnergyStorage extends ModItemBlock {
                 list.add(LocalizationUtils.localize("tooltip.energyStorage.capacity", EnergyUtility.formatNumber(FIConfig.energyStorageQuantumStorage)));
                 list.add(LocalizationUtils.localize("tooltip.energyStorage.store", EnergyUtility.formatNumber(energy)));
                 if (FICore.ifCoFHCoreIsLoaded && FIConfig.energyStorageQuantumSupportsRF) {
-                    list.add(LocalizationUtils.localize("tooltip.energyStorage.supportsRF", FIConfig.rfInEu));
+                    list.add(LocalizationUtils.localize("tooltip.energyStorage.supportsRF", FoxLibConfig.rfInEu));
                 }
             }
             if (isBlock(ModBlocks.singularEnergyStorage, ModBlocks.singularChargePad)) {
@@ -68,7 +69,7 @@ public class ItemBlockEnergyStorage extends ModItemBlock {
                 list.add(LocalizationUtils.localize("tooltip.energyStorage.capacity", EnergyUtility.formatNumber(FIConfig.energyStorageSingularStorage)));
                 list.add(LocalizationUtils.localize("tooltip.energyStorage.store", EnergyUtility.formatNumber(energy)));
                 if (FICore.ifCoFHCoreIsLoaded && FIConfig.energyStorageSingularSupportsRF) {
-                    list.add(LocalizationUtils.localize("tooltip.energyStorage.supportsRF", FIConfig.rfInEu));
+                    list.add(LocalizationUtils.localize("tooltip.energyStorage.supportsRF", FoxLibConfig.rfInEu));
                 }
             }
         }

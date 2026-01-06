@@ -80,4 +80,16 @@ public class ContentConfig {
 
     @ConfigValue(category = "Content", desc = "Enable Power Converter?")
     public static boolean enablePowerConverter = true;
+
+
+    // Generators
+    // Fuel
+    @ConfigValue(category = "Content.Generators.Fuel", desc = "Enable Advanced Generator?")
+    public static boolean enableAdvancedGenerator = true;
+
+    @ConfigValue(category = "Content.Generators.Fuel", desc = "Enable Nano Generator?")
+    public static boolean enableNanoGenerator = true;
+
+    @ConfigValue(category = "Content.Generators.Fuel", desc = "Enable Quantum Generator?")
+    public static boolean enableQuantumGenerator = true;
 }

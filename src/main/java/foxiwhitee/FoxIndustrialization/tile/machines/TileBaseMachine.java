@@ -6,7 +6,6 @@ import foxiwhitee.FoxIndustrialization.tile.TileIC2Inv;
 import foxiwhitee.FoxIndustrialization.utils.ButtonInventoryMode;
 import foxiwhitee.FoxIndustrialization.utils.MachineTier;
 import foxiwhitee.FoxIndustrialization.utils.UpgradesTypes;
-import foxiwhitee.FoxLib.tile.event.TickRateModulation;
 import foxiwhitee.FoxLib.tile.event.TileEvent;
 import foxiwhitee.FoxLib.tile.event.TileEventType;
 import foxiwhitee.FoxLib.tile.inventory.FoxInternalInventory;
@@ -17,6 +16,7 @@ import ic2.core.upgrade.IUpgradeItem;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -42,7 +42,7 @@ public abstract class TileBaseMachine extends TileIC2Inv {
     private final int defaultItemsPerOp;
 
     private ForgeDirection[] pushSides = {}, pullSides = {};
-    private final IInventory[] adjacentInventories = new IInventory[6];
+    private final ISidedInventory[] adjacentInventories = new ISidedInventory[6];
     private int scanTimer = 0;
     private boolean hasEjector = false;
     private boolean hasPuller = false;
@@ -85,6 +85,13 @@ public abstract class TileBaseMachine extends TileIC2Inv {
             updateAdjacentCache();
             scanTimer = 20;
         }
+        if (hasPuller) {
+            pullIfCan();
+        }
+        if (hasEjector) {
+            pushIfCan();
+        }
+
         if (doInventoryUpdateByMode) {
             switch (inventoryMode) {
                 case MERGE:
@@ -210,32 +217,6 @@ public abstract class TileBaseMachine extends TileIC2Inv {
         }
     }
 
-    @TileEvent(TileEventType.TICK_SPEED)
-    public TickRateModulation tickPull() {
-        if (toSleepPull) {
-            toSleepPull = false;
-            return TickRateModulation.SLEEP;
-        }
-        if (hasPuller && pullIfCan()) {
-            return TickRateModulation.FASTER;
-        }
-
-        return TickRateModulation.SLOWER;
-    }
-
-    @TileEvent(TileEventType.TICK_SPEED)
-    public TickRateModulation tickPush() {
-        if (toSleepPush) {
-            toSleepPush = false;
-            return TickRateModulation.SLEEP;
-        }
-        if (hasEjector && pushIfCan()) {
-            return TickRateModulation.FASTER;
-        }
-
-        return TickRateModulation.SLOWER;
-    }
-
     protected void getRecipe(ItemStack stack, int idx) {
         if (stack == null) {
             currentRecipes[idx] = null;
@@ -265,80 +246,93 @@ public abstract class TileBaseMachine extends TileIC2Inv {
         for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
             if (worldObj.blockExists(xCoord + dir.offsetX, yCoord + dir.offsetY, zCoord + dir.offsetZ)) {
                 TileEntity te = worldObj.getTileEntity(xCoord + dir.offsetX, yCoord + dir.offsetY, zCoord + dir.offsetZ);
-                adjacentInventories[dir.ordinal()] = (te instanceof IInventory) ? (IInventory) te : null;
+                adjacentInventories[dir.ordinal()] = (te instanceof ISidedInventory) ? (ISidedInventory) te : null;
             }
         }
     }
 
-    private boolean pullIfCan() {
-        if (!canInsert(inventory, someItem)) return false;
-
+    private void pullIfCan() {
         for (ForgeDirection side : pullSides) {
             IInventory neighbor = adjacentInventories[side.ordinal()];
             if (neighbor == null || ((TileEntity)neighbor).isInvalid()) continue;
 
-            for (int slot = 0; slot < neighbor.getSizeInventory(); slot++) {
-                ItemStack stackInSlot = neighbor.getStackInSlot(slot);
-                if (stackInSlot != null) {
-                    if (this.canInsert(inventory, stackInSlot)) {
-                        this.insert(inventory, stackInSlot);
+            int sideFrom = side.getOpposite().ordinal();
 
-                        neighbor.setInventorySlotContents(slot, null);
-                        neighbor.markDirty();
-                        return true;
+            if (neighbor instanceof ISidedInventory sided) {
+                int[] accessibleSlots = sided.getAccessibleSlotsFromSide(sideFrom);
+
+                for (int slot : accessibleSlots) {
+                    ItemStack stack = sided.getStackInSlot(slot);
+
+                    if (stack != null && sided.canExtractItem(slot, stack, sideFrom)) {
+                        if (this.canInsert(inventory, stack)) {
+                            this.insert(inventory, stack);
+
+                            sided.setInventorySlotContents(slot, null);
+                            sided.markDirty();
+                        }
                     }
                 }
             }
         }
-        return false;
     }
 
-    private boolean pushIfCan() {
+    private void pushIfCan() {
         for (ForgeDirection side : pushSides) {
             IInventory neighbor = adjacentInventories[side.ordinal()];
-            if (neighbor == null || ((TileEntity)neighbor).isInvalid()) continue;
 
-            for (int i = 0; i < output.getSizeInventory(); i++) {
-                ItemStack stack = output.getStackInSlot(i);
-                if (stack != null) {
-                    return tryPushStack(stack, i, neighbor);
+            if (neighbor instanceof ISidedInventory && !((TileEntity)neighbor).isInvalid()) {
+                ISidedInventory sidedNeighbor = (ISidedInventory) neighbor;
+
+                for (int i = 0; i < output.getSizeInventory(); i++) {
+                    ItemStack stack = output.getStackInSlot(i);
+                    if (stack != null) {
+                        tryPushStack(stack, i, sidedNeighbor, side);
+                    }
                 }
             }
         }
-        return false;
     }
 
-    private boolean tryPushStack(ItemStack stackToPush, int mySlot, IInventory neighbor) {
-        boolean changed = false;
-        for (int targetSlot = 0; targetSlot < neighbor.getSizeInventory(); targetSlot++) {
-            if (!neighbor.isItemValidForSlot(targetSlot, stackToPush)) continue;
+    private void tryPushStack(ItemStack stackToPush, int mySlot, ISidedInventory neighbor, ForgeDirection side) {
+        int sideTo = side.getOpposite().ordinal();
+
+        int[] accessibleSlots = neighbor.getAccessibleSlotsFromSide(sideTo);
+
+        for (int targetSlot : accessibleSlots) {
+            if (!neighbor.isItemValidForSlot(targetSlot, stackToPush) ||
+                !neighbor.canInsertItem(targetSlot, stackToPush, sideTo)) {
+                continue;
+            }
 
             ItemStack stackInTarget = neighbor.getStackInSlot(targetSlot);
 
             if (stackInTarget == null) {
                 neighbor.setInventorySlotContents(targetSlot, stackToPush.copy());
                 output.setInventorySlotContents(mySlot, null);
-                changed = true;
                 neighbor.markDirty();
                 this.markDirty();
                 break;
             } else if (ItemStackUtil.stackEquals(stackInTarget, stackToPush)) {
-                int spaceLeft = Math.min(neighbor.getInventoryStackLimit(), stackInTarget.getMaxStackSize()) - stackInTarget.stackSize;
+                int limit = Math.min(neighbor.getInventoryStackLimit(), stackInTarget.getMaxStackSize());
+                int spaceLeft = limit - stackInTarget.stackSize;
+
                 if (spaceLeft > 0) {
                     int amountToTransfer = Math.min(stackToPush.stackSize, spaceLeft);
                     stackInTarget.stackSize += amountToTransfer;
                     stackToPush.stackSize -= amountToTransfer;
 
-                    if (stackToPush.stackSize <= 0) output.setInventorySlotContents(mySlot, null);
+                    if (stackToPush.stackSize <= 0) {
+                        output.setInventorySlotContents(mySlot, null);
+                    }
 
-                    changed = true;
                     neighbor.markDirty();
                     this.markDirty();
+
                     if (output.getStackInSlot(mySlot) == null) break;
                 }
             }
         }
-        return changed;
     }
 
     protected boolean canInsert(FoxInternalInventory inv, ItemStack stack, int idx) {
@@ -391,18 +385,30 @@ public abstract class TileBaseMachine extends TileIC2Inv {
         if (pullSides.length > 0) {
             int[] pullSidesNbt = new int[pullSides.length];
             for (int i = 0; i < pullSidesNbt.length; i++) {
-                pullSidesNbt[i] = pullSides[i].ordinal();
+                if (pullSides[i] == null) {
+                    pullSidesNbt[i] = -1;
+                } else {
+                    pullSidesNbt[i] = pullSides[i].ordinal();
+                }
             }
             data.setIntArray("pullSides", pullSidesNbt);
         }
         if (pushSides.length > 0) {
             int[] pushSidesNbt = new int[pushSides.length];
             for (int i = 0; i < pushSides.length; i++) {
-                pushSidesNbt[i] = pushSides[i].ordinal();
+                if (pullSides[i] == null) {
+                    pushSidesNbt[i] = -1;
+                } else {
+                    pushSidesNbt[i] = pushSides[i].ordinal();
+                }
             }
-            data.setIntArray("pullSides", pushSidesNbt);
+            data.setIntArray("pushSides", pushSidesNbt);
         }
         data.setByte("invMode", (byte) inventoryMode.ordinal());
+        data.setBoolean("hasEjector", hasEjector);
+        data.setBoolean("hasPuller", hasPuller);
+        data.setBoolean("toSleepPush", toSleepPush);
+        data.setBoolean("toSleepPull", toSleepPull);
     }
 
     @Override
@@ -418,14 +424,26 @@ public abstract class TileBaseMachine extends TileIC2Inv {
         int[] pullSidesNbt = data.getIntArray("pullSides");
         pullSides = new ForgeDirection[pullSidesNbt.length];
         for (int i = 0; i < pullSidesNbt.length; i++) {
-            pullSides[i] = ForgeDirection.getOrientation(pullSidesNbt[i]);
+            if (pullSidesNbt[i] == -1) {
+                pullSides[i] = null;
+            } else {
+                pullSides[i] = ForgeDirection.getOrientation(pullSidesNbt[i]);
+            }
         }
         int[] pushSidesNbt = data.getIntArray("pushSides");
         pushSides = new ForgeDirection[pushSidesNbt.length];
         for (int i = 0; i < pushSidesNbt.length; i++) {
-            pushSides[i] = ForgeDirection.getOrientation(pushSidesNbt[i]);
+            if (pushSidesNbt[i] == -1) {
+                pushSides[i] = null;
+            } else {
+                pushSides[i] = ForgeDirection.getOrientation(pushSidesNbt[i]);
+            }
         }
         inventoryMode = ButtonInventoryMode.values()[data.getByte("invMode")];
+        hasEjector = data.getBoolean("hasEjector");
+        hasPuller = data.getBoolean("hasPuller");
+        toSleepPush = data.getBoolean("toSleepPush");
+        toSleepPull = data.getBoolean("toSleepPull");
     }
 
     @Override
@@ -543,7 +561,7 @@ public abstract class TileBaseMachine extends TileIC2Inv {
                 if (stack.getItem() instanceof IAdvancedUpgradeItem upgrade) {
                     this.ticksNeed *= (int) upgrade.getSpeedMultiplier(stack);
                     this.itemsPerOp += upgrade.getItemsPerOpAdd(stack);
-                    this.maxEnergy *= upgrade.getStorageEnergyMultiplier(stack);
+                    this.maxEnergy = safeMultiply(maxEnergy, upgrade.getStorageEnergyMultiplier(stack));
                     this.energyPerTick *= upgrade.getEnergyUseMultiplier(stack);
                 } else if (stack.getItem() instanceof IUpgradeItem) {
                     switch (stack.getItemDamage()) {
@@ -585,15 +603,6 @@ public abstract class TileBaseMachine extends TileIC2Inv {
             this.maxEnergy = Math.max(this.maxEnergy, this.energyPerTick);
             if (this.maxEnergy < 0) this.maxEnergy = Double.MAX_VALUE;
             this.energy = Math.min(this.maxEnergy, energy);
-
-            if (toSleepPull && hasPuller) {
-                toSleepPull = false;
-                awakeTickableFunction("tickPull");
-            }
-            if (toSleepPush && hasEjector) {
-                toSleepPush = false;
-                awakeTickableFunction("tickPush");
-            }
 
             markForUpdate();
         } else if (iInv == inventory) {

@@ -39,6 +39,10 @@ tile.ultimateChargePad.name=Ультимативна зарядна панель
 tile.quantumChargePad.name=Квантова зарядна панель
 tile.singularChargePad.name=Сингулярна зарядна панель
 
+tile.advancedGenerator.name=Розширений генератор
+tile.nanoGenerator.name=Нано генератор
+tile.quantumGenerator.name=Квантовий генератор
+
 # Items
 item.speedUpgrade.Advanced.name=Розширене поліпшення швидкості
 item.speedUpgrade.Nano.name=Нано поліпшення швидкості
@@ -105,3 +109,5 @@ tooltip.energyCrystal.mode.hot_bar=Хотбар
 tooltip.energyCrystal.mode.armor=Броня
 tooltip.energyCrystal.mode.hot_bar_and_armor=Хотбар і броня
 tooltip.energyCrystal.mode.all=Весь інвентар
+tooltip.generator.generate=§7Генерує: §3%s §7EU/t
+tooltip.generator.output=§7Вихід: §3%s§7 EU/t
