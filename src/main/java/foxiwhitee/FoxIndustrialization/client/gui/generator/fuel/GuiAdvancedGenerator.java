@@ -15,19 +15,19 @@ public class GuiAdvancedGenerator extends GuiGenerator {
     }
 
     @Override
-    public void drawFG(int offsetX, int offsetY, int mouseX, int mouseY) {
-        super.drawFG(offsetX, offsetY, mouseX, mouseY);
+    public void drawBG(int offsetX, int offsetY, int mouseX, int mouseY) {
+        super.drawBG(offsetX, offsetY, mouseX, mouseY);
 
         int[] fuel = tile.getFuel();
         int[] fuelNeed = tile.getFuelNeed();
 
         if (fuel[0] > 0) {
             double l = ProductivityUtil.gauge(12, fuel[0], fuelNeed[0]);
-            UtilGui.drawTexture(111, 100 - (int) l, 272, 0, 4, (int) l + 1, 4, (int) l + 1);
+            UtilGui.drawTexture(offsetX + 111, offsetY + 100 - (int) l, 272, 0, 4, (int) l + 1, 4, (int) l + 1);
         }
         if (fuel[1] > 0) {
             double l = ProductivityUtil.gauge(12, fuel[1], fuelNeed[1]);
-            UtilGui.drawTexture(147, 100 - (int) l, 272, 0, 4, (int) l + 1, 4, (int) l + 1);
+            UtilGui.drawTexture(offsetX + 147, offsetY + 100 - (int) l, 272, 0, 4, (int) l + 1, 4, (int) l + 1);
         }
     }
 

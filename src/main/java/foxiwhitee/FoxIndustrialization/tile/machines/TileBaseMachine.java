@@ -1,6 +1,8 @@
 package foxiwhitee.FoxIndustrialization.tile.machines;
 
 import foxiwhitee.FoxIndustrialization.api.IAdvancedUpgradeItem;
+import foxiwhitee.FoxIndustrialization.api.IHasActiveState;
+import foxiwhitee.FoxIndustrialization.api.IUpgradableTile;
 import foxiwhitee.FoxIndustrialization.recipes.IRecipeIC2;
 import foxiwhitee.FoxIndustrialization.tile.TileIC2Inv;
 import foxiwhitee.FoxIndustrialization.utils.ButtonInventoryMode;
@@ -25,7 +27,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 import java.util.*;
 
-public abstract class TileBaseMachine extends TileIC2Inv {
+public abstract class TileBaseMachine extends TileIC2Inv implements IHasActiveState, IUpgradableTile {
     private final static ItemStack someItem = new ItemStack(Blocks.command_block, 64);
     private final FoxInternalInventory inventory;
     private final FoxInternalInventory output;
@@ -46,12 +48,13 @@ public abstract class TileBaseMachine extends TileIC2Inv {
     private int scanTimer = 0;
     private boolean hasEjector = false;
     private boolean hasPuller = false;
-    private boolean mustHaveRedstoneSignal = false;
     private final int[] cachedAllSlots;
 
-    private boolean toSleepPush = false, toSleepPull = false, doInventoryUpdateByMode = true;
+    private boolean doInventoryUpdateByMode = true;
 
     private ButtonInventoryMode inventoryMode = ButtonInventoryMode.NONE;
+
+    private boolean active;
 
     public TileBaseMachine(MachineTier tier, double maxEnergy, int itemsPerOp, double energyPerTick) {
         this.inventory = new FoxInternalInventory(this, tier.getInvInpSize());
@@ -148,7 +151,32 @@ public abstract class TileBaseMachine extends TileIC2Inv {
 
                 markForUpdate();
             }
+            if (someoneInWork()) {
+                if (!active) {
+                    active = true;
+                    markForUpdate();
+                }
+            } else {
+                if (active) {
+                    active = false;
+                    markForUpdate();
+                }
+            }
+        } else {
+            if (active) {
+                active = false;
+                markForUpdate();
+            }
         }
+    }
+
+    private boolean someoneInWork() {
+        for (IRecipeIC2 recipe : currentRecipes) {
+            if (recipe != null) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void doMergeInventory() {
@@ -407,8 +435,7 @@ public abstract class TileBaseMachine extends TileIC2Inv {
         data.setByte("invMode", (byte) inventoryMode.ordinal());
         data.setBoolean("hasEjector", hasEjector);
         data.setBoolean("hasPuller", hasPuller);
-        data.setBoolean("toSleepPush", toSleepPush);
-        data.setBoolean("toSleepPull", toSleepPull);
+        data.setBoolean("active", active);
     }
 
     @Override
@@ -442,8 +469,7 @@ public abstract class TileBaseMachine extends TileIC2Inv {
         inventoryMode = ButtonInventoryMode.values()[data.getByte("invMode")];
         hasEjector = data.getBoolean("hasEjector");
         hasPuller = data.getBoolean("hasPuller");
-        toSleepPush = data.getBoolean("toSleepPush");
-        toSleepPull = data.getBoolean("toSleepPull");
+        active = data.getBoolean("active");
     }
 
     @Override
@@ -455,21 +481,25 @@ public abstract class TileBaseMachine extends TileIC2Inv {
         }
         data.writeInt(ticksNeed);
         data.writeByte(inventoryMode.ordinal());
+        data.writeBoolean(active);
     }
 
     @Override
     @TileEvent(TileEventType.CLIENT_NBT_READ)
     public boolean readFromStream(ByteBuf data) {
         boolean old = super.readFromStream(data);
+        boolean oldActive = active;
         int[] oldTicks = Arrays.copyOf(ticks, ticks.length);
         int oldNeedTicks = ticksNeed;
         ButtonInventoryMode oldInvMode = inventoryMode;
+
         for (int i = 0; i < ticks.length; i++) {
             ticks[i] = data.readInt();
         }
         ticksNeed = data.readInt();
         inventoryMode = ButtonInventoryMode.values()[data.readByte()];
-        return old || oldNeedTicks != ticksNeed || !Arrays.equals(oldTicks, ticks) || oldInvMode != inventoryMode;
+        active = data.readBoolean();
+        return old || oldNeedTicks != ticksNeed || !Arrays.equals(oldTicks, ticks) || oldInvMode != inventoryMode || oldActive != active;
     }
 
     @Override
@@ -531,8 +561,7 @@ public abstract class TileBaseMachine extends TileIC2Inv {
     }
 
     protected boolean canWork() {
-        if (!mustHaveRedstoneSignal) return true;
-        return worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord);
+        return true;
     }
 
     @Override
@@ -541,10 +570,7 @@ public abstract class TileBaseMachine extends TileIC2Inv {
             this.maxEnergy = defaultMaxEnergy;
             this.itemsPerOp = defaultItemsPerOp;
             this.energyPerTick = defaultEnergyPerTick;
-            this.mustHaveRedstoneSignal = false;
             this.ticksNeed = 100;
-            this.toSleepPull = true;
-            this.toSleepPush = true;
 
             List<Integer> newPushRaw = new ArrayList<>();
             List<Integer> newPullRaw = new ArrayList<>();
@@ -583,9 +609,6 @@ public abstract class TileBaseMachine extends TileIC2Inv {
                                 NBTTagCompound nbt = stack.getTagCompound();
                                 newPullRaw.add((nbt != null && nbt.hasKey("dir")) ? (int)nbt.getByte("dir") : 0);
                             }
-                            break;
-                        case 5: // Redstone
-                            if (canRS) mustHaveRedstoneSignal = true;
                             break;
                     }
                 }
@@ -662,6 +685,20 @@ public abstract class TileBaseMachine extends TileIC2Inv {
         markForUpdate();
     }
 
+    protected void setNewMeta(int newMeta) {
+        if (worldObj == null || worldObj.isRemote)
+            return;
+
+        int oldMeta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
+        if (oldMeta != newMeta) {
+            worldObj.setBlockMetadataWithNotify(
+                xCoord, yCoord, zCoord,
+                newMeta,
+                3
+            );
+        }
+    }
+
     public ButtonInventoryMode getInventoryMode() {
         return inventoryMode;
     }
@@ -678,7 +715,10 @@ public abstract class TileBaseMachine extends TileIC2Inv {
         return ticks;
     }
 
-    public abstract UpgradesTypes[] getAvailableTypes();
+    @Override
+    public boolean isActive() {
+        return active;
+    }
 
     protected abstract List<? extends IRecipeIC2> getRecipes();
 

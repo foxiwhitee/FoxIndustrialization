@@ -5,7 +5,6 @@ import foxiwhitee.FoxIndustrialization.tile.generator.fuel.TileNanoGenerator;
 import foxiwhitee.FoxIndustrialization.utils.FilterInitializer;
 import foxiwhitee.FoxLib.container.slots.SlotFiltered;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.Slot;
 
 public class ContainerNanoGenerator extends ContainerGenerator {
     public ContainerNanoGenerator(EntityPlayer ip, TileNanoGenerator myTile) {

@@ -11,6 +11,6 @@ public abstract class TileAdvancedMachine extends TileBaseMachine {
 
     @Override
     public UpgradesTypes[] getAvailableTypes() {
-        return new UpgradesTypes[] {UpgradesTypes.EJECTOR, UpgradesTypes.PULLING, UpgradesTypes.REDSTONE, UpgradesTypes.SPEED, UpgradesTypes.STORAGE};
+        return new UpgradesTypes[] {UpgradesTypes.EJECTOR, UpgradesTypes.PULLING, UpgradesTypes.SPEED, UpgradesTypes.STORAGE};
     }
 }

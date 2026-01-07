@@ -1,13 +1,10 @@
 package foxiwhitee.FoxIndustrialization.integration.cofh.container;
 
-import foxiwhitee.FoxIndustrialization.container.slots.SlotMachineUpgrade;
 import foxiwhitee.FoxIndustrialization.integration.cofh.CoFHIntegration;
 import foxiwhitee.FoxIndustrialization.integration.cofh.tile.TilePowerConverter;
 import foxiwhitee.FoxLib.container.FoxBaseContainer;
 import foxiwhitee.FoxLib.container.slots.SlotFiltered;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.tileentity.TileEntity;
 
 public class ContainerPowerConverter extends FoxBaseContainer {
     public ContainerPowerConverter(EntityPlayer ip, TilePowerConverter myTile) {

@@ -16,23 +16,23 @@ public class GuiNanoGenerator extends GuiGenerator {
     }
 
     @Override
-    public void drawFG(int offsetX, int offsetY, int mouseX, int mouseY) {
-        super.drawFG(offsetX, offsetY, mouseX, mouseY);
+    public void drawBG(int offsetX, int offsetY, int mouseX, int mouseY) {
+        super.drawBG(offsetX, offsetY, mouseX, mouseY);
 
         int[] fuel = tile.getFuel();
         int[] fuelNeed = tile.getFuelNeed();
 
         if (fuel[0] > 0) {
             double l = ProductivityUtil.gauge(12, fuel[0], fuelNeed[0]);
-            UtilGui.drawTexture(93, 100 - (int) l, 272, 0, 4, (int) l + 1, 4, (int) l + 1);
+            UtilGui.drawTexture(offsetX + 93, offsetY + 100 - (int) l, 272, 0, 4, (int) l + 1, 4, (int) l + 1);
         }
         if (fuel[1] > 0) {
             double l = ProductivityUtil.gauge(12, fuel[1], fuelNeed[1]);
-            UtilGui.drawTexture(129, 100 - (int) l, 272, 0, 4, (int) l + 1, 4, (int) l + 1);
+            UtilGui.drawTexture(offsetX + 129, offsetY + 100 - (int) l, 272, 0, 4, (int) l + 1, 4, (int) l + 1);
         }
         if (fuel[2] > 0) {
             double l = ProductivityUtil.gauge(12, fuel[2], fuelNeed[2]);
-            UtilGui.drawTexture(165, 100 - (int) l, 272, 0, 4, (int) l + 1, 4, (int) l + 1);
+            UtilGui.drawTexture(offsetX + 165, offsetY + 100 - (int) l, 272, 0, 4, (int) l + 1, 4, (int) l + 1);
         }
     }
 

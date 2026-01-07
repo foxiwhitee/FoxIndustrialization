@@ -12,31 +12,9 @@ import net.minecraft.world.World;
 import java.util.Random;
 
 public abstract class BlockChargePad extends BlockEnergyStorage {
-    protected IIcon activeIcon;
-
     public BlockChargePad(String name, Class<? extends TileEntity> tileEntityClass) {
         super(name, tileEntityClass);
         this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.95F, 1.0F);
-    }
-
-    @Override
-    public void registerBlockIcons(IIconRegister register) {
-        super.registerBlockIcons(register);
-
-        String base = this.getTextureName();
-        this.activeIcon = register.registerIcon(base + "Active");
-    }
-
-    @Override
-    public IIcon getIcon(int side, int metadata) {
-        return switch (side) {
-            case 0 -> this.downIcon;
-            case 2 -> this.backIcon;
-            case 3 -> this.frontIcon;
-            case 4 -> this.westIcon;
-            case 5 -> this.eastIcon;
-            default -> metadata == 1 ? this.activeIcon : this.topIcon;
-        };
     }
 
     public void randomDisplayTick(World world, int x, int y, int z, Random random) {

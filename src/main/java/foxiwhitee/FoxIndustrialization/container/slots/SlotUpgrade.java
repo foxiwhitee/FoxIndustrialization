@@ -1,6 +1,7 @@
 package foxiwhitee.FoxIndustrialization.container.slots;
 
 import foxiwhitee.FoxIndustrialization.api.IAdvancedUpgradeItem;
+import foxiwhitee.FoxIndustrialization.api.IUpgradableTile;
 import foxiwhitee.FoxIndustrialization.items.ItemSpeedUpgrade;
 import foxiwhitee.FoxIndustrialization.items.ItemStorageUpgrade;
 import foxiwhitee.FoxIndustrialization.tile.machines.TileBaseMachine;
@@ -12,13 +13,11 @@ import net.minecraft.item.ItemStack;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Predicate;
 
-public class SlotMachineUpgrade extends FoxSlot {
-    private final TileBaseMachine tile;
+public class SlotUpgrade extends FoxSlot {
+    private final IUpgradableTile tile;
 
-    public SlotMachineUpgrade(IInventory inv, TileBaseMachine tile, int idx, int x, int y) {
+    public SlotUpgrade(IInventory inv, IUpgradableTile tile, int idx, int x, int y) {
         super(inv, idx, x, y);
         this.tile = tile;
     }

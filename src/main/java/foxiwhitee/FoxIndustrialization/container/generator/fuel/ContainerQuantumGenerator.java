@@ -1,11 +1,10 @@
 package foxiwhitee.FoxIndustrialization.container.generator.fuel;
 
-import foxiwhitee.FoxIndustrialization.tile.generator.fuel.TileNanoGenerator;
+import foxiwhitee.FoxIndustrialization.tile.generator.fuel.TileAdvancedGenerator;
 import foxiwhitee.FoxIndustrialization.tile.generator.fuel.TileQuantumGenerator;
 import foxiwhitee.FoxIndustrialization.utils.FilterInitializer;
 import foxiwhitee.FoxLib.container.slots.SlotFiltered;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.Slot;
 
 public class ContainerQuantumGenerator extends ContainerGenerator {
     public ContainerQuantumGenerator(EntityPlayer ip, TileQuantumGenerator myTile) {

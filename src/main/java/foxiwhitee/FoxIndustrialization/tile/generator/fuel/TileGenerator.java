@@ -17,6 +17,7 @@ import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import java.util.Arrays;
 import java.util.List;
 
 public abstract class TileGenerator extends TileIC2Inv implements IEnergySource {
@@ -130,6 +131,7 @@ public abstract class TileGenerator extends TileIC2Inv implements IEnergySource 
     @TileEvent(TileEventType.SERVER_NBT_WRITE)
     public void writeToNbt_(NBTTagCompound data) {
         super.writeToNbt_(data);
+        charge.writeToNBT(data, "charge");
         data.setIntArray("fuel", fuel);
         data.setIntArray("fuelNeed", fuelNeed);
     }
@@ -138,6 +140,7 @@ public abstract class TileGenerator extends TileIC2Inv implements IEnergySource 
     @TileEvent(TileEventType.SERVER_NBT_READ)
     public void readFromNbt_(NBTTagCompound data) {
         super.readFromNbt_(data);
+        charge.readFromNBT(data, "charge");
         fuel = data.getIntArray("fuel");
         fuelNeed = data.getIntArray("fuelNeed");
     }
@@ -157,16 +160,18 @@ public abstract class TileGenerator extends TileIC2Inv implements IEnergySource 
     @Override
     @TileEvent(TileEventType.CLIENT_NBT_READ)
     public boolean readFromStream(ByteBuf data) {
-        super.readFromStream(data);
+        boolean old = super.readFromStream(data);
+        int[] oldFuel = Arrays.copyOf(fuel, fuel.length);
         this.fuel = new int[fuel.length];
         for (int i = 0; i < this.fuel.length; i++) {
             this.fuel[i] = data.readInt();
         }
+        int[] oldFuelNeed = Arrays.copyOf(fuelNeed, fuelNeed.length);
         this.fuelNeed = new int[fuelNeed.length];
         for (int i = 0; i < this.fuelNeed.length; i++) {
             this.fuelNeed[i] = data.readInt();
         }
-        return true;
+        return old || !Arrays.equals(oldFuel, fuel) || !Arrays.equals(oldFuelNeed, fuelNeed);
     }
 
     @Override
