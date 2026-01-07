@@ -4,7 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
-public class ModItemBlock extends ItemBlock {
+public abstract class ModItemBlock extends ItemBlock {
     private final Block blockType;
 
     public ModItemBlock(Block b) {

@@ -43,6 +43,19 @@ tile.advancedGenerator.name=Розширений генератор
 tile.nanoGenerator.name=Нано генератор
 tile.quantumGenerator.name=Квантовий генератор
 
+tile.solarPanelLevel1.name=Сонячна панель 1 рівня
+tile.solarPanelLevel2.name=Сонячна панель 2 рівня
+tile.solarPanelLevel3.name=Сонячна панель 3 рівня
+tile.solarPanelLevel4.name=Сонячна панель 4 рівня
+tile.solarPanelLevel5.name=Сонячна панель 5 рівня
+tile.solarPanelLevel6.name=Сонячна панель 6 рівня
+tile.solarPanelLevel7.name=Сонячна панель 7 рівня
+tile.solarPanelLevel8.name=Сонячна панель 8 рівня
+
+tile.infinityGenerator.name=Генератор нескінченності
+
+tile.casingNano.name=Нано корпус механізму
+tile.casingQuantum.name=Квантовий корпус механізму
 # Items
 item.speedUpgrade.Advanced.name=Розширене поліпшення швидкості
 item.speedUpgrade.Nano.name=Нано поліпшення швидкості
@@ -60,6 +73,19 @@ item.baseUpgrade.name=Основа поліпшення
 item.powerConverterUpgrade.EU.name=§3Модуль EU
 item.powerConverterUpgrade.RF.name=§4Модуль RF
 
+item.synthesizerUpgradeSun.name=Поліпшення синтезатора: Нескінченне сонце
+item.synthesizerUpgrade.1.name=Поліпшення синтезатора 1
+item.synthesizerUpgrade.2.name=Поліпшення синтезатора 2
+item.synthesizerUpgrade.3.name=Поліпшення синтезатора 3
+item.synthesizerUpgrade.4.name=Поліпшення синтезатора 4
+item.synthesizerUpgrade.5.name=Поліпшення синтезатора 5
+item.synthesizerUpgrade.6.name=Поліпшення синтезатора 6
+item.synthesizerUpgrade.7.name=Поліпшення синтезатора 7
+item.synthesizerUpgrade.8.name=Поліпшення синтезатора 8
+item.synthesizerUpgrade.9.name=Поліпшення синтезатора 9
+item.synthesizerUpgrade.10.name=Поліпшення синтезатора 10
+
+tile.synthesizer.name=Синтезатор енергії
 # Tooltips 
 tooltip.upgrade.addPerOp=§7Збільшує кількість перероблених предметів за операцію на §3%s
 tooltip.upgrade.speed=§7Зменшує час роботи до §3%s%%
@@ -68,6 +94,9 @@ tooltip.upgrade.storageMult=§7Збільшує кількість зберіг�
 tooltip.upgrade.needsType=§7Поліпшення працює з рівня механізму: %s
 tooltip.upgrade.pc.storageMult=§7Збільшує кількість зберігаємої %s%s енергії§7 у §3%s§7 разів
 tooltip.upgrade.pc.outputMult=§7Збільшує швидкість виходу %s%s енергії§7 у §3%s§7 разів
+tooltip.upgrade.outputMult=§7Збільшує швидкість виходу енергії у §3%s§7 разів 
+tooltip.upgrade.synthesizerBonus=§7Бонус енергії що виробляється §3%s%%
+tooltip.upgrade.sun.desc=§7Сонячні панелі генерують стільки ж енергії вночі, скільки й вдень.
 tooltip.level.advanced=§6Розширений
 tooltip.level.nano=§8Нано
 tooltip.level.quantum=§3Квантовий
@@ -111,3 +140,6 @@ tooltip.energyCrystal.mode.hot_bar_and_armor=Хотбар і броня
 tooltip.energyCrystal.mode.all=Весь інвентар
 tooltip.generator.generate=§7Генерує: §3%s §7EU/t
 tooltip.generator.output=§7Вихід: §3%s§7 EU/t
+tooltip.solarPanel.generateInDay=§7Генерує в день: §3%s§7 EU/t
+tooltip.solarPanel.generateInNight=§7Генерує в ніч: §3%s§7 EU/t
+tooltip.solarPanel.output=§7Вихід: §3%s §7EU/t

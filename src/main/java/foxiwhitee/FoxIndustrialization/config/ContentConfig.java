@@ -17,6 +17,21 @@ public class ContentConfig {
     @ConfigValue(category = "Content", desc = "Enable Energy Crystals?")
     public static boolean enableEnergyCrystals = true;
 
+    @ConfigValue(category = "Content", desc = "Enable Custom Solar Panels?")
+    public static boolean enableCustomSolarPanels = true;
+
+    @ConfigValue(category = "Content", desc = "Enable Infinity Generator?")
+    public static boolean enableInfinityGenerator = true;
+
+    @ConfigValue(category = "Content", desc = "Enable Nano Casing?")
+    public static boolean enableNanoCasing = true;
+
+    @ConfigValue(category = "Content", desc = "Enable Quantum Casing?")
+    public static boolean enableQuantumCasing = true;
+
+    @ConfigValue(category = "Content", desc = "Enable Synthesizer?")
+    public static boolean enableSynthesizer = true;
+
 
     // Machines Advanced
     @ConfigValue(category = "Content.Machines.Advanced", desc = "Enable Advanced Compressor?")
@@ -82,8 +97,7 @@ public class ContentConfig {
     public static boolean enablePowerConverter = true;
 
 
-    // Generators
-    // Fuel
+    // Generator Fuel
     @ConfigValue(category = "Content.Generators.Fuel", desc = "Enable Advanced Generator?")
     public static boolean enableAdvancedGenerator = true;
 

@@ -63,6 +63,108 @@ public class FIConfig {
     @ConfigValue(category = "Upgrades.PowerConverter", name = "outputMultiplierRF", desc = "How many times will the rate of RF energy output increase?")
     public static double powerConverterUpgradeRFOutputMultiplier = 8;
 
+    // Upgrades Synthesizer
+
+    @ConfigValue(category = "Upgrades.Synthesizer.Level1", name = "bonus", max = "1000", desc = "By what percentage will the upgrade increase the generation of panels in the Panel Synthesizer?")
+    public static double synthesizerUpgrade1Bonus = 0.5;
+
+    @ConfigValue(category = "Upgrades.Synthesizer.Level1", name = "storageMultiplier", desc = "How many times will the Synthesizer's storage be increased with each upgrade?")
+    public static double synthesizerUpgrade1StorageMultiplier = 10;
+
+    @ConfigValue(category = "Upgrades.Synthesizer.Level1", name = "outputMultiplier", desc = "How many times will the rate of energy output increase?")
+    public static double synthesizerUpgrade1OutputMultiplier = 5;
+
+
+    @ConfigValue(category = "Upgrades.Synthesizer.Level2", name = "bonus", max = "1000", desc = "By what percentage will the upgrade increase the generation of panels in the Panel Synthesizer?")
+    public static double synthesizerUpgrade2Bonus = 1;
+
+    @ConfigValue(category = "Upgrades.Synthesizer.Level2", name = "storageMultiplier", desc = "How many times will the Synthesizer's storage be increased with each upgrade?")
+    public static double synthesizerUpgrade2StorageMultiplier = 30;
+
+    @ConfigValue(category = "Upgrades.Synthesizer.Level2", name = "outputMultiplier", desc = "How many times will the rate of energy output increase?")
+    public static double synthesizerUpgrade2OutputMultiplier = 12;
+
+
+    @ConfigValue(category = "Upgrades.Synthesizer.Level3", name = "bonus", max = "1000", desc = "By what percentage will the upgrade increase the generation of panels in the Panel Synthesizer?")
+    public static double synthesizerUpgrade3Bonus = 2.5;
+
+    @ConfigValue(category = "Upgrades.Synthesizer.Level3", name = "storageMultiplier", desc = "How many times will the Synthesizer's storage be increased with each upgrade?")
+    public static double synthesizerUpgrade3StorageMultiplier = 50;
+
+    @ConfigValue(category = "Upgrades.Synthesizer.Level3", name = "outputMultiplier", desc = "How many times will the rate of energy output increase?")
+    public static double synthesizerUpgrade3OutputMultiplier = 25;
+
+
+    @ConfigValue(category = "Upgrades.Synthesizer.Level4", name = "bonus", max = "1000", desc = "By what percentage will the upgrade increase the generation of panels in the Panel Synthesizer?")
+    public static double synthesizerUpgrade4Bonus = 5;
+
+    @ConfigValue(category = "Upgrades.Synthesizer.Level4", name = "storageMultiplier", desc = "How many times will the Synthesizer's storage be increased with each upgrade?")
+    public static double synthesizerUpgrade4StorageMultiplier = 90;
+
+    @ConfigValue(category = "Upgrades.Synthesizer.Level4", name = "outputMultiplier", desc = "How many times will the rate of energy output increase?")
+    public static double synthesizerUpgrade4OutputMultiplier = 60;
+
+
+    @ConfigValue(category = "Upgrades.Synthesizer.Level5", name = "bonus", max = "1000", desc = "By what percentage will the upgrade increase the generation of panels in the Panel Synthesizer?")
+    public static double synthesizerUpgrade5Bonus = 10;
+
+    @ConfigValue(category = "Upgrades.Synthesizer.Level5", name = "storageMultiplier", desc = "How many times will the Synthesizer's storage be increased with each upgrade?")
+    public static double synthesizerUpgrade5StorageMultiplier = 140;
+
+    @ConfigValue(category = "Upgrades.Synthesizer.Level5", name = "outputMultiplier", desc = "How many times will the rate of energy output increase?")
+    public static double synthesizerUpgrade5OutputMultiplier = 100;
+
+
+    @ConfigValue(category = "Upgrades.Synthesizer.Level6", name = "bonus", max = "1000", desc = "By what percentage will the upgrade increase the generation of panels in the Panel Synthesizer?")
+    public static double synthesizerUpgrade6Bonus = 15;
+
+    @ConfigValue(category = "Upgrades.Synthesizer.Level6", name = "storageMultiplier", desc = "How many times will the Synthesizer's storage be increased with each upgrade?")
+    public static double synthesizerUpgrade6StorageMultiplier = 300;
+
+    @ConfigValue(category = "Upgrades.Synthesizer.Level6", name = "outputMultiplier", desc = "How many times will the rate of energy output increase?")
+    public static double synthesizerUpgrade6OutputMultiplier = 250;
+
+
+    @ConfigValue(category = "Upgrades.Synthesizer.Level7", name = "bonus", max = "1000", desc = "By what percentage will the upgrade increase the generation of panels in the Panel Synthesizer?")
+    public static double synthesizerUpgrade7Bonus = 25;
+
+    @ConfigValue(category = "Upgrades.Synthesizer.Level7", name = "storageMultiplier", desc = "How many times will the Synthesizer's storage be increased with each upgrade?")
+    public static double synthesizerUpgrade7StorageMultiplier = 900;
+
+    @ConfigValue(category = "Upgrades.Synthesizer.Level7", name = "outputMultiplier", desc = "How many times will the rate of energy output increase?")
+    public static double synthesizerUpgrade7OutputMultiplier = 760;
+
+
+    @ConfigValue(category = "Upgrades.Synthesizer.Level8", name = "bonus", max = "1000", desc = "By what percentage will the upgrade increase the generation of panels in the Panel Synthesizer?")
+    public static double synthesizerUpgrade8Bonus = 50;
+
+    @ConfigValue(category = "Upgrades.Synthesizer.Level8", name = "storageMultiplier", desc = "How many times will the Synthesizer's storage be increased with each upgrade?")
+    public static double synthesizerUpgrade8StorageMultiplier = 1500;
+
+    @ConfigValue(category = "Upgrades.Synthesizer.Level8", name = "outputMultiplier", desc = "How many times will the rate of energy output increase?")
+    public static double synthesizerUpgrade8OutputMultiplier = 1435;
+
+
+    @ConfigValue(category = "Upgrades.Synthesizer.Level9", name = "bonus", max = "1000", desc = "By what percentage will the upgrade increase the generation of panels in the Panel Synthesizer?")
+    public static double synthesizerUpgrade9Bonus = 100;
+
+    @ConfigValue(category = "Upgrades.Synthesizer.Level9", name = "storageMultiplier", desc = "How many times will the Synthesizer's storage be increased with each upgrade?")
+    public static double synthesizerUpgrade9StorageMultiplier = 9000;
+
+    @ConfigValue(category = "Upgrades.Synthesizer.Level9", name = "outputMultiplier", desc = "How many times will the rate of energy output increase?")
+    public static double synthesizerUpgrade9OutputMultiplier = 8000;
+
+
+    @ConfigValue(category = "Upgrades.Synthesizer.Level10", name = "bonus", max = "1000", desc = "By what percentage will the upgrade increase the generation of panels in the Panel Synthesizer?")
+    public static double synthesizerUpgrade10Bonus = 150;
+
+    @ConfigValue(category = "Upgrades.Synthesizer.Level10", name = "storageMultiplier", desc = "How many times will the Synthesizer's storage be increased with each upgrade?")
+    public static double synthesizerUpgrade10StorageMultiplier = 25000;
+
+    @ConfigValue(category = "Upgrades.Synthesizer.Level10", name = "outputMultiplier", desc = "How many times will the rate of energy output increase?")
+    public static double synthesizerUpgrade10OutputMultiplier = 25000;
+
+
 
     // Energy Storage Basic
     @ConfigValue(category = "Storage.Basic", name = "tier", desc = "The energy level of the unit. Affects the speed of charging and discharging energy. For example, MFSU has level 4")
@@ -447,6 +549,136 @@ public class FIConfig {
     @ConfigValue(category = "Generator.Fuel.Quantum", name = "storage", desc = "How much energy can this item hold?")
     public static double generatorQuantumStorage = 100_000;
 
-    @ConfigValue(category = "Generator.Fuel.Quantum", name = "supportsRF", desc = "Does this item support RF energy?")
+    @ConfigValue(category = "Generator.Fuel.Quantum", name = "supportsRF", desc = "Does this block support RF energy?")
     public static boolean generatorQuantumSupportsRF = true;
+
+
+    // Solar Panels
+    @ConfigValue(category = "Generator.SolarPanels.Level1", name = "dayGenerating", desc = "Amount of energy produced by a Solar Panel 1-level during the day")
+    public static double solarPanel1GeneratingDay = 1_024;
+
+    @ConfigValue(category = "Generator.SolarPanels.Level1", name = "nightGenerating", desc = "Amount of energy produced by a Solar Panel 1-level at night")
+    public static double solarPanel1GeneratingNight = 512;
+
+    @ConfigValue(category = "Generator.SolarPanels.Level1", name = "output", desc = "How much energy does it transfer at a time?")
+    public static double solarPanel1Output = 10_240;
+
+    @ConfigValue(category = "Generator.SolarPanels.Level1", name = "storage", desc = "How much energy can this item hold?")
+    public static double solarPanel1Storage = 1_024_000;
+
+
+    @ConfigValue(category = "Generator.SolarPanels.Level2", name = "dayGenerating", desc = "Amount of energy produced by a Solar Panel 2-level during the day")
+    public static double solarPanel2GeneratingDay = 8_192;
+
+    @ConfigValue(category = "Generator.SolarPanels.Level2", name = "nightGenerating", desc = "Amount of energy produced by a Solar Panel 2-level at night")
+    public static double solarPanel2GeneratingNight = 4_096;
+
+    @ConfigValue(category = "Generator.SolarPanels.Level2", name = "output", desc = "How much energy does it transfer at a time?")
+    public static double solarPanel2Output = 81_920;
+
+    @ConfigValue(category = "Generator.SolarPanels.Level2", name = "storage", desc = "How much energy can this item hold?")
+    public static double solarPanel2Storage = 8_192_000;
+
+
+    @ConfigValue(category = "Generator.SolarPanels.Level3", name = "dayGenerating", desc = "Amount of energy produced by a Solar Panel 3-level during the day")
+    public static double solarPanel3GeneratingDay = 32_768;
+
+    @ConfigValue(category = "Generator.SolarPanels.Level3", name = "nightGenerating", desc = "Amount of energy produced by a Solar Panel 3-level at night")
+    public static double solarPanel3GeneratingNight = 16_384;
+
+    @ConfigValue(category = "Generator.SolarPanels.Level3", name = "output", desc = "How much energy does it transfer at a time?")
+    public static double solarPanel3Output = 327_680;
+
+    @ConfigValue(category = "Generator.SolarPanels.Level3", name = "storage", desc = "How much energy can this item hold?")
+    public static double solarPanel3Storage = 32_768_000;
+
+
+    @ConfigValue(category = "Generator.SolarPanels.Level4", name = "dayGenerating", desc = "Amount of energy produced by a Solar Panel 4-level during the day")
+    public static double solarPanel4GeneratingDay = 131_072;
+
+    @ConfigValue(category = "Generator.SolarPanels.Level4", name = "nightGenerating", desc = "Amount of energy produced by a Solar Panel 4-level at night")
+    public static double solarPanel4GeneratingNight = 65_536;
+
+    @ConfigValue(category = "Generator.SolarPanels.Level4", name = "output", desc = "How much energy does it transfer at a time?")
+    public static double solarPanel4Output = 1_310_720;
+
+    @ConfigValue(category = "Generator.SolarPanels.Level4", name = "storage", desc = "How much energy can this item hold?")
+    public static double solarPanel4Storage = 131_072_000;
+
+
+    @ConfigValue(category = "Generator.SolarPanels.Level5", name = "dayGenerating", desc = "Amount of energy produced by a Solar Panel 5-level during the day")
+    public static double solarPanel5GeneratingDay = 524_288;
+
+    @ConfigValue(category = "Generator.SolarPanels.Level5", name = "nightGenerating", desc = "Amount of energy produced by a Solar Panel 5-level at night")
+    public static double solarPanel5GeneratingNight = 262_144;
+
+    @ConfigValue(category = "Generator.SolarPanels.Level5", name = "output", desc = "How much energy does it transfer at a time?")
+    public static double solarPanel5Output = 5_242_880;
+
+    @ConfigValue(category = "Generator.SolarPanels.Level5", name = "storage", desc = "How much energy can this item hold?")
+    public static double solarPanel5Storage = 524_288_000;
+
+
+    @ConfigValue(category = "Generator.SolarPanels.Level6", name = "dayGenerating", desc = "Amount of energy produced by a Solar Panel 6-level during the day")
+    public static double solarPanel6GeneratingDay = 2_097_152;
+
+    @ConfigValue(category = "Generator.SolarPanels.Level6", name = "nightGenerating", desc = "Amount of energy produced by a Solar Panel 6-level at night")
+    public static double solarPanel6GeneratingNight = 1_048_576;
+
+    @ConfigValue(category = "Generator.SolarPanels.Level6", name = "output", desc = "How much energy does it transfer at a time?")
+    public static double solarPanel6Output = 20_971_520;
+
+    @ConfigValue(category = "Generator.SolarPanels.Level6", name = "storage", desc = "How much energy can this item hold?")
+    public static double solarPanel6Storage = 2_097_152_000;
+
+
+    @ConfigValue(category = "Generator.SolarPanels.Level7", name = "dayGenerating", desc = "Amount of energy produced by a Solar Panel 78-level during the day")
+    public static double solarPanel7GeneratingDay = 8_388_608;
+
+    @ConfigValue(category = "Generator.SolarPanels.Level7", name = "nightGenerating", desc = "Amount of energy produced by a Solar Panel 7-level at night")
+    public static double solarPanel7GeneratingNight = 4_194_304;
+
+    @ConfigValue(category = "Generator.SolarPanels.Level7", name = "output", desc = "How much energy does it transfer at a time?")
+    public static double solarPanel7Output = 83_886_080;
+
+    @ConfigValue(category = "Generator.SolarPanels.Level7", name = "storage", desc = "How much energy can this item hold?")
+    public static double solarPanel7Storage = 8_388_608_000D;
+
+
+    @ConfigValue(category = "Generator.SolarPanels.Level8", name = "dayGenerating", desc = "Amount of energy produced by a Solar Panel 8-level during the day")
+    public static double solarPanel8GeneratingDay = 33_554_432;
+
+    @ConfigValue(category = "Generator.SolarPanels.Level8", name = "nightGenerating", desc = "Amount of energy produced by a Solar Panel 8-level at night")
+    public static double solarPanel8GeneratingNight = 16_777_216;
+
+    @ConfigValue(category = "Generator.SolarPanels.Level8", name = "output", desc = "How much energy does it transfer at a time?")
+    public static double solarPanel8Output = 335_544_320;
+
+    @ConfigValue(category = "Generator.SolarPanels.Level8", name = "storage", desc = "How much energy can this item hold?")
+    public static double solarPanel8Storage = 33_554_432_000D;
+
+
+    // Infinity Generator
+    @ConfigValue(category = "Generator.Infinity", name = "generating", desc = "Amount of energy produced by a Infinity Generator")
+    public static double infinityGeneratorGenerating = 5_000_000_000D;
+
+    @ConfigValue(category = "Generator.Infinity", name = "output", desc = "How much energy does it transfer at a time?")
+    public static double infinityGeneratorOutput = 50_000_000_000D;
+
+    @ConfigValue(category = "Generator.Infinity", name = "storage", desc = "How much energy can this item hold?")
+    public static double infinityGeneratorStorage = 5_000_000_000_000D;
+
+    @ConfigValue(category = "Generator.Infinity", name = "supportsRF", desc = "Does this block support RF energy?")
+    public static boolean infinityGeneratorSupportsRF = true;
+
+
+    // Synthesizer
+    @ConfigValue(category = "Synthesizer", name = "output", desc = "How much energy does it transfer at a time?")
+    public static double synthesizerOutput = 700_000_000;
+
+    @ConfigValue(category = "Synthesizer", name = "storage", desc = "How much energy can this item hold?")
+    public static double synthesizerStorage = 70_000_000_000D;
+
+    @ConfigValue(category = "Synthesizer", name = "supportsRF", desc = "Does this block support RF energy?")
+    public static boolean synthesizerSupportsRF = true;
 }

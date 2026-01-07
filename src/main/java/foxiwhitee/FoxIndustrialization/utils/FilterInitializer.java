@@ -1,16 +1,14 @@
 package foxiwhitee.FoxIndustrialization.utils;
 
+import foxiwhitee.FoxIndustrialization.api.IHasSynthesizerIntegration;
+import foxiwhitee.FoxIndustrialization.api.ISynthesizerSunUpgrade;
+import foxiwhitee.FoxIndustrialization.api.ISynthesizerUpgrade;
 import foxiwhitee.FoxLib.api.energy.IDoubleEnergyContainerItem;
 import foxiwhitee.FoxLib.container.slots.SlotFiltered;
 import foxiwhitee.FoxLib.items.ItemProductivityCard;
 import ic2.api.item.IElectricItem;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockNetherrack;
-import net.minecraft.block.BlockStone;
-import net.minecraft.block.BlockTNT;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityFurnace;
 
@@ -23,6 +21,7 @@ public class FilterInitializer {
     private static final List<Class<?>> filterSingularEnergyStorageClasses = new ArrayList<>();
 
     private static final List<Class<?>> filterQuantumGeneratorClasses = new ArrayList<>();
+    private static final List<Class<?>> filterInfinityGeneratorClasses = new ArrayList<>();
 
     static {
         addClassToFilterUltimateStorage(IElectricItem.class);
@@ -33,6 +32,8 @@ public class FilterInitializer {
         addClassToFilterSingularStorage(IDoubleEnergyContainerItem.class);
         addClassToFilterQuantumGenerator(IElectricItem.class);
         addClassToFilterQuantumGenerator(IDoubleEnergyContainerItem.class);
+        addClassToFilterInfinityGenerator(IElectricItem.class);
+        addClassToFilterInfinityGenerator(IDoubleEnergyContainerItem.class);
     }
 
     public static final String FILTER_BASIC_ENERGY_STORAGE = "basicEnergyStorage";
@@ -48,6 +49,13 @@ public class FilterInitializer {
     public static final String FILTER_QUANTUM_GENERATOR = "quantumGenerator";
     public static final String FILTER_FLAMMABLE_MATERIAL = "flammableMaterial";
 
+    public static final String FILTER_CUSTOM_SOLAR_PANEL = "solarPanel";
+    public static final String FILTER_INFINITY_GENERATOR = "infinityGenerator";
+
+    public static final String FILTER_SYNTHESIZER_SLOTS = "synthesizerSlots";
+    public static final String FILTER_SYNTHESIZER_SUN_UPGRADE = "synthesizerSunUpgrade";
+    public static final String FILTER_SYNTHESIZER_UPGRADE = "synthesizerUpgrade";
+
     public static void initFilters() {
         SlotFiltered.filters.put(FILTER_BASIC_ENERGY_STORAGE, stack -> itemInstanceof(stack, IElectricItem.class));
         SlotFiltered.filters.put(FILTER_ADVANCED_ENERGY_STORAGE, stack -> itemInstanceof(stack, IElectricItem.class));
@@ -61,6 +69,13 @@ public class FilterInitializer {
         SlotFiltered.filters.put(FILTER_QUANTUM_GENERATOR, stack -> itemInstanceof(stack, filterQuantumGeneratorClasses.toArray(new Class[0])));
 
         SlotFiltered.filters.put(FILTER_FLAMMABLE_MATERIAL, stack -> TileEntityFurnace.getItemBurnTime(stack) > 0);
+
+        SlotFiltered.filters.put(FILTER_CUSTOM_SOLAR_PANEL, stack -> itemInstanceof(stack, IElectricItem.class));
+        SlotFiltered.filters.put(FILTER_INFINITY_GENERATOR, stack -> itemInstanceof(stack, filterInfinityGeneratorClasses.toArray(new Class[0])));
+
+        SlotFiltered.filters.put(FILTER_SYNTHESIZER_SLOTS, stack -> itemInstanceof(stack, IHasSynthesizerIntegration.class));
+        SlotFiltered.filters.put(FILTER_SYNTHESIZER_SUN_UPGRADE, stack -> itemInstanceof(stack, ISynthesizerSunUpgrade.class));
+        SlotFiltered.filters.put(FILTER_SYNTHESIZER_UPGRADE, stack -> itemInstanceof(stack, ISynthesizerUpgrade.class));
     }
 
     public static void addClassToFilterUltimateStorage(Class<?> clazz) {
@@ -79,6 +94,10 @@ public class FilterInitializer {
         filterQuantumGeneratorClasses.add(clazz);
     }
 
+    public static void addClassToFilterInfinityGenerator(Class<?> clazz) {
+        filterInfinityGeneratorClasses.add(clazz);
+    }
+
     @SafeVarargs
     private static boolean blockInstanceof(ItemStack stack, Class<? extends Block>... classes) {
         boolean b = false;
@@ -91,7 +110,6 @@ public class FilterInitializer {
         return b;
     }
 
-    @SafeVarargs
     private static boolean itemInstanceof(ItemStack stack, Class<?>... classes) {
         boolean b = false;
         for (Class<?> clazz : classes) {

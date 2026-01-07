@@ -63,7 +63,7 @@ public abstract class TileGenerator extends TileIC2Inv implements IEnergySource 
     protected boolean chargeItems() {
         boolean needUpdate = false;
         for (int i = 0; i < charge.getSizeInventory(); i++) {
-            ItemStack chargeItem = charge.getStackInSlot(0);
+            ItemStack chargeItem = charge.getStackInSlot(i);
             if (this.energy >= 1 && chargeItem != null) {
                 double sent = ElectricItem.manager.charge(chargeItem, energy, 64, false, false);
                 this.energy -= sent;

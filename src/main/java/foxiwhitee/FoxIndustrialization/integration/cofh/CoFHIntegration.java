@@ -47,6 +47,7 @@ public class CoFHIntegration implements IIntegration {
         FilterInitializer.addClassToFilterQuantumStorage(IEnergyContainerItem.class);
         FilterInitializer.addClassToFilterSingularStorage(IEnergyContainerItem.class);
         FilterInitializer.addClassToFilterQuantumGenerator(IEnergyContainerItem.class);
+        FilterInitializer.addClassToFilterInfinityGenerator(IEnergyContainerItem.class);
     }
 
     @Override

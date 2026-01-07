@@ -44,6 +44,21 @@ tile.advancedGenerator.name=Advanced Generator
 tile.nanoGenerator.name=Nano Generator
 tile.quantumGenerator.name=Quantum Generator
 
+tile.solarPanelLevel1.name=Solar panel 1-level
+tile.solarPanelLevel2.name=Solar panel 2-level
+tile.solarPanelLevel3.name=Solar panel 3-level
+tile.solarPanelLevel4.name=Solar panel 4-level
+tile.solarPanelLevel5.name=Solar panel 5-level
+tile.solarPanelLevel6.name=Solar panel 6-level
+tile.solarPanelLevel7.name=Solar panel 7-level
+tile.solarPanelLevel8.name=Solar panel 8-level
+
+tile.infinityGenerator.name=Infinity Generator
+
+tile.casingNano.name=Nano Casing
+tile.casingQuantum.name=Nano Quantum
+
+tile.synthesizer.name=Energy Synthesizer
 # Items
 item.speedUpgrade.Advanced.name=Advanced Speed Upgrade
 item.speedUpgrade.Nano.name=Nano Speed Upgrade
@@ -61,6 +76,18 @@ item.baseUpgrade.name=Basis for upgrade
 item.powerConverterUpgrade.EU.name=§3Module EU
 item.powerConverterUpgrade.RF.name=§4Module RF
 
+item.synthesizerUpgradeSun.name=Synthesizer Upgrade: Infinity Sun
+item.synthesizerUpgrade.1.name=Synthesizer Upgrade 1
+item.synthesizerUpgrade.2.name=Synthesizer Upgrade 2
+item.synthesizerUpgrade.3.name=Synthesizer Upgrade 3
+item.synthesizerUpgrade.4.name=Synthesizer Upgrade 4
+item.synthesizerUpgrade.5.name=Synthesizer Upgrade 5
+item.synthesizerUpgrade.6.name=Synthesizer Upgrade 6
+item.synthesizerUpgrade.7.name=Synthesizer Upgrade 7
+item.synthesizerUpgrade.8.name=Synthesizer Upgrade 8
+item.synthesizerUpgrade.9.name=Synthesizer Upgrade 9
+item.synthesizerUpgrade.10.name=Synthesizer Upgrade 10
+
 # Tooltips
 tooltip.upgrade.addPerOp=§7Increases the number of items processed per operation by §3%s
 tooltip.upgrade.speed=§7Decrease process time to §3%S%%
@@ -69,6 +96,9 @@ tooltip.upgrade.storageMult=§7Increases the amount of energy stored by §3%s§7
 tooltip.upgrade.needsType=§7The upgrade works from the mechanism level: %s
 tooltip.upgrade.pc.storageMult=§7Increases the amount of %s%s energy§7 stored by §3%s§7 times
 tooltip.upgrade.pc.outputMult=§7Increases the rate of %s%s energy§7 output by §3%s§7 times
+tooltip.upgrade.outputMult=§7Increases the rate of energy output by §3%s§7 times
+tooltip.upgrade.synthesizerBonus=§7Energy bonus produced §3%s%%
+tooltip.upgrade.sun.desc=§7The solar panels generate as much energy at night as during the day.
 tooltip.level.advanced=§6Advanced
 tooltip.level.nano=§8Nano
 tooltip.level.quantum=§3Quantum
@@ -112,3 +142,6 @@ tooltip.energyCrystal.mode.hot_bar_and_armor=Hot bar and armor
 tooltip.energyCrystal.mode.all=All inventory
 tooltip.generator.generate=§7Generates: §3%s§7 EU/t
 tooltip.generator.output=§7Output: §3%s §7EU/t
+tooltip.solarPanel.generateInDay=§7Daytime generation: §3%s§7 EU/t
+tooltip.solarPanel.generateInNight=§7Nighttime generation: §3%s§7 EU/t
+tooltip.solarPanel.output=§7Output: §3%s §7EU/t

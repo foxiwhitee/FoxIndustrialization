@@ -1,19 +1,23 @@
 package foxiwhitee.FoxIndustrialization;
 
+import foxiwhitee.FoxIndustrialization.blocks.BlockCasing;
+import foxiwhitee.FoxIndustrialization.blocks.BlockSynthesizer;
 import foxiwhitee.FoxIndustrialization.blocks.generator.fuel.BlockAdvancedGenerator;
 import foxiwhitee.FoxIndustrialization.blocks.generator.fuel.BlockNanoGenerator;
 import foxiwhitee.FoxIndustrialization.blocks.generator.fuel.BlockQuantumGenerator;
+import foxiwhitee.FoxIndustrialization.blocks.generator.infinity.BlockInfinityGenerator;
+import foxiwhitee.FoxIndustrialization.blocks.generator.panel.*;
 import foxiwhitee.FoxIndustrialization.blocks.machines.advanced.*;
 import foxiwhitee.FoxIndustrialization.blocks.machines.nano.*;
 import foxiwhitee.FoxIndustrialization.blocks.machines.quantum.*;
 import foxiwhitee.FoxIndustrialization.blocks.storage.*;
 import foxiwhitee.FoxIndustrialization.config.ContentConfig;
-import foxiwhitee.FoxIndustrialization.items.block.ItemBlockEnergyStorage;
-import foxiwhitee.FoxIndustrialization.items.block.ItemBlockGenerator;
-import foxiwhitee.FoxIndustrialization.items.block.ItemBlockMachine;
+import foxiwhitee.FoxIndustrialization.items.block.*;
+import foxiwhitee.FoxIndustrialization.tile.TileSynthesizer;
 import foxiwhitee.FoxIndustrialization.tile.generator.fuel.TileAdvancedGenerator;
 import foxiwhitee.FoxIndustrialization.tile.generator.fuel.TileNanoGenerator;
 import foxiwhitee.FoxIndustrialization.tile.generator.fuel.TileQuantumGenerator;
+import foxiwhitee.FoxIndustrialization.tile.generator.infinity.TileInfinityGenerator;
 import foxiwhitee.FoxIndustrialization.tile.machines.advanced.*;
 import foxiwhitee.FoxIndustrialization.tile.machines.nano.*;
 import foxiwhitee.FoxIndustrialization.tile.machines.quantum.*;
@@ -22,6 +26,9 @@ import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;
 
 public class ModBlocks {
+    public static final Block casingNano = new BlockCasing("casingNano");
+    public static final Block casingQuantum = new BlockCasing("casingQuantum");
+
     public static final Block advancedCompressor = new BlockAdvancedCompressor("advancedCompressor");
     public static final Block advancedExtractor = new BlockAdvancedExtractor("advancedExtractor");
     public static final Block advancedFurnace = new BlockAdvancedFurnace("advancedFurnace");
@@ -63,12 +70,38 @@ public class ModBlocks {
     public static final Block nanoGenerator = new BlockNanoGenerator("nanoGenerator");
     public static final Block quantumGenerator = new BlockQuantumGenerator("quantumGenerator");
 
+    public static final Block solarPanelLevel1 = new BlockSolarPanelLevel1("solarPanelLevel1");
+    public static final Block solarPanelLevel2 = new BlockSolarPanelLevel2("solarPanelLevel2");
+    public static final Block solarPanelLevel3 = new BlockSolarPanelLevel3("solarPanelLevel3");
+    public static final Block solarPanelLevel4 = new BlockSolarPanelLevel4("solarPanelLevel4");
+    public static final Block solarPanelLevel5 = new BlockSolarPanelLevel5("solarPanelLevel5");
+    public static final Block solarPanelLevel6 = new BlockSolarPanelLevel6("solarPanelLevel6");
+    public static final Block solarPanelLevel7 = new BlockSolarPanelLevel7("solarPanelLevel7");
+    public static final Block solarPanelLevel8 = new BlockSolarPanelLevel8("solarPanelLevel8");
+
+    public static final Block infinityGenerator = new BlockInfinityGenerator("infinityGenerator");
+
+    public static final Block synthesizer = new BlockSynthesizer("synthesizer");
+
     public static void registerBlocks() {
+        registerCasings();
         registerAdvancedMachines();
         registerNanoMachines();
         registerQuantumMachines();
         registerGenerators();
         registerEnergyStorages();
+        registerCustomSolarPanels();
+        registerInfinityGenerator();
+        registerSynthesizers();
+    }
+
+    private static void registerCasings() {
+        if (ContentConfig.enableNanoCasing) {
+            RegisterUtils.registerBlock(casingNano);
+        }
+        if (ContentConfig.enableQuantumCasing) {
+            RegisterUtils.registerBlock(casingQuantum);
+        }
     }
 
     private static void registerAdvancedMachines() {
@@ -175,6 +208,27 @@ public class ModBlocks {
         if (ContentConfig.enableQuantumGenerator) {
             RegisterUtils.registerBlock(quantumGenerator, ItemBlockGenerator.class);
             RegisterUtils.registerTile(TileQuantumGenerator.class);
+        }
+    }
+
+    private static void registerCustomSolarPanels() {
+        if (ContentConfig.enableCustomSolarPanels) {
+            RegisterUtils.registerBlocks(ItemBlockSolarPanel.class, solarPanelLevel1, solarPanelLevel2, solarPanelLevel3, solarPanelLevel4, solarPanelLevel5, solarPanelLevel6, solarPanelLevel7, solarPanelLevel8);
+            RegisterUtils.findClasses("foxiwhitee.FoxIndustrialization.tile.generator.panel", TileEntity.class).forEach(RegisterUtils::registerTile);
+        }
+    }
+
+    private static void registerInfinityGenerator() {
+        if (ContentConfig.enableInfinityGenerator) {
+            RegisterUtils.registerBlock(ItemBlockInfinityGenerator.class, infinityGenerator);
+            RegisterUtils.registerTile(TileInfinityGenerator.class);
+        }
+    }
+
+    private static void registerSynthesizers() {
+        if (ContentConfig.enableSynthesizer) {
+            RegisterUtils.registerBlock(ItemBlockSynthesizer.class, synthesizer);
+            RegisterUtils.registerTile(TileSynthesizer.class);
         }
     }
 }
