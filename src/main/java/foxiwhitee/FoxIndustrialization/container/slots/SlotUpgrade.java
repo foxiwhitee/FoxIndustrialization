@@ -45,8 +45,8 @@ public class SlotUpgrade extends FoxSlot {
                     case 0: return types.contains(UpgradesTypes.SPEED);
                     case 2: return types.contains(UpgradesTypes.STORAGE);
                     case 3: return types.contains(UpgradesTypes.EJECTOR);
+                    case 4: return types.contains(UpgradesTypes.FLUID_EJECTOR);
                     case 6: return types.contains(UpgradesTypes.PULLING);
-                    case 5: return types.contains(UpgradesTypes.REDSTONE);
                 }
             }
 

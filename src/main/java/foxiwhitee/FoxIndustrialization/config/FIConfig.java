@@ -552,6 +552,31 @@ public class FIConfig {
     @ConfigValue(category = "Generator.Fuel.Quantum", name = "supportsRF", desc = "Does this block support RF energy?")
     public static boolean generatorQuantumSupportsRF = true;
 
+    // Kinetic
+    // Advanced
+    @ConfigValue(category = "Generator.Kinetic.Advanced", name = "output", desc = "How much energy does it transfer at a time?")
+    public static double kineticGeneratorAdvancedOutput = 12_000;
+
+    @ConfigValue(category = "Generator.Kinetic.Advanced", name = "storage", desc = "How much energy can this item hold?")
+    public static double kineticGeneratorAdvancedStorage = 1_000_000;
+
+    // Nano
+    @ConfigValue(category = "Generator.Kinetic.Nano", name = "output", desc = "How much energy does it transfer at a time?")
+    public static double kineticGeneratorNanoOutput = 32_000;
+
+    @ConfigValue(category = "Generator.Kinetic.Nano", name = "storage", desc = "How much energy can this item hold?")
+    public static double kineticGeneratorNanoStorage = 5_000_000;
+
+    // Quantum
+    @ConfigValue(category = "Generator.Kinetic.Quantum", name = "output", desc = "How much energy does it transfer at a time?")
+    public static double kineticGeneratorQuantumOutput = 128_000;
+
+    @ConfigValue(category = "Generator.Kinetic.Quantum", name = "storage", desc = "How much energy can this item hold?")
+    public static double kineticGeneratorQuantumStorage = 100_000_000;
+
+    @ConfigValue(category = "Generator.Kinetic.Quantum", name = "supportsRF", desc = "Does this block support RF energy?")
+    public static boolean kineticGeneratorQuantumSupportsRF = true;
+
 
     // Solar Panels
     @ConfigValue(category = "Generator.SolarPanels.Level1", name = "dayGenerating", desc = "Amount of energy produced by a Solar Panel 1-level during the day")
@@ -681,4 +706,15 @@ public class FIConfig {
 
     @ConfigValue(category = "Synthesizer", name = "supportsRF", desc = "Does this block support RF energy?")
     public static boolean synthesizerSupportsRF = true;
+
+
+    // Universal Fluid Complex
+    @ConfigValue(category = "UFC", name = "storage", desc = "The maximum amount of energy that the block can hold")
+    public static double ufcStorage = 5_000_000;
+
+    @ConfigValue(category = "UFC", name = "itemsPerOp", max = "64", desc = "How many items can this block process at a time according to the standard?")
+    public static int ufcItemsPerOp = 4;
+
+    @ConfigValue(category = "UFC", name = "fluidStorage", desc = "The maximum amount of fluid that the block can hold in one fluid container")
+    public static int ufcFluidStorage = 128_000;
 }

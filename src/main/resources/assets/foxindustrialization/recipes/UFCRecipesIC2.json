@@ -1,0 +1,28 @@
+{
+  "crafts": [
+    {
+      "type": "universalFluidComplex",
+      "energy": 5000,
+      "outputs": [],
+      "outputFluid": "<ic2coolant:8000>",
+      "inputs": ["<IC2:itemDust.12:8>"],
+      "inputsFluid": ["<water:8000>"]
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 5000,
+      "outputs": [],
+      "outputFluid": "<ic2constructionfoam>",
+      "inputs": ["<IC2:itemPartCFPowder>"],
+      "inputsFluid": ["<water>"]
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 5000,
+      "outputs": [],
+      "outputFluid": "<ic2biomass>",
+      "inputs": ["<IC2:itemBiochaff>"],
+      "inputsFluid": ["<water>"]
+    }
+  ]
+}

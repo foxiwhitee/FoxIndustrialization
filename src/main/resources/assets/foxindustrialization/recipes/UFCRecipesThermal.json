@@ -1,0 +1,653 @@
+{
+  "crafts": [
+    {
+      "type": "universalFluidComplex",
+      "energy": 5000,
+      "outputs": [],
+      "outputFluid": "<glowstone:250>",
+      "inputs": ["<minecraft:glowstone_dust>"],
+      "inputsFluid": []
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 2000,
+      "outputs": [],
+      "outputFluid": "<redstone:100>",
+      "inputs": ["<minecraft:redstone>"],
+      "inputsFluid": []
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 2000,
+      "outputs": [],
+      "outputFluid": "<coal:100>",
+      "inputs": ["<ThermalFoundation:material.2>"],
+      "inputsFluid": []
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 5000,
+      "outputs": [],
+      "outputFluid": "<lava:250>",
+      "inputs": ["<minecraft:blaze_rod>"],
+      "inputsFluid": []
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 20000,
+      "outputs": [],
+      "outputFluid": "<glowstone>",
+      "inputs": ["<minecraft:glowstone>"],
+      "inputsFluid": []
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 80000,
+      "outputs": [],
+      "outputFluid": "<lava>",
+      "inputs": ["<minecraft:obsidian>"],
+      "inputsFluid": []
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 18000,
+      "outputs": [],
+      "outputFluid": "<redstone:900>",
+      "inputs": ["<minecraft:redstone_block>"],
+      "inputsFluid": []
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 2000,
+      "outputs": [],
+      "outputFluid": "<cryotheum:250>",
+      "inputs": ["<ThermalFoundation:material.513>"],
+      "inputsFluid": []
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 200,
+      "outputs": [],
+      "outputFluid": "<water:500>",
+      "inputs": ["<minecraft:snow>"],
+      "inputsFluid": []
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 20000,
+      "outputs": [],
+      "outputFluid": "<aerotheum:250>",
+      "inputs": ["<ThermalFoundation:material.514>"],
+      "inputsFluid": []
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 2000,
+      "outputs": [],
+      "outputFluid": "<petrotheum:250>",
+      "inputs": ["<ThermalFoundation:material.515>"],
+      "inputsFluid": []
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 2000,
+      "outputs": [],
+      "outputFluid": "<pyrotheum:250>",
+      "inputs": ["<ThermalFoundation:material.512>"],
+      "inputsFluid": []
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 80000,
+      "outputs": [],
+      "outputFluid": "<lava>",
+      "inputs": ["<minecraft:cobblestone>"],
+      "inputsFluid": []
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 5000,
+      "outputs": [],
+      "outputFluid": "<ender:250>",
+      "inputs": ["<minecraft:ender_pearl>"],
+      "inputsFluid": []
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 80000,
+      "outputs": [],
+      "outputFluid": "<lava>",
+      "inputs": ["<minecraft:stone>"],
+      "inputsFluid": []
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 4000,
+      "outputs": [],
+      "outputFluid": "<water>",
+      "inputs": ["<minecraft:ice>"],
+      "inputsFluid": []
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 30000,
+      "outputs": [],
+      "outputFluid": "<lava>",
+      "inputs": ["<minecraft:netherrack>"],
+      "inputsFluid": []
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 50,
+      "outputs": [],
+      "outputFluid": "<water:125>",
+      "inputs": ["<minecraft:snowball>"],
+      "inputsFluid": []
+    },
+
+    {
+      "type": "universalFluidComplex",
+      "energy": 4000,
+      "outputs": ["<minecraft:potion>"],
+      "outputFluid": "",
+      "inputs": ["<minecraft:glass_bottle>"],
+      "inputsFluid": ["<water>"]
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 200,
+      "outputs": ["<ThermalDynamics:ThermalDynamics_32.7>"],
+      "outputFluid": "",
+      "inputs": ["<ThermalDynamics:ThermalDynamics_32.1>"],
+      "inputsFluid": ["<redstone:200>"]
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 2000,
+      "outputs": ["<minecraft:packed_ice>"],
+      "outputFluid": "",
+      "inputs": ["<minecraft:ice>"],
+      "inputsFluid": ["<cryotheum:250>"]
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 200,
+      "outputs": ["<minecraft:water_bucket>"],
+      "outputFluid": "",
+      "inputs": ["<minecraft:bucket>"],
+      "inputsFluid": ["<water>"]
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 200,
+      "outputs": ["<minecraft:lava_bucket>"],
+      "outputFluid": "",
+      "inputs": ["<minecraft:bucket>"],
+      "inputsFluid": ["<lava>"]
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 200,
+      "outputs": ["<EnderIO:bucketXpjuice>"],
+      "outputFluid": "",
+      "inputs": ["<minecraft:bucket>"],
+      "inputsFluid": ["<xpjuice>"]
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 200,
+      "outputs": ["<EnderIO:bucketNutrient_distillation>"],
+      "outputFluid": "",
+      "inputs": ["<minecraft:bucket>"],
+      "inputsFluid": ["<nutrient_distillation>"]
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 200,
+      "outputs": ["<EnderIO:bucketHootch>"],
+      "outputFluid": "",
+      "inputs": ["<minecraft:bucket>"],
+      "inputsFluid": ["<hooth>"]
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 200,
+      "outputs": ["<EnderIO:bucketRocket_fuel>"],
+      "outputFluid": "",
+      "inputs": ["<minecraft:bucket>"],
+      "inputsFluid": ["<rocket_fuel>"]
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 200,
+      "outputs": ["<EnderIO:bucketFire_water>"],
+      "outputFluid": "",
+      "inputs": ["<minecraft:bucket>"],
+      "inputsFluid": ["<fire_water>"]
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 200,
+      "outputs": ["<EnderIO:bucketLiquid_sunshine>"],
+      "outputFluid": "",
+      "inputs": ["<minecraft:bucket>"],
+      "inputsFluid": ["<liquid_sunshine>"]
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 200,
+      "outputs": ["<EnderIO:bucketCloud_seed>"],
+      "outputFluid": "",
+      "inputs": ["<minecraft:bucket>"],
+      "inputsFluid": ["<cloud_seed>"]
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 200,
+      "outputs": ["<EnderIO:bucketCloud_seed_concentrated>"],
+      "outputFluid": "",
+      "inputs": ["<minecraft:bucket>"],
+      "inputsFluid": ["<cloud_seed_concentrated>"]
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 200,
+      "outputs": ["<EnderIO:bucketEnder_distillation>"],
+      "outputFluid": "",
+      "inputs": ["<minecraft:bucket>"],
+      "inputsFluid": ["<ender_distillation>"]
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 200,
+      "outputs": ["<EnderIO:bucketVapor_of_levity>"],
+      "outputFluid": "",
+      "inputs": ["<minecraft:bucket>"],
+      "inputsFluid": ["<vapor_of_levity>"]
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 200,
+      "outputs": ["<ThermalFoundation:bucket>"],
+      "outputFluid": "",
+      "inputs": ["<minecraft:bucket>"],
+      "inputsFluid": ["<redstone>"]
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 200,
+      "outputs": ["<ThermalFoundation:bucket.1>"],
+      "outputFluid": "",
+      "inputs": ["<minecraft:bucket>"],
+      "inputsFluid": ["<glowstone>"]
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 200,
+      "outputs": ["<ThermalFoundation:bucket.2>"],
+      "outputFluid": "",
+      "inputs": ["<minecraft:bucket>"],
+      "inputsFluid": ["<ender>"]
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 200,
+      "outputs": ["<ThermalFoundation:bucket.3>"],
+      "outputFluid": "",
+      "inputs": ["<minecraft:bucket>"],
+      "inputsFluid": ["<pyrotheum>"]
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 200,
+      "outputs": ["<ThermalFoundation:bucket.4>"],
+      "outputFluid": "",
+      "inputs": ["<minecraft:bucket>"],
+      "inputsFluid": ["<cryotheum>"]
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 200,
+      "outputs": ["<ThermalFoundation:bucket.7>"],
+      "outputFluid": "",
+      "inputs": ["<minecraft:bucket>"],
+      "inputsFluid": ["<aerotheum>"]
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 200,
+      "outputs": ["<ThermalFoundation:bucket.8>"],
+      "outputFluid": "",
+      "inputs": ["<minecraft:bucket>"],
+      "inputsFluid": ["<petrotheum>"]
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 200,
+      "outputs": ["<ThermalFoundation:bucket.5>"],
+      "outputFluid": "",
+      "inputs": ["<minecraft:bucket>"],
+      "inputsFluid": ["<mana>"]
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 200,
+      "outputs": ["<ThermalFoundation:bucket.6>"],
+      "outputFluid": "",
+      "inputs": ["<minecraft:bucket>"],
+      "inputsFluid": ["<coal>"]
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 200,
+      "outputs": ["<minecraft:bucket>"],
+      "outputFluid": "<water>",
+      "inputs": ["<minecraft:water_bucket>"],
+      "inputsFluid": []
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 200,
+      "outputs": ["<minecraft:bucket>"],
+      "outputFluid": "<lava>",
+      "inputs": ["<minecraft:lava_bucket>"],
+      "inputsFluid": []
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 200,
+      "outputs": ["<minecraft:bucket>"],
+      "outputFluid": "<xpjuice>",
+      "inputs": ["<EnderIO:bucketXpjuice>"],
+      "inputsFluid": []
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 200,
+      "outputs": ["<minecraft:bucket>"],
+      "outputFluid": "<nutrient_distillation>",
+      "inputs": ["<EnderIO:bucketNutrient_distillation>"],
+      "inputsFluid": []
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 200,
+      "outputs": ["<minecraft:bucket>"],
+      "outputFluid": "<hooth>",
+      "inputs": ["<EnderIO:bucketHootch>"],
+      "inputsFluid": []
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 200,
+      "outputs": ["<minecraft:bucket>"],
+      "outputFluid": "<rocket_fuel>",
+      "inputs": ["<EnderIO:bucketRocket_fuel>"],
+      "inputsFluid": []
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 200,
+      "outputs": ["<minecraft:bucket>"],
+      "outputFluid": "<fire_water>",
+      "inputs": ["<EnderIO:bucketFire_water>"],
+      "inputsFluid": []
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 200,
+      "outputs": ["<minecraft:bucket>"],
+      "outputFluid": "<liquid_sunshine>",
+      "inputs": ["<EnderIO:bucketLiquid_sunshine>"],
+      "inputsFluid": []
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 200,
+      "outputs": ["<minecraft:bucket>"],
+      "outputFluid": "<cloud_seed>",
+      "inputs": ["<EnderIO:bucketCloud_seed>"],
+      "inputsFluid": []
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 200,
+      "outputs": ["<minecraft:bucket>"],
+      "outputFluid": "<cloud_seed_concentrated>",
+      "inputs": ["<EnderIO:bucketCloud_seed_concentrated>"],
+      "inputsFluid": []
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 200,
+      "outputs": ["<minecraft:bucket>"],
+      "outputFluid": "<ender_distillation>",
+      "inputs": ["<EnderIO:bucketEnder_distillation>"],
+      "inputsFluid": []
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 200,
+      "outputs": ["<minecraft:bucket>"],
+      "outputFluid": "<vapor_of_levity>",
+      "inputs": ["<EnderIO:bucketVapor_of_levity>"],
+      "inputsFluid": []
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 200,
+      "outputs": ["<minecraft:bucket>"],
+      "outputFluid": "<redstone>",
+      "inputs": ["<ThermalFoundation:bucket>"],
+      "inputsFluid": []
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 200,
+      "outputs": ["<minecraft:bucket>"],
+      "outputFluid": "<glowstone>",
+      "inputs": ["<ThermalFoundation:bucket.1>"],
+      "inputsFluid": []
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 200,
+      "outputs": ["<minecraft:bucket>"],
+      "outputFluid": "<ender>",
+      "inputs": ["<ThermalFoundation:bucket.2>"],
+      "inputsFluid": []
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 200,
+      "outputs": ["<minecraft:bucket>"],
+      "outputFluid": "<pyrotheum>",
+      "inputs": ["<ThermalFoundation:bucket.3>"],
+      "inputsFluid": []
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 200,
+      "outputs": ["<minecraft:bucket>"],
+      "outputFluid": "<cryotheum>",
+      "inputs": ["<ThermalFoundation:bucket.4>"],
+      "inputsFluid": []
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 200,
+      "outputs": ["<minecraft:bucket>"],
+      "outputFluid": "<aerotheum>",
+      "inputs": ["<ThermalFoundation:bucket.7>"],
+      "inputsFluid": []
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 200,
+      "outputs": ["<minecraft:bucket>"],
+      "outputFluid": "<petrotheum>",
+      "inputs": ["<ThermalFoundation:bucket.8>"],
+      "inputsFluid": []
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 200,
+      "outputs": ["<minecraft:bucket>"],
+      "outputFluid": "<mana>",
+      "inputs": ["<ThermalFoundation:bucket.5>"],
+      "inputsFluid": []
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 200,
+      "outputs": ["<minecraft:bucket>"],
+      "outputFluid": "<coal>",
+      "inputs": ["<ThermalFoundation:bucket.6>"],
+      "inputsFluid": []
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 200,
+      "outputs": ["<ThermalDynamics:ThermalDynamics_64>"],
+      "outputFluid": "",
+      "inputs": ["<ThermalDynamics:ThermalDynamics_64.3>"],
+      "inputsFluid": ["<aerotheum:50>"]
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 200,
+      "outputs": ["<ThermalDynamics:ThermalDynamics_0.4>"],
+      "outputFluid": "",
+      "inputs": ["<ThermalDynamics:ThermalDynamics_0.5>"],
+      "inputsFluid": ["<redstone:200>"]
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 2000,
+      "outputs": ["<minecraft:end_stone>"],
+      "outputFluid": "",
+      "inputs": ["<minecraft:sandstone>"],
+      "inputsFluid": ["<ender:200>"]
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 200,
+      "outputs": ["<ThermalDynamics:ThermalDynamics_0.2>"],
+      "outputFluid": "",
+      "inputs": ["<ThermalDynamics:ThermalDynamics_0.3>"],
+      "inputsFluid": ["<redstone:200>"]
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 1000,
+      "outputs": ["<minecraft:blaze_powder>"],
+      "outputFluid": "",
+      "inputs": ["<minecraft:glowstone_dust>"],
+      "inputsFluid": ["<redstone:200>"]
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 4000,
+      "outputs": ["<ThermalExpansion:Frame.7>"],
+      "outputFluid": "",
+      "inputs": ["<ThermalExpansion:Frame.6>"],
+      "inputsFluid": ["<redstone:4000>"]
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 4000,
+      "outputs": ["<ThermalExpansion:Frame.9>"],
+      "outputFluid": "",
+      "inputs": ["<ThermalExpansion:Frame.8>"],
+      "inputsFluid": ["<redstone:4000>"]
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 2000,
+      "outputs": ["<minecraft:mossy_cobblestone>"],
+      "outputFluid": "",
+      "inputs": ["<minecraft:cobblestone>"],
+      "inputsFluid": ["<water:250>"]
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 200,
+      "outputs": ["<ThermalDynamics:ThermalDynamics_32.3>"],
+      "outputFluid": "",
+      "inputs": ["<ThermalDynamics:ThermalDynamics_32.1>"],
+      "inputsFluid": ["<glowstone:200>"]
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 1000,
+      "outputs": ["<ThermalDynamics:ThermalDynamics_0.6>"],
+      "outputFluid": "",
+      "inputs": ["<ThermalDynamics:ThermalDynamics_0.7>"],
+      "inputsFluid": ["<cryotheum:500>"]
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 200,
+      "outputs": ["<ThermalDynamics:ThermalDynamics_32.6>"],
+      "outputFluid": "",
+      "inputs": ["<ThermalDynamics:ThermalDynamics_32>"],
+      "inputsFluid": ["<redstone:200>"]
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 8000,
+      "outputs": ["<ThermalDynamics:ThermalDynamics_64.2>"],
+      "outputFluid": "",
+      "inputs": ["<ThermalDynamics:ThermalDynamics_64>"],
+      "inputsFluid": ["<ender>"]
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 1000,
+      "outputs": ["<ThermalFoundation:material.1027>"],
+      "outputFluid": "",
+      "inputs": ["<minecraft:sand>"],
+      "inputsFluid": ["<redstone:200>"]
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 200,
+      "outputs": [],
+      "outputFluid": "<ThermalDynamics:ThermalDynamics_32.2>",
+      "inputs": ["<ThermalDynamics:ThermalDynamics_32>"],
+      "inputsFluid": ["<glowstone:200>"]
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 4000,
+      "outputs": ["<ThermalExpansion:Frame.11>"],
+      "outputFluid": "",
+      "inputs": ["<ThermalExpansion:Frame.10>"],
+      "inputsFluid": ["<ender>"]
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 1000,
+      "outputs": ["<ThermalFoundation:material.1029>"],
+      "outputFluid": "",
+      "inputs": ["<IC2:itemDust.11>"],
+      "inputsFluid": ["<redstone:200>"]
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 1000,
+      "outputs": ["<ThermalFoundation:material.1025>"],
+      "outputFluid": "",
+      "inputs": ["<minecraft:snowball>"],
+      "inputsFluid": ["<redstone:200>"]
+    },
+    {
+      "type": "universalFluidComplex",
+      "energy": 2000,
+      "outputs": ["<minecraft:stonebrick.1>"],
+      "outputFluid": "",
+      "inputs": ["<minecraft:stonebrick>"],
+      "inputsFluid": ["<water:250>"]
+    }
+  ]
+}

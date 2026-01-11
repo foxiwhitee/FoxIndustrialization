@@ -183,6 +183,6 @@ public abstract class TileCustomSolarPanel extends TileIC2Inv implements IEnergy
 
     @Override
     public boolean emitsEnergyTo(TileEntity tileEntity, ForgeDirection forgeDirection) {
-        return false;
+        return true;
     }
 }

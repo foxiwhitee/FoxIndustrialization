@@ -12,7 +12,7 @@ public class ContainerInfinityGenerator extends FoxBaseContainer {
 
         bindPlayerInventory(ip.inventory, 43, 173);
 
-        addSlotToContainer(new SlotFiltered(FilterInitializer.FILTER_CUSTOM_SOLAR_PANEL, myTile.getInternalInventory(), 0, 86, 87, ip.inventory));
-        addSlotToContainer(new SlotFiltered(FilterInitializer.FILTER_CUSTOM_SOLAR_PANEL, myTile.getInternalInventory(), 1, 160, 87, ip.inventory));
+        addSlotToContainer(new SlotFiltered(FilterInitializer.FILTER_INFINITY_GENERATOR, myTile.getInternalInventory(), 0, 86, 87, ip.inventory));
+        addSlotToContainer(new SlotFiltered(FilterInitializer.FILTER_INFINITY_GENERATOR, myTile.getInternalInventory(), 1, 160, 87, ip.inventory));
     }
 }

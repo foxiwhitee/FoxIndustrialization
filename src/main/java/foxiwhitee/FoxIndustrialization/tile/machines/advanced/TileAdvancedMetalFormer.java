@@ -1,5 +1,6 @@
 package foxiwhitee.FoxIndustrialization.tile.machines.advanced;
 
+import foxiwhitee.FoxIndustrialization.ModRecipes;
 import foxiwhitee.FoxIndustrialization.config.FIConfig;
 import foxiwhitee.FoxIndustrialization.helper.RecipeHelper;
 import foxiwhitee.FoxIndustrialization.recipes.IRecipeIC2;
@@ -54,9 +55,9 @@ public class TileAdvancedMetalFormer extends TileAdvancedMachine {
     @Override
     protected List<? extends IRecipeIC2> getRecipes() {
         return switch (mode) {
-            case ROLLING -> RecipeHelper.metalformerRollingRecipes;
-            case CUTTING -> RecipeHelper.metalformerCuttingRecipes;
-            case EXTRUDING -> RecipeHelper.metalformerExtrudingRecipes;
+            case ROLLING -> ModRecipes.metalformerRollingRecipes;
+            case CUTTING -> ModRecipes.metalformerCuttingRecipes;
+            case EXTRUDING -> ModRecipes.metalformerExtrudingRecipes;
         };
     }
 

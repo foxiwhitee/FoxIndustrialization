@@ -1,5 +1,6 @@
 package foxiwhitee.FoxIndustrialization.helper;
 
+import foxiwhitee.FoxIndustrialization.ModRecipes;
 import foxiwhitee.FoxIndustrialization.recipes.BasicIC2MachineRecipe;
 import foxiwhitee.FoxLib.utils.helpers.StackOreDict;
 import ic2.api.recipe.IRecipeInput;
@@ -15,25 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 public class RecipeHelper {
-    public static final List<BasicIC2MachineRecipe> furnaceRecipes = new ArrayList<>();
-    public static final List<BasicIC2MachineRecipe> maceratorRecipes = new ArrayList<>();
-    public static final List<BasicIC2MachineRecipe> extractorRecipes = new ArrayList<>();
-    public static final List<BasicIC2MachineRecipe> compressorRecipes = new ArrayList<>();
-    public static final List<BasicIC2MachineRecipe> metalformerExtrudingRecipes = new ArrayList<>();
-    public static final List<BasicIC2MachineRecipe> metalformerCuttingRecipes = new ArrayList<>();
-    public static final List<BasicIC2MachineRecipe> metalformerRollingRecipes = new ArrayList<>();
-
-    public static void init() {
-        convertFurnaceRecipes();
-        parseRecipe(maceratorRecipes, Recipes.macerator.getRecipes());
-        parseRecipe(extractorRecipes, Recipes.extractor.getRecipes());
-        parseRecipe(compressorRecipes, Recipes.compressor.getRecipes());
-        parseRecipe(metalformerExtrudingRecipes, Recipes.metalformerExtruding.getRecipes());
-        parseRecipe(metalformerCuttingRecipes, Recipes.metalformerCutting.getRecipes());
-        parseRecipe(metalformerRollingRecipes, Recipes.metalformerRolling.getRecipes());
-    }
-
-    private static void parseRecipe(List<BasicIC2MachineRecipe> recipes, Map<IRecipeInput, RecipeOutput> map) {
+    public static void parseRecipe(List<BasicIC2MachineRecipe> recipes, Map<IRecipeInput, RecipeOutput> map) {
         for (Map.Entry<IRecipeInput, RecipeOutput> entry : map.entrySet()) {
             Object input;
             if (entry.getKey() instanceof RecipeInputOreDict r) {
@@ -45,12 +28,12 @@ public class RecipeHelper {
         }
     }
 
-    private static void convertFurnaceRecipes() {
+    public static void convertFurnaceRecipes() {
         FurnaceRecipes furnaceRecipes = FurnaceRecipes.smelting();
 
         for(Map.Entry<ItemStack, ItemStack> entry : furnaceRecipes.getSmeltingList().entrySet()) {
             if (entry.getKey() != null && entry.getValue() != null) {
-                RecipeHelper.furnaceRecipes.add(new BasicIC2MachineRecipe(entry.getKey(), entry.getValue()));
+                ModRecipes.furnaceRecipes.add(new BasicIC2MachineRecipe(entry.getKey(), entry.getValue()));
             }
         }
     }

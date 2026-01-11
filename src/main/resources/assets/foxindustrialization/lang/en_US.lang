@@ -44,6 +44,10 @@ tile.advancedGenerator.name=Advanced Generator
 tile.nanoGenerator.name=Nano Generator
 tile.quantumGenerator.name=Quantum Generator
 
+tile.advancedKineticGenerator.name=Advanced Kinetic Generator
+tile.nanoKineticGenerator.name=Nano Kinetic Generator
+tile.quantumKineticGenerator.name=Quantum Kinetic Generator
+
 tile.solarPanelLevel1.name=Solar panel 1-level
 tile.solarPanelLevel2.name=Solar panel 2-level
 tile.solarPanelLevel3.name=Solar panel 3-level
@@ -145,3 +149,4 @@ tooltip.generator.output=§7Output: §3%s §7EU/t
 tooltip.solarPanel.generateInDay=§7Daytime generation: §3%s§7 EU/t
 tooltip.solarPanel.generateInNight=§7Nighttime generation: §3%s§7 EU/t
 tooltip.solarPanel.output=§7Output: §3%s §7EU/t
+tooltip.ufc.pressShiftToClear=Shift + RMB to clear

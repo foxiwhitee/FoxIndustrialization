@@ -32,6 +32,9 @@ public class ContentConfig {
     @ConfigValue(category = "Content", desc = "Enable Synthesizer?")
     public static boolean enableSynthesizer = true;
 
+    @ConfigValue(category = "Content", desc = "Enable Universal Fluid Complex?")
+    public static boolean enableUniversalFluidComplex = true;
+
 
     // Machines Advanced
     @ConfigValue(category = "Content.Machines.Advanced", desc = "Enable Advanced Compressor?")
@@ -106,4 +109,15 @@ public class ContentConfig {
 
     @ConfigValue(category = "Content.Generators.Fuel", desc = "Enable Quantum Generator?")
     public static boolean enableQuantumGenerator = true;
+
+
+    // Generator Kinetic
+    @ConfigValue(category = "Content.Generators.Kinetic", desc = "Enable Advanced Kinetic Generator?")
+    public static boolean enableAdvancedKineticGenerator = true;
+
+    @ConfigValue(category = "Content.Generators.Kinetic", desc = "Enable Nano Kinetic Generator?")
+    public static boolean enableNanoKineticGenerator = true;
+
+    @ConfigValue(category = "Content.Generators.Kinetic", desc = "Enable Quantum Kinetic Generator?")
+    public static boolean enableQuantumKineticGenerator = true;
 }

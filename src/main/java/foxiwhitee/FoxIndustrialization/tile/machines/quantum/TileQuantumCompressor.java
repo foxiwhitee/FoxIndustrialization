@@ -1,5 +1,6 @@
 package foxiwhitee.FoxIndustrialization.tile.machines.quantum;
 
+import foxiwhitee.FoxIndustrialization.ModRecipes;
 import foxiwhitee.FoxIndustrialization.config.FIConfig;
 import foxiwhitee.FoxIndustrialization.helper.RecipeHelper;
 import foxiwhitee.FoxIndustrialization.recipes.IRecipeIC2;
@@ -16,7 +17,7 @@ public class TileQuantumCompressor extends TileQuantumMachine {
 
     @Override
     protected List<? extends IRecipeIC2> getRecipes() {
-        return RecipeHelper.compressorRecipes;
+        return ModRecipes.compressorRecipes;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package foxiwhitee.FoxIndustrialization.tile.machines.nano;
 
+import foxiwhitee.FoxIndustrialization.ModRecipes;
 import foxiwhitee.FoxIndustrialization.config.FIConfig;
 import foxiwhitee.FoxIndustrialization.helper.RecipeHelper;
 import foxiwhitee.FoxIndustrialization.recipes.IRecipeIC2;
@@ -17,7 +18,7 @@ public class TileNanoFurnace extends TileNanoMachine {
 
     @Override
     protected List<? extends IRecipeIC2> getRecipes() {
-        return RecipeHelper.furnaceRecipes;
+        return ModRecipes.furnaceRecipes;
     }
 
     @Override

@@ -43,6 +43,10 @@ tile.advancedGenerator.name=Розширений генератор
 tile.nanoGenerator.name=Нано генератор
 tile.quantumGenerator.name=Квантовий генератор
 
+tile.advancedKineticGenerator.name=Розширений кінетичний генератор
+tile.nanoKineticGenerator.name=Нано кінетичний генератор
+tile.quantumKineticGenerator.name=Квантовий кінетичний генератор
+
 tile.solarPanelLevel1.name=Сонячна панель 1 рівня
 tile.solarPanelLevel2.name=Сонячна панель 2 рівня
 tile.solarPanelLevel3.name=Сонячна панель 3 рівня
@@ -143,3 +147,4 @@ tooltip.generator.output=§7Вихід: §3%s§7 EU/t
 tooltip.solarPanel.generateInDay=§7Генерує в день: §3%s§7 EU/t
 tooltip.solarPanel.generateInNight=§7Генерує в ніч: §3%s§7 EU/t
 tooltip.solarPanel.output=§7Вихід: §3%s §7EU/t
+tooltip.ufc.pressShiftToClear=Shift + ПКМ щоб очистити 

@@ -448,22 +448,26 @@ public abstract class TileBaseMachine extends TileIC2Inv implements IHasActiveSt
         ticksNeed = data.getInteger("ticksNeed");
         energyPerTick = data.getDouble("energyPerTick");
         itemsPerOp = data.getInteger("itemsPerOp");
-        int[] pullSidesNbt = data.getIntArray("pullSides");
-        pullSides = new ForgeDirection[pullSidesNbt.length];
-        for (int i = 0; i < pullSidesNbt.length; i++) {
-            if (pullSidesNbt[i] == -1) {
-                pullSides[i] = null;
-            } else {
-                pullSides[i] = ForgeDirection.getOrientation(pullSidesNbt[i]);
+        if (data.hasKey("pullSides")) {
+            int[] pullSidesNbt = data.getIntArray("pullSides");
+            pullSides = new ForgeDirection[pullSidesNbt.length];
+            for (int i = 0; i < pullSidesNbt.length; i++) {
+                if (pullSidesNbt[i] == -1) {
+                    pullSides[i] = null;
+                } else {
+                    pullSides[i] = ForgeDirection.getOrientation(pullSidesNbt[i]);
+                }
             }
         }
-        int[] pushSidesNbt = data.getIntArray("pushSides");
-        pushSides = new ForgeDirection[pushSidesNbt.length];
-        for (int i = 0; i < pushSidesNbt.length; i++) {
-            if (pushSidesNbt[i] == -1) {
-                pushSides[i] = null;
-            } else {
-                pushSides[i] = ForgeDirection.getOrientation(pushSidesNbt[i]);
+        if (data.hasKey("pushSides")) {
+            int[] pushSidesNbt = data.getIntArray("pushSides");
+            pushSides = new ForgeDirection[pushSidesNbt.length];
+            for (int i = 0; i < pushSidesNbt.length; i++) {
+                if (pushSidesNbt[i] == -1) {
+                    pushSides[i] = null;
+                } else {
+                    pushSides[i] = ForgeDirection.getOrientation(pushSidesNbt[i]);
+                }
             }
         }
         inventoryMode = ButtonInventoryMode.values()[data.getByte("invMode")];
@@ -578,7 +582,6 @@ public abstract class TileBaseMachine extends TileIC2Inv implements IHasActiveSt
             List<UpgradesTypes> available = Arrays.asList(getAvailableTypes());
             boolean canEject = available.contains(UpgradesTypes.EJECTOR);
             boolean canPull = available.contains(UpgradesTypes.PULLING);
-            boolean canRS = available.contains(UpgradesTypes.REDSTONE);
 
             for (int j = 0; j < upgrades.getSizeInventory(); j++) {
                 ItemStack stack = upgrades.getStackInSlot(j);

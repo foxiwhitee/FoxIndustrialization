@@ -1,5 +1,6 @@
 package foxiwhitee.FoxIndustrialization.tile.machines.advanced;
 
+import foxiwhitee.FoxIndustrialization.ModRecipes;
 import foxiwhitee.FoxIndustrialization.config.FIConfig;
 import foxiwhitee.FoxIndustrialization.helper.RecipeHelper;
 import foxiwhitee.FoxIndustrialization.recipes.IRecipeIC2;
@@ -16,7 +17,7 @@ public class TileAdvancedCompressor extends TileAdvancedMachine {
 
     @Override
     protected List<? extends IRecipeIC2> getRecipes() {
-        return RecipeHelper.compressorRecipes;
+        return ModRecipes.compressorRecipes;
     }
 
     @Override

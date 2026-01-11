@@ -2,10 +2,14 @@ package foxiwhitee.FoxIndustrialization;
 
 import foxiwhitee.FoxIndustrialization.blocks.BlockCasing;
 import foxiwhitee.FoxIndustrialization.blocks.BlockSynthesizer;
+import foxiwhitee.FoxIndustrialization.blocks.BlockUniversalFluidComplex;
 import foxiwhitee.FoxIndustrialization.blocks.generator.fuel.BlockAdvancedGenerator;
 import foxiwhitee.FoxIndustrialization.blocks.generator.fuel.BlockNanoGenerator;
 import foxiwhitee.FoxIndustrialization.blocks.generator.fuel.BlockQuantumGenerator;
 import foxiwhitee.FoxIndustrialization.blocks.generator.infinity.BlockInfinityGenerator;
+import foxiwhitee.FoxIndustrialization.blocks.generator.kinetic.BlockAdvancedKineticGenerator;
+import foxiwhitee.FoxIndustrialization.blocks.generator.kinetic.BlockNanoKineticGenerator;
+import foxiwhitee.FoxIndustrialization.blocks.generator.kinetic.BlockQuantumKineticGenerator;
 import foxiwhitee.FoxIndustrialization.blocks.generator.panel.*;
 import foxiwhitee.FoxIndustrialization.blocks.machines.advanced.*;
 import foxiwhitee.FoxIndustrialization.blocks.machines.nano.*;
@@ -14,10 +18,14 @@ import foxiwhitee.FoxIndustrialization.blocks.storage.*;
 import foxiwhitee.FoxIndustrialization.config.ContentConfig;
 import foxiwhitee.FoxIndustrialization.items.block.*;
 import foxiwhitee.FoxIndustrialization.tile.TileSynthesizer;
+import foxiwhitee.FoxIndustrialization.tile.TileUniversalFluidComplex;
 import foxiwhitee.FoxIndustrialization.tile.generator.fuel.TileAdvancedGenerator;
 import foxiwhitee.FoxIndustrialization.tile.generator.fuel.TileNanoGenerator;
 import foxiwhitee.FoxIndustrialization.tile.generator.fuel.TileQuantumGenerator;
 import foxiwhitee.FoxIndustrialization.tile.generator.infinity.TileInfinityGenerator;
+import foxiwhitee.FoxIndustrialization.tile.generator.kinetic.TileAdvancedKineticGenerator;
+import foxiwhitee.FoxIndustrialization.tile.generator.kinetic.TileNanoKineticGenerator;
+import foxiwhitee.FoxIndustrialization.tile.generator.kinetic.TileQuantumKineticGenerator;
 import foxiwhitee.FoxIndustrialization.tile.machines.advanced.*;
 import foxiwhitee.FoxIndustrialization.tile.machines.nano.*;
 import foxiwhitee.FoxIndustrialization.tile.machines.quantum.*;
@@ -28,6 +36,8 @@ import net.minecraft.tileentity.TileEntity;
 public class ModBlocks {
     public static final Block casingNano = new BlockCasing("casingNano");
     public static final Block casingQuantum = new BlockCasing("casingQuantum");
+
+    public static final Block universalFluidComplex = new BlockUniversalFluidComplex("universalFluidComplex");
 
     public static final Block advancedCompressor = new BlockAdvancedCompressor("advancedCompressor");
     public static final Block advancedExtractor = new BlockAdvancedExtractor("advancedExtractor");
@@ -70,6 +80,10 @@ public class ModBlocks {
     public static final Block nanoGenerator = new BlockNanoGenerator("nanoGenerator");
     public static final Block quantumGenerator = new BlockQuantumGenerator("quantumGenerator");
 
+    public static final Block advancedKineticGenerator = new BlockAdvancedKineticGenerator("advancedKineticGenerator");
+    public static final Block nanoKineticGenerator = new BlockNanoKineticGenerator("nanoKineticGenerator");
+    public static final Block quantumKineticGenerator = new BlockQuantumKineticGenerator("quantumKineticGenerator");
+
     public static final Block solarPanelLevel1 = new BlockSolarPanelLevel1("solarPanelLevel1");
     public static final Block solarPanelLevel2 = new BlockSolarPanelLevel2("solarPanelLevel2");
     public static final Block solarPanelLevel3 = new BlockSolarPanelLevel3("solarPanelLevel3");
@@ -85,6 +99,7 @@ public class ModBlocks {
 
     public static void registerBlocks() {
         registerCasings();
+        registerUniversalFluidComplex();
         registerAdvancedMachines();
         registerNanoMachines();
         registerQuantumMachines();
@@ -93,6 +108,13 @@ public class ModBlocks {
         registerCustomSolarPanels();
         registerInfinityGenerator();
         registerSynthesizers();
+    }
+
+    private static void registerUniversalFluidComplex() {
+        if (ContentConfig.enableUniversalFluidComplex) {
+            RegisterUtils.registerBlock(universalFluidComplex);
+            RegisterUtils.registerTile(TileUniversalFluidComplex.class);
+        }
     }
 
     private static void registerCasings() {
@@ -208,6 +230,18 @@ public class ModBlocks {
         if (ContentConfig.enableQuantumGenerator) {
             RegisterUtils.registerBlock(quantumGenerator, ItemBlockGenerator.class);
             RegisterUtils.registerTile(TileQuantumGenerator.class);
+        }
+        if (ContentConfig.enableAdvancedKineticGenerator) {
+            RegisterUtils.registerBlock(advancedKineticGenerator, ItemBlockKineticGenerator.class);
+            RegisterUtils.registerTile(TileAdvancedKineticGenerator.class);
+        }
+        if (ContentConfig.enableNanoKineticGenerator) {
+            RegisterUtils.registerBlock(nanoKineticGenerator, ItemBlockKineticGenerator.class);
+            RegisterUtils.registerTile(TileNanoKineticGenerator.class);
+        }
+        if (ContentConfig.enableQuantumKineticGenerator) {
+            RegisterUtils.registerBlock(quantumKineticGenerator, ItemBlockKineticGenerator.class);
+            RegisterUtils.registerTile(TileQuantumKineticGenerator.class);
         }
     }
 
