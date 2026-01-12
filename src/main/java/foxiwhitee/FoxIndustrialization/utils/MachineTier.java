@@ -3,7 +3,8 @@ package foxiwhitee.FoxIndustrialization.utils;
 public enum MachineTier {
     ADVANCED(2, 2, 3, 2),
     NANO(3, 3, 3, 3),
-    QUANTUM(4, 4, 3, 4);
+    QUANTUM(4, 4, 3, 4),
+    SINGULAR(4, 4, 3, 4);
 
     private final int invInpSize, invOutSize, invUpgradesSize, maxOperations;
 

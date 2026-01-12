@@ -1,16 +1,18 @@
 package foxiwhitee.FoxIndustrialization.utils;
 
+import foxiwhitee.FoxIndustrialization.api.IHasMatterSynthesizerIntegration;
 import foxiwhitee.FoxIndustrialization.api.IHasSynthesizerIntegration;
 import foxiwhitee.FoxIndustrialization.api.ISynthesizerSunUpgrade;
 import foxiwhitee.FoxIndustrialization.api.ISynthesizerUpgrade;
 import foxiwhitee.FoxLib.api.energy.IDoubleEnergyContainerItem;
 import foxiwhitee.FoxLib.container.slots.SlotFiltered;
-import foxiwhitee.FoxLib.items.ItemProductivityCard;
 import ic2.api.item.IElectricItem;
+import ic2.core.Ic2Items;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityFurnace;
+import net.minecraftforge.fluids.FluidContainerRegistry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +58,12 @@ public class FilterInitializer {
     public static final String FILTER_SYNTHESIZER_SUN_UPGRADE = "synthesizerSunUpgrade";
     public static final String FILTER_SYNTHESIZER_UPGRADE = "synthesizerUpgrade";
 
+    public static final String FILTER_FLUID_GENERATOR = "fluidGenerator";
+
+    public static final String FILTER_MATTER_GENERATOR = "matterGenerator";
+    public static final String FILTER_SCRAP = "scrap";
+    public static final String FILTER_MATTER_SYNTHESIZER = "matterSynthesizer";
+
     public static void initFilters() {
         SlotFiltered.filters.put(FILTER_BASIC_ENERGY_STORAGE, stack -> itemInstanceof(stack, IElectricItem.class));
         SlotFiltered.filters.put(FILTER_ADVANCED_ENERGY_STORAGE, stack -> itemInstanceof(stack, IElectricItem.class));
@@ -76,6 +84,12 @@ public class FilterInitializer {
         SlotFiltered.filters.put(FILTER_SYNTHESIZER_SLOTS, stack -> itemInstanceof(stack, IHasSynthesizerIntegration.class));
         SlotFiltered.filters.put(FILTER_SYNTHESIZER_SUN_UPGRADE, stack -> itemInstanceof(stack, ISynthesizerSunUpgrade.class));
         SlotFiltered.filters.put(FILTER_SYNTHESIZER_UPGRADE, stack -> itemInstanceof(stack, ISynthesizerUpgrade.class));
+
+        SlotFiltered.filters.put(FILTER_FLUID_GENERATOR, FluidContainerRegistry::isContainer);
+
+        SlotFiltered.filters.put(FILTER_MATTER_GENERATOR, FluidContainerRegistry::isContainer);
+        SlotFiltered.filters.put(FILTER_SCRAP, stack -> itemEquals(stack, Ic2Items.scrap.getItem()) || itemEquals(stack, Ic2Items.scrapBox.getItem()));
+        SlotFiltered.filters.put(FILTER_MATTER_SYNTHESIZER, stack -> itemInstanceof(stack, IHasMatterSynthesizerIntegration.class) || Block.getBlockFromItem(stack.getItem()) == Block.getBlockFromItem(Ic2Items.massFabricator.getItem()));
     }
 
     public static void addClassToFilterUltimateStorage(Class<?> clazz) {
@@ -119,10 +133,6 @@ public class FilterInitializer {
             }
         }
         return b;
-    }
-
-    private static boolean itemInstanceofProductivity(ItemStack stack, boolean has) {
-        return stack.getItem() instanceof ItemProductivityCard && has;
     }
 
     private static boolean itemEquals(ItemStack stack, Item item) {

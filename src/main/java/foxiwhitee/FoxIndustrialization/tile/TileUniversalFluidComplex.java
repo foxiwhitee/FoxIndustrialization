@@ -5,7 +5,7 @@ import foxiwhitee.FoxIndustrialization.api.IAdvancedUpgradeItem;
 import foxiwhitee.FoxIndustrialization.api.IHasActiveState;
 import foxiwhitee.FoxIndustrialization.api.IUpgradableTile;
 import foxiwhitee.FoxIndustrialization.config.FIConfig;
-import foxiwhitee.FoxIndustrialization.recipes.IRecipeIC2;
+import foxiwhitee.FoxIndustrialization.items.ItemFluidGeneratorUpgrade;
 import foxiwhitee.FoxIndustrialization.recipes.IUniversalFluidComplexRecipe;
 import foxiwhitee.FoxIndustrialization.utils.MachineTier;
 import foxiwhitee.FoxIndustrialization.utils.UpgradesTypes;
@@ -16,7 +16,6 @@ import foxiwhitee.FoxLib.tile.inventory.InvOperation;
 import foxiwhitee.FoxLib.utils.helpers.ItemStackUtil;
 import ic2.core.upgrade.IUpgradeItem;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
@@ -29,7 +28,6 @@ import net.minecraftforge.fluids.*;
 import java.util.*;
 
 public class TileUniversalFluidComplex extends TileIC2Inv implements IUpgradableTile, IFluidHandler, IHasActiveState {
-    private final static ItemStack someItem = new ItemStack(Blocks.command_block, 64);
     private final int[] cachedAllSlots;
     private final FoxInternalInventory inventory = new FoxInternalInventory(this, 3);
     private final FoxInternalInventory output = new FoxInternalInventory(this, 3);
@@ -43,7 +41,7 @@ public class TileUniversalFluidComplex extends TileIC2Inv implements IUpgradable
     private final ISidedInventory[] adjacentInventories = new ISidedInventory[6];
     private final IFluidHandler[] adjacentFluidHandlers = new IFluidHandler[6];
     private ForgeDirection[] pushSides = {}, pushFluidSides = {}, pullSides = {};
-    private boolean hasEjector, hasEjectorFluid, hasPuller, active;
+    private boolean hasEjector, hasEjectorFluid, hasPuller, active, hasWaterGenerator, hasLavaGenerator, needFluidUpdate;
 
     private IUniversalFluidComplexRecipe recipe;
 
@@ -67,6 +65,10 @@ public class TileUniversalFluidComplex extends TileIC2Inv implements IUpgradable
             return;
         }
 
+        if (needFluidUpdate) {
+            needFluidUpdate = false;
+            updateFluids();
+        }
         if (scanTimer-- <= 0) {
             updateAdjacentCache();
             scanTimer = 20;
@@ -124,11 +126,21 @@ public class TileUniversalFluidComplex extends TileIC2Inv implements IUpgradable
                     break;
                 }
             }
+            needFluidUpdate = true;
             active = false;
             recipe = null;
         }
 
         markForUpdate();
+    }
+
+    private void updateFluids() {
+        if (hasWaterGenerator) {
+            this.fill(ForgeDirection.UNKNOWN, new FluidStack(FluidRegistry.WATER, FIConfig.ufcFluidStorage), true);
+        }
+        if (hasLavaGenerator) {
+            this.fill(ForgeDirection.UNKNOWN, new FluidStack(FluidRegistry.LAVA, FIConfig.ufcFluidStorage), true);
+        }
     }
 
     private boolean canStartCrafting() {
@@ -138,7 +150,7 @@ public class TileUniversalFluidComplex extends TileIC2Inv implements IUpgradable
             }
             if (!canInsert(output, stack)) {
                 return false;
-            };
+            }
         }
 
         if (!canInsert(outputTank, recipe.getOutputFluid())) {
@@ -169,7 +181,7 @@ public class TileUniversalFluidComplex extends TileIC2Inv implements IUpgradable
 
         FluidStack outFluid = recipe.getOutputFluid();
         if (outFluid != null) {
-            if (outputTank.fill(outFluid, false) < outFluid.amount) return false;
+            return outputTank.fill(outFluid, false) >= outFluid.amount;
         }
 
         return true;
@@ -345,6 +357,9 @@ public class TileUniversalFluidComplex extends TileIC2Inv implements IUpgradable
         data.setBoolean("hasPuller", hasPuller);
         data.setBoolean("hasEjector", hasEjector);
         data.setBoolean("hasEjectorFluid", hasEjectorFluid);
+        data.setBoolean("hasWaterGenerator", hasWaterGenerator);
+        data.setBoolean("hasLavaGenerator", hasLavaGenerator);
+        data.setBoolean("needFluidUpdate", needFluidUpdate);
         data.setInteger("tick", tick);
         data.setInteger("ticksNeed", ticksNeed);
         data.setInteger("energyPerTickMultiplier", energyPerTickMultiplier);
@@ -398,6 +413,9 @@ public class TileUniversalFluidComplex extends TileIC2Inv implements IUpgradable
         hasPuller = data.getBoolean("hasPuller");
         hasEjector = data.getBoolean("hasEjector");
         hasEjectorFluid = data.getBoolean("hasEjectorFluid");
+        hasWaterGenerator = data.getBoolean("hasWaterGenerator");
+        hasLavaGenerator = data.getBoolean("hasLavaGenerator");
+        needFluidUpdate = data.getBoolean("needFluidUpdate");
         tick = data.getInteger("tick");
         ticksNeed = data.getInteger("ticksNeed");
         energyPerTickMultiplier = data.getInteger("energyPerTickMultiplier");
@@ -575,6 +593,8 @@ public class TileUniversalFluidComplex extends TileIC2Inv implements IUpgradable
             this.itemsPerOp = FIConfig.ufcItemsPerOp;
             this.energyPerTickMultiplier = 0;
             this.ticksNeed = 100;
+            this.hasWaterGenerator = false;
+            this.hasLavaGenerator = false;
 
             List<Integer> newPushRaw = new ArrayList<>();
             List<Integer> newPushFluidRaw = new ArrayList<>();
@@ -584,6 +604,8 @@ public class TileUniversalFluidComplex extends TileIC2Inv implements IUpgradable
             boolean canEject = available.contains(UpgradesTypes.EJECTOR);
             boolean canEjectFluid = available.contains(UpgradesTypes.FLUID_EJECTOR);
             boolean canPull = available.contains(UpgradesTypes.PULLING);
+            boolean canWater = available.contains(UpgradesTypes.WATER_GENERATOR);
+            boolean canLava = available.contains(UpgradesTypes.LAVA_GENERATOR);
 
             for (int j = 0; j < upgrades.getSizeInventory(); j++) {
                 ItemStack stack = upgrades.getStackInSlot(j);
@@ -593,12 +615,25 @@ public class TileUniversalFluidComplex extends TileIC2Inv implements IUpgradable
                     this.ticksNeed *= (int) upgrade.getSpeedMultiplier(stack);
                     this.itemsPerOp += upgrade.getItemsPerOpAdd(stack);
                     this.maxEnergy = safeMultiply(maxEnergy, upgrade.getStorageEnergyMultiplier(stack));
-                    this.energyPerTickMultiplier += upgrade.getEnergyUseMultiplier(stack);
+                    this.energyPerTickMultiplier += (int) upgrade.getEnergyUseMultiplier(stack);
+                } else if (stack.getItem() instanceof ItemFluidGeneratorUpgrade) {
+                    switch (stack.getItemDamage()) {
+                        case 0: {
+                            this.hasWaterGenerator = canWater;
+                            this.needFluidUpdate |= canWater;
+                            break;
+                        }
+                        case 1: {
+                            this.hasLavaGenerator = canLava;
+                            this.needFluidUpdate |= canLava;
+                            break;
+                        }
+                    }
                 } else if (stack.getItem() instanceof IUpgradeItem) {
                     switch (stack.getItemDamage()) {
                         case 0: // Speed
                             this.ticksNeed *= (int) Math.pow(0.7, stack.stackSize);
-                            this.energyPerTickMultiplier += Math.pow(1.6, stack.stackSize);
+                            this.energyPerTickMultiplier += (int) Math.pow(1.6, stack.stackSize);
                             break;
                         case 2: // Energy Storage
                             this.maxEnergy += 10000 * stack.stackSize;
@@ -720,24 +755,22 @@ public class TileUniversalFluidComplex extends TileIC2Inv implements IUpgradable
 
     private void pullIfCan() {
         for (ForgeDirection side : pullSides) {
-            IInventory neighbor = adjacentInventories[side.ordinal()];
+            ISidedInventory neighbor = adjacentInventories[side.ordinal()];
             if (neighbor == null || ((TileEntity)neighbor).isInvalid()) continue;
 
             int sideFrom = side.getOpposite().ordinal();
 
-            if (neighbor instanceof ISidedInventory sided) {
-                int[] accessibleSlots = sided.getAccessibleSlotsFromSide(sideFrom);
+            int[] accessibleSlots = neighbor.getAccessibleSlotsFromSide(sideFrom);
 
-                for (int slot : accessibleSlots) {
-                    ItemStack stack = sided.getStackInSlot(slot);
+            for (int slot : accessibleSlots) {
+                ItemStack stack = neighbor.getStackInSlot(slot);
 
-                    if (stack != null && sided.canExtractItem(slot, stack, sideFrom)) {
-                        if (this.canInsert(inventory, stack)) {
-                            this.insert(inventory, stack);
+                if (stack != null && neighbor.canExtractItem(slot, stack, sideFrom)) {
+                    if (this.canInsert(inventory, stack)) {
+                        this.insert(inventory, stack);
 
-                            sided.setInventorySlotContents(slot, null);
-                            sided.markDirty();
-                        }
+                        neighbor.setInventorySlotContents(slot, null);
+                        neighbor.markDirty();
                     }
                 }
             }
@@ -749,12 +782,11 @@ public class TileUniversalFluidComplex extends TileIC2Inv implements IUpgradable
             ISidedInventory neighbor = adjacentInventories[side.ordinal()];
 
             if (neighbor instanceof ISidedInventory && !((TileEntity)neighbor).isInvalid()) {
-                ISidedInventory sidedNeighbor = neighbor;
 
                 for (int i = 0; i < output.getSizeInventory(); i++) {
                     ItemStack stack = output.getStackInSlot(i);
                     if (stack != null) {
-                        tryPushStack(stack, i, sidedNeighbor, side);
+                        tryPushStack(stack, i, neighbor, side);
                     }
                 }
             }
@@ -815,12 +847,11 @@ public class TileUniversalFluidComplex extends TileIC2Inv implements IUpgradable
         return false;
     }
 
-    protected boolean insert(FoxInternalInventory inv, ItemStack stack) {
+    protected void insert(FoxInternalInventory inv, ItemStack stack) {
         for (int i = 0; i < inv.getSizeInventory(); i++) {
             boolean b = insert(inv, stack, i);
-            if (b) return true;
+            if (b) return;
         }
-        return false;
     }
 
     protected boolean insert(FoxInternalInventory inv, ItemStack stack, int idx) {
@@ -968,6 +999,7 @@ public class TileUniversalFluidComplex extends TileIC2Inv implements IUpgradable
             case 2: clearTank(this.inputTank2); break;
             case 3: clearTank(this.inputTank3); break;
         }
+        needFluidUpdate = true;
     }
 
     private void clearTank(FluidTank tank) {

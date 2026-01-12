@@ -1,22 +1,19 @@
 package foxiwhitee.FoxIndustrialization.client.gui.generator.fuel;
 
 import foxiwhitee.FoxIndustrialization.FICore;
+import foxiwhitee.FoxIndustrialization.client.gui.FIGui;
 import foxiwhitee.FoxIndustrialization.container.generator.fuel.ContainerGenerator;
 import foxiwhitee.FoxIndustrialization.tile.generator.fuel.TileGenerator;
-import foxiwhitee.FoxIndustrialization.tile.storage.TileEnergyStorage;
-import foxiwhitee.FoxLib.client.gui.FoxBaseGui;
 import foxiwhitee.FoxLib.utils.ProductivityUtil;
 import foxiwhitee.FoxLib.utils.helpers.EnergyUtility;
 import foxiwhitee.FoxLib.utils.helpers.LocalizationUtils;
 import foxiwhitee.FoxLib.utils.helpers.UtilGui;
-import net.minecraft.inventory.Container;
 
-public abstract class GuiGenerator extends FoxBaseGui {
+public abstract class GuiGenerator extends FIGui {
     private final TileGenerator tile;
 
     public GuiGenerator(ContainerGenerator container) {
         super(container, 262, 255);
-        setModID(FICore.MODID);
         tile = (TileGenerator) container.getTileEntity();
     }
 

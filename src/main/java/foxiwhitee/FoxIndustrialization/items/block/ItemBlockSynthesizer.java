@@ -22,7 +22,7 @@ public class ItemBlockSynthesizer extends ModItemBlock {
         if (isBlock(ModBlocks.synthesizer)) {
             this.storage = FIConfig.synthesizerStorage;
             this.output = FIConfig.synthesizerOutput;
-            this.supportsRF = FIConfig.synthesizerSupportsRF && FICore.ifCoFHCoreIsLoaded;
+            this.supportsRF = FIConfig.synthesizerSupportsRF;
         } else {
             this.storage = 0;
             this.output = 0;
@@ -35,7 +35,7 @@ public class ItemBlockSynthesizer extends ModItemBlock {
         if (FIConfig.enableTooltips) {
             list.add(LocalizationUtils.localize("tooltip.machine.capacity", EnergyUtility.formatNumber(storage)));
             list.add(LocalizationUtils.localize("tooltip.solarPanel.output", EnergyUtility.formatNumber(output)));
-            if (supportsRF) {
+            if (supportsRF && FICore.ifCoFHCoreIsLoaded) {
                 list.add(LocalizationUtils.localize("tooltip.machine.supportsRF", EnergyUtility.formatNumber(FoxLibConfig.rfInEu)));
             }
         }

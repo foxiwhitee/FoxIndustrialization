@@ -1,15 +1,14 @@
 package foxiwhitee.FoxIndustrialization.client.gui.storage;
 
 import foxiwhitee.FoxIndustrialization.FICore;
+import foxiwhitee.FoxIndustrialization.client.gui.FIGui;
 import foxiwhitee.FoxIndustrialization.container.storage.ContainerEnergyStorage;
 import foxiwhitee.FoxIndustrialization.tile.storage.TileEnergyStorage;
-import foxiwhitee.FoxLib.client.gui.FoxBaseGui;
 import foxiwhitee.FoxLib.utils.ProductivityUtil;
 import foxiwhitee.FoxLib.utils.helpers.EnergyUtility;
 import foxiwhitee.FoxLib.utils.helpers.UtilGui;
-import net.minecraft.inventory.Container;
 
-public class GuiEnergyStorage extends FoxBaseGui {
+public class GuiEnergyStorage extends FIGui {
     private final TileEnergyStorage tile;
 
     public GuiEnergyStorage(ContainerEnergyStorage container) {

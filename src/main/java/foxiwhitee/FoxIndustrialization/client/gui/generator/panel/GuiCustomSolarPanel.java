@@ -1,15 +1,15 @@
 package foxiwhitee.FoxIndustrialization.client.gui.generator.panel;
 
 import foxiwhitee.FoxIndustrialization.FICore;
+import foxiwhitee.FoxIndustrialization.client.gui.FIGui;
 import foxiwhitee.FoxIndustrialization.container.generator.panel.ContainerCustomSolarPanel;
 import foxiwhitee.FoxIndustrialization.tile.generator.panel.TileCustomSolarPanel;
-import foxiwhitee.FoxLib.client.gui.FoxBaseGui;
 import foxiwhitee.FoxLib.utils.ProductivityUtil;
 import foxiwhitee.FoxLib.utils.helpers.EnergyUtility;
 import foxiwhitee.FoxLib.utils.helpers.LocalizationUtils;
 import foxiwhitee.FoxLib.utils.helpers.UtilGui;
 
-public class GuiCustomSolarPanel extends FoxBaseGui {
+public class GuiCustomSolarPanel extends FIGui {
     private final TileCustomSolarPanel tile;
 
     public GuiCustomSolarPanel(ContainerCustomSolarPanel container) {

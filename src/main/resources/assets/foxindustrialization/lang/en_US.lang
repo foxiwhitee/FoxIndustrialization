@@ -63,6 +63,18 @@ tile.casingNano.name=Nano Casing
 tile.casingQuantum.name=Nano Quantum
 
 tile.synthesizer.name=Energy Synthesizer
+tile.matterSynthesizer.name=Matter Synthesizer
+
+tile.universalFluidComplex.name=Universal Fluid Complex
+
+tile.waterGenerator.name=Water Generator
+tile.lavaGenerator.name=Lava Generator
+
+tile.advancedMatterGenerator.name=Advanced Matter Generator
+tile.nanoMatterGenerator.name=Nano Matter Generator
+tile.quantumMatterGenerator.name=Quantum Matter Generator
+tile.singularMatterGenerator.name=Singular Matter Generator
+
 # Items
 item.speedUpgrade.Advanced.name=Advanced Speed Upgrade
 item.speedUpgrade.Nano.name=Nano Speed Upgrade
@@ -92,6 +104,9 @@ item.synthesizerUpgrade.8.name=Synthesizer Upgrade 8
 item.synthesizerUpgrade.9.name=Synthesizer Upgrade 9
 item.synthesizerUpgrade.10.name=Synthesizer Upgrade 10
 
+item.fluidUpgrades.Water.name=Upgrade: Water Generator
+item.fluidUpgrades.Lava.name=Upgrade: Lava Generator
+
 # Tooltips
 tooltip.upgrade.addPerOp=§7Increases the number of items processed per operation by §3%s
 tooltip.upgrade.speed=§7Decrease process time to §3%S%%
@@ -103,9 +118,12 @@ tooltip.upgrade.pc.outputMult=§7Increases the rate of %s%s energy§7 output by 
 tooltip.upgrade.outputMult=§7Increases the rate of energy output by §3%s§7 times
 tooltip.upgrade.synthesizerBonus=§7Energy bonus produced §3%s%%
 tooltip.upgrade.sun.desc=§7The solar panels generate as much energy at night as during the day.
+tooltip.fluidUpgrade.Water.desc=§7Infinitely generates water in the block
+tooltip.fluidUpgrade.Lava.desc=§7Infinitely generates lava in the block
 tooltip.level.advanced=§6Advanced
 tooltip.level.nano=§8Nano
 tooltip.level.quantum=§3Quantum
+tooltip.level.singular=§3Singular
 tooltip.energyStorage.output=§7Output: §3%s §7EU/t
 tooltip.energyStorage.capacity=§7Capacity: §3%s §7EU
 tooltip.energyStorage.store=§7Store: §3%s §7EU
@@ -149,4 +167,7 @@ tooltip.generator.output=§7Output: §3%s §7EU/t
 tooltip.solarPanel.generateInDay=§7Daytime generation: §3%s§7 EU/t
 tooltip.solarPanel.generateInNight=§7Nighttime generation: §3%s§7 EU/t
 tooltip.solarPanel.output=§7Output: §3%s §7EU/t
-tooltip.ufc.pressShiftToClear=Shift + RMB to clear
+tooltip.ufc.pressShiftToClear=Shift + LMB to clear
+tooltip.fluidGenerator.capacity=§7Capacity: §3%s §7mB
+tooltip.matter.generating=§7Generates §3%s§7 matter for §3%s§7 EU
+tooltip.matter.generate=§7Generates: §3%s§7 mB/t

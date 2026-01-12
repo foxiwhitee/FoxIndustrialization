@@ -8,7 +8,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 
-import java.text.DecimalFormat;
 import java.util.List;
 
 public class ItemSpeedUpgrade extends ItemWithMeta implements IAdvancedUpgradeItem {
@@ -29,6 +28,7 @@ public class ItemSpeedUpgrade extends ItemWithMeta implements IAdvancedUpgradeIt
                 case ADVANCED -> "tooltip.level.advanced";
                 case NANO -> "tooltip.level.nano";
                 case QUANTUM -> "tooltip.level.quantum";
+                case SINGULAR -> "tooltip.level.singular";
             })));
         }
     }

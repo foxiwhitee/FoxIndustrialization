@@ -1,15 +1,15 @@
 package foxiwhitee.FoxIndustrialization.client.gui.generator.infinity;
 
 import foxiwhitee.FoxIndustrialization.FICore;
+import foxiwhitee.FoxIndustrialization.client.gui.FIGui;
 import foxiwhitee.FoxIndustrialization.container.generator.infinity.ContainerInfinityGenerator;
 import foxiwhitee.FoxIndustrialization.tile.generator.infinity.TileInfinityGenerator;
-import foxiwhitee.FoxLib.client.gui.FoxBaseGui;
 import foxiwhitee.FoxLib.utils.ProductivityUtil;
 import foxiwhitee.FoxLib.utils.helpers.EnergyUtility;
 import foxiwhitee.FoxLib.utils.helpers.LocalizationUtils;
 import foxiwhitee.FoxLib.utils.helpers.UtilGui;
 
-public class GuiInfinityGenerator extends FoxBaseGui {
+public class GuiInfinityGenerator extends FIGui {
     private final TileInfinityGenerator tile;
 
     public GuiInfinityGenerator(ContainerInfinityGenerator container) {

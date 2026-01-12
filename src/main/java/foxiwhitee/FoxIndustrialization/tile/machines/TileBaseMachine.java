@@ -16,7 +16,6 @@ import foxiwhitee.FoxLib.utils.helpers.ItemStackUtil;
 import foxiwhitee.FoxLib.utils.helpers.StackOreDict;
 import ic2.core.upgrade.IUpgradeItem;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
@@ -28,7 +27,6 @@ import net.minecraftforge.common.util.ForgeDirection;
 import java.util.*;
 
 public abstract class TileBaseMachine extends TileIC2Inv implements IHasActiveState, IUpgradableTile {
-    private final static ItemStack someItem = new ItemStack(Blocks.command_block, 64);
     private final FoxInternalInventory inventory;
     private final FoxInternalInventory output;
     private final FoxInternalInventory upgrades;
@@ -147,7 +145,7 @@ public abstract class TileBaseMachine extends TileIC2Inv implements IHasActiveSt
                     insert(output, recipe.getOut().copy(), i);
                 }
 
-                currentRecipes[i] = null;
+                getRecipe(inventory.getStackInSlot(i), i);
 
                 markForUpdate();
             }
@@ -281,24 +279,22 @@ public abstract class TileBaseMachine extends TileIC2Inv implements IHasActiveSt
 
     private void pullIfCan() {
         for (ForgeDirection side : pullSides) {
-            IInventory neighbor = adjacentInventories[side.ordinal()];
+            ISidedInventory neighbor = adjacentInventories[side.ordinal()];
             if (neighbor == null || ((TileEntity)neighbor).isInvalid()) continue;
 
             int sideFrom = side.getOpposite().ordinal();
 
-            if (neighbor instanceof ISidedInventory sided) {
-                int[] accessibleSlots = sided.getAccessibleSlotsFromSide(sideFrom);
+            int[] accessibleSlots = neighbor.getAccessibleSlotsFromSide(sideFrom);
 
-                for (int slot : accessibleSlots) {
-                    ItemStack stack = sided.getStackInSlot(slot);
+            for (int slot : accessibleSlots) {
+                ItemStack stack = neighbor.getStackInSlot(slot);
 
-                    if (stack != null && sided.canExtractItem(slot, stack, sideFrom)) {
-                        if (this.canInsert(inventory, stack)) {
-                            this.insert(inventory, stack);
+                if (stack != null && neighbor.canExtractItem(slot, stack, sideFrom)) {
+                    if (this.canInsert(inventory, stack)) {
+                        this.insert(inventory, stack);
 
-                            sided.setInventorySlotContents(slot, null);
-                            sided.markDirty();
-                        }
+                        neighbor.setInventorySlotContents(slot, null);
+                        neighbor.markDirty();
                     }
                 }
             }
@@ -309,8 +305,7 @@ public abstract class TileBaseMachine extends TileIC2Inv implements IHasActiveSt
         for (ForgeDirection side : pushSides) {
             IInventory neighbor = adjacentInventories[side.ordinal()];
 
-            if (neighbor instanceof ISidedInventory && !((TileEntity)neighbor).isInvalid()) {
-                ISidedInventory sidedNeighbor = (ISidedInventory) neighbor;
+            if (neighbor instanceof ISidedInventory sidedNeighbor && !((TileEntity)neighbor).isInvalid()) {
 
                 for (int i = 0; i < output.getSizeInventory(); i++) {
                     ItemStack stack = output.getStackInSlot(i);
@@ -376,12 +371,11 @@ public abstract class TileBaseMachine extends TileIC2Inv implements IHasActiveSt
         return false;
     }
 
-    protected boolean insert(FoxInternalInventory inv, ItemStack stack) {
+    protected void insert(FoxInternalInventory inv, ItemStack stack) {
         for (int i = 0; i < inv.getSizeInventory(); i++) {
             boolean b = insert(inv, stack, i);
-            if (b) return true;
+            if (b) return;
         }
-        return false;
     }
 
     protected boolean insert(FoxInternalInventory inv, ItemStack stack, int idx) {
@@ -686,20 +680,6 @@ public abstract class TileBaseMachine extends TileIC2Inv implements IHasActiveSt
         }
         inventoryMode = ButtonInventoryMode.values()[newID];
         markForUpdate();
-    }
-
-    protected void setNewMeta(int newMeta) {
-        if (worldObj == null || worldObj.isRemote)
-            return;
-
-        int oldMeta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
-        if (oldMeta != newMeta) {
-            worldObj.setBlockMetadataWithNotify(
-                xCoord, yCoord, zCoord,
-                newMeta,
-                3
-            );
-        }
     }
 
     public ButtonInventoryMode getInventoryMode() {

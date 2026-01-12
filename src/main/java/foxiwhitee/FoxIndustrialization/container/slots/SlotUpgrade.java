@@ -2,9 +2,9 @@ package foxiwhitee.FoxIndustrialization.container.slots;
 
 import foxiwhitee.FoxIndustrialization.api.IAdvancedUpgradeItem;
 import foxiwhitee.FoxIndustrialization.api.IUpgradableTile;
+import foxiwhitee.FoxIndustrialization.items.ItemFluidGeneratorUpgrade;
 import foxiwhitee.FoxIndustrialization.items.ItemSpeedUpgrade;
 import foxiwhitee.FoxIndustrialization.items.ItemStorageUpgrade;
-import foxiwhitee.FoxIndustrialization.tile.machines.TileBaseMachine;
 import foxiwhitee.FoxIndustrialization.utils.UpgradesTypes;
 import foxiwhitee.FoxLib.container.slots.FoxSlot;
 import ic2.core.upgrade.IUpgradeItem;
@@ -40,7 +40,12 @@ public class SlotUpgrade extends FoxSlot {
                         return true;
                     } else return item instanceof ItemStorageUpgrade && types.contains(UpgradesTypes.STORAGE);
                 }
-            } else if (i.getItem() instanceof IUpgradeItem item) {
+            } else if (i.getItem() instanceof ItemFluidGeneratorUpgrade) {
+                switch (i.getItemDamage()) {
+                    case 0: return types.contains(UpgradesTypes.WATER_GENERATOR);
+                    case 1: return types.contains(UpgradesTypes.LAVA_GENERATOR);
+                }
+            } else if (i.getItem() instanceof IUpgradeItem) {
                 switch (i.getItemDamage()) {
                     case 0: return types.contains(UpgradesTypes.SPEED);
                     case 2: return types.contains(UpgradesTypes.STORAGE);

@@ -3,18 +3,16 @@ package foxiwhitee.FoxIndustrialization.client.gui;
 import foxiwhitee.FoxIndustrialization.FICore;
 import foxiwhitee.FoxIndustrialization.container.ContainerSynthesizer;
 import foxiwhitee.FoxIndustrialization.tile.TileSynthesizer;
-import foxiwhitee.FoxLib.client.gui.FoxBaseGui;
 import foxiwhitee.FoxLib.utils.ProductivityUtil;
 import foxiwhitee.FoxLib.utils.helpers.EnergyUtility;
 import foxiwhitee.FoxLib.utils.helpers.LocalizationUtils;
 import foxiwhitee.FoxLib.utils.helpers.UtilGui;
 
-public class GuiSynthesizer extends FoxBaseGui {
+public class GuiSynthesizer extends FIGui {
     private final TileSynthesizer tile;
 
     public GuiSynthesizer(ContainerSynthesizer container) {
         super(container, 262, 265);
-        setModID(FICore.MODID);
         tile = (TileSynthesizer) container.getTileEntity();
     }
 

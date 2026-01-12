@@ -33,7 +33,7 @@ public class TileInfinityGenerator extends TileCustomSolarPanel implements IEner
     private void pushEnergy() {
         boolean needUpdate = false;
         for (ForgeDirection side : ForgeDirection.VALID_DIRECTIONS) {
-            double pushedEnergy = EnergyUtility.pushEnergy(side, energy, FIConfig.infinityGeneratorOutput, this, true, false);
+            double pushedEnergy = EnergyUtility.pushEnergy(side, energy * FoxLibConfig.rfInEu, FIConfig.infinityGeneratorOutput, this, true, true);
             this.energy -= pushedEnergy;
             needUpdate |= pushedEnergy > 0;
         }

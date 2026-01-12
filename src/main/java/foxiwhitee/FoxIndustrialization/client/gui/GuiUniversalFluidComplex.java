@@ -2,27 +2,20 @@ package foxiwhitee.FoxIndustrialization.client.gui;
 
 import foxiwhitee.FoxIndustrialization.FICore;
 import foxiwhitee.FoxIndustrialization.container.ContainerUniversalFluidComplex;
+import foxiwhitee.FoxIndustrialization.network.packets.C2SClearTankInUFC;
 import foxiwhitee.FoxIndustrialization.tile.TileUniversalFluidComplex;
-import foxiwhitee.FoxLib.client.gui.FoxBaseGui;
+import foxiwhitee.FoxLib.network.NetworkManager;
 import foxiwhitee.FoxLib.utils.ProductivityUtil;
 import foxiwhitee.FoxLib.utils.helpers.EnergyUtility;
 import foxiwhitee.FoxLib.utils.helpers.LocalizationUtils;
 import foxiwhitee.FoxLib.utils.helpers.UtilGui;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.inventory.Container;
-import net.minecraft.util.IIcon;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
-import org.lwjgl.opengl.GL11;
 
-public class GuiUniversalFluidComplex extends FoxBaseGui {
+public class GuiUniversalFluidComplex extends FIGui {
     private final TileUniversalFluidComplex tile;
 
     public GuiUniversalFluidComplex(ContainerUniversalFluidComplex container) {
         super(container, 278, 280);
-        setModID(FICore.MODID);
         tile = (TileUniversalFluidComplex) container.getTileEntity();
     }
 
@@ -113,47 +106,32 @@ public class GuiUniversalFluidComplex extends FoxBaseGui {
         }
     }
 
-    private void drawFluid(FluidTank tank, int x, int y, int width, int height) {
-        FluidStack fluid = tank.getFluid();
-        if (fluid == null || fluid.amount <= 0) {
-            return;
+    @Override
+    protected void mouseClicked(int mouseX, int mouseY, int mouseButton) {
+        super.mouseClicked(mouseX, mouseY, mouseButton);
+
+        int guiLeft = (this.width - this.xSize) / 2;
+        int guiTop = (this.height - this.ySize) / 2;
+        int relX = mouseX - guiLeft;
+        int relY = mouseY - guiTop;
+
+        if (mouseButton == 0 && isShiftKeyDown()) {
+            int mode = -1;
+            if (relX >= 55 && relX <= 72 && relY >= 85 && relY <= 141) {
+                mode = 1;
+            }
+            if (relX >= 77 && relX <= 94 && relY >= 85 && relY <= 141) {
+                mode = 2;
+            }
+            if (relX >= 99 && relX <= 116 && relY >= 85 && relY <= 141) {
+                mode = 3;
+            }
+            if (relX >= 183 && relX <= 200 && relY >= 85 && relY <= 141) {
+                mode = 0;
+            }
+
+            NetworkManager.instance.sendToServer(new C2SClearTankInUFC(tile.xCoord, tile.yCoord, tile.zCoord, mode));
         }
-
-        Fluid fluidType = fluid.getFluid();
-        IIcon fluidStill = fluidType.getIcon(fluid);
-
-        if (fluidStill == null) {
-            return;
-        }
-
-        int fluidHeight = (int) (fluid.amount * height / tank.getCapacity());
-        if (fluidHeight <= 0 && fluid.amount > 0) fluidHeight = 1;
-
-        int fluidColor = fluidType.getColor();
-
-        float red = (float) (fluidColor >> 16 & 255) / 255.0F;
-        float green = (float) (fluidColor >> 8 & 255) / 255.0F;
-        float blue = (float) (fluidColor & 255) / 255.0F;
-
-        GL11.glColor4f(red, green, blue, 1.0F);
-
-        Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationBlocksTexture);
-
-        int drawY = y + height - fluidHeight;
-
-        for (int currentDrawHeight = 0; currentDrawHeight < fluidHeight; currentDrawHeight += 16) {
-            int actualDrawHeight = Math.min(fluidHeight - currentDrawHeight, 16);
-
-            drawTexturedModelRectFromIcon(
-                x,
-                drawY + fluidHeight - currentDrawHeight - actualDrawHeight,
-                fluidStill,
-                width,
-                actualDrawHeight
-            );
-        }
-
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
     }
 
     @Override

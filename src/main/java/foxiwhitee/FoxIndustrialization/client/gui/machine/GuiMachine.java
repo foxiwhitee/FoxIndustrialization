@@ -1,26 +1,23 @@
 package foxiwhitee.FoxIndustrialization.client.gui.machine;
 
 import foxiwhitee.FoxIndustrialization.FICore;
+import foxiwhitee.FoxIndustrialization.client.gui.FIGui;
 import foxiwhitee.FoxIndustrialization.container.machine.ContainerMachine;
 import foxiwhitee.FoxIndustrialization.network.packets.C2SUpdateMachineInventoryModePacket;
 import foxiwhitee.FoxIndustrialization.tile.machines.TileBaseMachine;
-import foxiwhitee.FoxIndustrialization.tile.storage.TileEnergyStorage;
 import foxiwhitee.FoxIndustrialization.utils.ButtonInventoryMode;
-import foxiwhitee.FoxLib.client.gui.FoxBaseGui;
 import foxiwhitee.FoxLib.client.gui.buttons.NoTextureButton;
 import foxiwhitee.FoxLib.network.NetworkManager;
 import foxiwhitee.FoxLib.utils.ProductivityUtil;
 import foxiwhitee.FoxLib.utils.helpers.EnergyUtility;
 import foxiwhitee.FoxLib.utils.helpers.UtilGui;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.inventory.Container;
 
-public abstract class GuiMachine extends FoxBaseGui {
+public abstract class GuiMachine extends FIGui {
     protected final TileBaseMachine tile;
 
     public GuiMachine(ContainerMachine container) {
         super(container, 262, 255);
-        setModID(FICore.MODID);
         tile = (TileBaseMachine) container.getTileEntity();
     }
 

@@ -1,8 +1,11 @@
 package foxiwhitee.FoxIndustrialization;
 
 import foxiwhitee.FoxIndustrialization.blocks.BlockCasing;
+import foxiwhitee.FoxIndustrialization.blocks.BlockMatterSynthesizer;
 import foxiwhitee.FoxIndustrialization.blocks.BlockSynthesizer;
 import foxiwhitee.FoxIndustrialization.blocks.BlockUniversalFluidComplex;
+import foxiwhitee.FoxIndustrialization.blocks.generator.fluid.BlockLavaGenerator;
+import foxiwhitee.FoxIndustrialization.blocks.generator.fluid.BlockWaterGenerator;
 import foxiwhitee.FoxIndustrialization.blocks.generator.fuel.BlockAdvancedGenerator;
 import foxiwhitee.FoxIndustrialization.blocks.generator.fuel.BlockNanoGenerator;
 import foxiwhitee.FoxIndustrialization.blocks.generator.fuel.BlockQuantumGenerator;
@@ -10,6 +13,10 @@ import foxiwhitee.FoxIndustrialization.blocks.generator.infinity.BlockInfinityGe
 import foxiwhitee.FoxIndustrialization.blocks.generator.kinetic.BlockAdvancedKineticGenerator;
 import foxiwhitee.FoxIndustrialization.blocks.generator.kinetic.BlockNanoKineticGenerator;
 import foxiwhitee.FoxIndustrialization.blocks.generator.kinetic.BlockQuantumKineticGenerator;
+import foxiwhitee.FoxIndustrialization.blocks.generator.matter.BlockAdvancedMatterGenerator;
+import foxiwhitee.FoxIndustrialization.blocks.generator.matter.BlockNanoMatterGenerator;
+import foxiwhitee.FoxIndustrialization.blocks.generator.matter.BlockQuantumMatterGenerator;
+import foxiwhitee.FoxIndustrialization.blocks.generator.matter.BlockSingularMatterGenerator;
 import foxiwhitee.FoxIndustrialization.blocks.generator.panel.*;
 import foxiwhitee.FoxIndustrialization.blocks.machines.advanced.*;
 import foxiwhitee.FoxIndustrialization.blocks.machines.nano.*;
@@ -17,8 +24,11 @@ import foxiwhitee.FoxIndustrialization.blocks.machines.quantum.*;
 import foxiwhitee.FoxIndustrialization.blocks.storage.*;
 import foxiwhitee.FoxIndustrialization.config.ContentConfig;
 import foxiwhitee.FoxIndustrialization.items.block.*;
+import foxiwhitee.FoxIndustrialization.tile.TileMatterSynthesizer;
 import foxiwhitee.FoxIndustrialization.tile.TileSynthesizer;
 import foxiwhitee.FoxIndustrialization.tile.TileUniversalFluidComplex;
+import foxiwhitee.FoxIndustrialization.tile.generator.fluid.TileLavaGenerator;
+import foxiwhitee.FoxIndustrialization.tile.generator.fluid.TileWaterGenerator;
 import foxiwhitee.FoxIndustrialization.tile.generator.fuel.TileAdvancedGenerator;
 import foxiwhitee.FoxIndustrialization.tile.generator.fuel.TileNanoGenerator;
 import foxiwhitee.FoxIndustrialization.tile.generator.fuel.TileQuantumGenerator;
@@ -26,6 +36,10 @@ import foxiwhitee.FoxIndustrialization.tile.generator.infinity.TileInfinityGener
 import foxiwhitee.FoxIndustrialization.tile.generator.kinetic.TileAdvancedKineticGenerator;
 import foxiwhitee.FoxIndustrialization.tile.generator.kinetic.TileNanoKineticGenerator;
 import foxiwhitee.FoxIndustrialization.tile.generator.kinetic.TileQuantumKineticGenerator;
+import foxiwhitee.FoxIndustrialization.tile.generator.matter.TileAdvancedMatterGenerator;
+import foxiwhitee.FoxIndustrialization.tile.generator.matter.TileNanoMatterGenerator;
+import foxiwhitee.FoxIndustrialization.tile.generator.matter.TileQuantumMatterGenerator;
+import foxiwhitee.FoxIndustrialization.tile.generator.matter.TileSingularMatterGenerator;
 import foxiwhitee.FoxIndustrialization.tile.machines.advanced.*;
 import foxiwhitee.FoxIndustrialization.tile.machines.nano.*;
 import foxiwhitee.FoxIndustrialization.tile.machines.quantum.*;
@@ -96,13 +110,24 @@ public class ModBlocks {
     public static final Block infinityGenerator = new BlockInfinityGenerator("infinityGenerator");
 
     public static final Block synthesizer = new BlockSynthesizer("synthesizer");
+    public static final Block matterSynthesizer = new BlockMatterSynthesizer("matterSynthesizer");
+
+    public static final Block waterGenerator = new BlockWaterGenerator("waterGenerator");
+    public static final Block lavaGenerator = new BlockLavaGenerator("lavaGenerator");
+
+    public static final Block advancedMatterGenerator = new BlockAdvancedMatterGenerator("advancedMatterGenerator");
+    public static final Block nanoMatterGenerator = new BlockNanoMatterGenerator("nanoMatterGenerator");
+    public static final Block quantumMatterGenerator = new BlockQuantumMatterGenerator("quantumMatterGenerator");
+    public static final Block singularMatterGenerator = new BlockSingularMatterGenerator("singularMatterGenerator");
 
     public static void registerBlocks() {
         registerCasings();
         registerUniversalFluidComplex();
+        registerFluidGenerators();
         registerAdvancedMachines();
         registerNanoMachines();
         registerQuantumMachines();
+        registerMatterGenerators();
         registerGenerators();
         registerEnergyStorages();
         registerCustomSolarPanels();
@@ -110,9 +135,39 @@ public class ModBlocks {
         registerSynthesizers();
     }
 
+    private static void registerMatterGenerators() {
+        if (ContentConfig.enableAdvancedMatterGenerator) {
+            RegisterUtils.registerBlock(advancedMatterGenerator, ItemBlockMatterGenerator.class);
+            RegisterUtils.registerTile(TileAdvancedMatterGenerator.class);
+        }
+        if (ContentConfig.enableNanoMatterGenerator) {
+            RegisterUtils.registerBlock(nanoMatterGenerator, ItemBlockMatterGenerator.class);
+            RegisterUtils.registerTile(TileNanoMatterGenerator.class);
+        }
+        if (ContentConfig.enableQuantumMatterGenerator) {
+            RegisterUtils.registerBlock(quantumMatterGenerator, ItemBlockMatterGenerator.class);
+            RegisterUtils.registerTile(TileQuantumMatterGenerator.class);
+        }
+        if (ContentConfig.enableSingularMatterGenerator) {
+            RegisterUtils.registerBlock(singularMatterGenerator, ItemBlockMatterGenerator.class);
+            RegisterUtils.registerTile(TileSingularMatterGenerator.class);
+        }
+    }
+
+    private static void registerFluidGenerators() {
+        if (ContentConfig.enableWaterGenerator) {
+            RegisterUtils.registerBlock(waterGenerator, ItemBlockFluidGenerator.class);
+            RegisterUtils.registerTile(TileWaterGenerator.class);
+        }
+        if (ContentConfig.enableLavaGenerator) {
+            RegisterUtils.registerBlock(lavaGenerator, ItemBlockFluidGenerator.class);
+            RegisterUtils.registerTile(TileLavaGenerator.class);
+        }
+    }
+
     private static void registerUniversalFluidComplex() {
         if (ContentConfig.enableUniversalFluidComplex) {
-            RegisterUtils.registerBlock(universalFluidComplex);
+            RegisterUtils.registerBlock(universalFluidComplex, ItemBlockUFC.class);
             RegisterUtils.registerTile(TileUniversalFluidComplex.class);
         }
     }
@@ -263,6 +318,10 @@ public class ModBlocks {
         if (ContentConfig.enableSynthesizer) {
             RegisterUtils.registerBlock(ItemBlockSynthesizer.class, synthesizer);
             RegisterUtils.registerTile(TileSynthesizer.class);
+        }
+        if (ContentConfig.enableMatterSynthesizer) {
+            RegisterUtils.registerBlock(ItemBlockMatterSynthesizer.class, matterSynthesizer);
+            RegisterUtils.registerTile(TileMatterSynthesizer.class);
         }
     }
 }

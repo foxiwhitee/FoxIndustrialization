@@ -1,17 +1,15 @@
 package foxiwhitee.FoxIndustrialization.client.gui.generator.kinetic;
 
 import foxiwhitee.FoxIndustrialization.FICore;
+import foxiwhitee.FoxIndustrialization.client.gui.FIGui;
 import foxiwhitee.FoxIndustrialization.container.generator.kinetic.ContainerKineticGenerator;
-import foxiwhitee.FoxIndustrialization.container.storage.ContainerEnergyStorage;
 import foxiwhitee.FoxIndustrialization.tile.generator.kinetic.TileKineticGenerator;
-import foxiwhitee.FoxIndustrialization.tile.storage.TileEnergyStorage;
-import foxiwhitee.FoxLib.client.gui.FoxBaseGui;
 import foxiwhitee.FoxLib.utils.ProductivityUtil;
 import foxiwhitee.FoxLib.utils.helpers.EnergyUtility;
 import foxiwhitee.FoxLib.utils.helpers.LocalizationUtils;
 import foxiwhitee.FoxLib.utils.helpers.UtilGui;
 
-public class GuiKineticGenerator extends FoxBaseGui {
+public class GuiKineticGenerator extends FIGui {
     private final TileKineticGenerator tile;
 
     public GuiKineticGenerator(ContainerKineticGenerator container) {
@@ -40,7 +38,7 @@ public class GuiKineticGenerator extends FoxBaseGui {
             double y = ProductivityUtil.gauge(73, storedEnergy, maxStoredEnergy);
             UtilGui.drawTexture(122, 132 - y, 272, 0, 18, y, 18, y, 512.0D, 512.0D);
             String text = EnergyUtility.formatNumber(storedEnergy) + " / " + EnergyUtility.formatNumber(maxStoredEnergy) + " EU\n" +
-                LocalizationUtils.localize("tooltip.generator.generate", EnergyUtility.formatNumber(tile.getProduction()));;
+                LocalizationUtils.localize("tooltip.generator.generate", EnergyUtility.formatNumber(tile.getProduction()));
             drawIfInMouse(mouseX, mouseY, 119, 56, 22, 77, text);
         }
     }

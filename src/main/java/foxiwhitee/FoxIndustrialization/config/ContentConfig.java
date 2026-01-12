@@ -35,6 +35,18 @@ public class ContentConfig {
     @ConfigValue(category = "Content", desc = "Enable Universal Fluid Complex?")
     public static boolean enableUniversalFluidComplex = true;
 
+    @ConfigValue(category = "Content", desc = "Enable Water Generator?")
+    public static boolean enableWaterGenerator = true;
+
+    @ConfigValue(category = "Content", desc = "Enable Lava Generator?")
+    public static boolean enableLavaGenerator = true;
+
+    @ConfigValue(category = "Content", desc = "Enable Fluid Upgrades?")
+    public static boolean enableFluidUpgrades = true;
+
+    @ConfigValue(category = "Content", desc = "Enable Matter Synthesizer?")
+    public static boolean enableMatterSynthesizer = true;
+
 
     // Machines Advanced
     @ConfigValue(category = "Content.Machines.Advanced", desc = "Enable Advanced Compressor?")
@@ -120,4 +132,18 @@ public class ContentConfig {
 
     @ConfigValue(category = "Content.Generators.Kinetic", desc = "Enable Quantum Kinetic Generator?")
     public static boolean enableQuantumKineticGenerator = true;
+
+
+    // Generator Matter
+    @ConfigValue(category = "Content.Generators.Matter", desc = "Enable Advanced Matter Generator?")
+    public static boolean enableAdvancedMatterGenerator = true;
+
+    @ConfigValue(category = "Content.Generators.Matter", desc = "Enable Nano Matter Generator?")
+    public static boolean enableNanoMatterGenerator = true;
+
+    @ConfigValue(category = "Content.Generators.Matter", desc = "Enable Quantum Matter Generator?")
+    public static boolean enableQuantumMatterGenerator = true;
+
+    @ConfigValue(category = "Content.Generators.Matter", desc = "Enable Singular Matter Generator?")
+    public static boolean enableSingularMatterGenerator = true;
 }

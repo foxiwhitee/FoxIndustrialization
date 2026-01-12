@@ -60,6 +60,20 @@ tile.infinityGenerator.name=Генератор нескінченності
 
 tile.casingNano.name=Нано корпус механізму
 tile.casingQuantum.name=Квантовий корпус механізму
+
+tile.universalFluidComplex.name=Універсальний рідинний комплекс
+
+tile.waterGenerator.name=Генератор води
+tile.lavaGenerator.name=Генератор лави
+
+tile.advancedMatterGenerator.name=Розширений генератор матерії
+tile.nanoMatterGenerator.name=Нано генератор матерії
+tile.quantumMatterGenerator.name=Квантовий генератор матерії
+tile.singularMatterGenerator.name=Сингулярний генератор матерії
+
+tile.synthesizer.name=Синтезатор енергії
+tile.matterSynthesizer.name=Синтезатор матерії
+
 # Items
 item.speedUpgrade.Advanced.name=Розширене поліпшення швидкості
 item.speedUpgrade.Nano.name=Нано поліпшення швидкості
@@ -89,7 +103,9 @@ item.synthesizerUpgrade.8.name=Поліпшення синтезатора 8
 item.synthesizerUpgrade.9.name=Поліпшення синтезатора 9
 item.synthesizerUpgrade.10.name=Поліпшення синтезатора 10
 
-tile.synthesizer.name=Синтезатор енергії
+item.fluidUpgrades.Water.name=Поліпшення: генератр води
+item.fluidUpgrades.Lava.name=Поліпшення: генератор лави
+
 # Tooltips 
 tooltip.upgrade.addPerOp=§7Збільшує кількість перероблених предметів за операцію на §3%s
 tooltip.upgrade.speed=§7Зменшує час роботи до §3%s%%
@@ -101,9 +117,12 @@ tooltip.upgrade.pc.outputMult=§7Збільшує швидкість виход�
 tooltip.upgrade.outputMult=§7Збільшує швидкість виходу енергії у §3%s§7 разів 
 tooltip.upgrade.synthesizerBonus=§7Бонус енергії що виробляється §3%s%%
 tooltip.upgrade.sun.desc=§7Сонячні панелі генерують стільки ж енергії вночі, скільки й вдень.
+tooltip.fluidUpgrade.Water.desc=§7Нескінченно генерує воду в блоці
+tooltip.fluidUpgrade.Lava.desc=§7Нескінченно генерує лаву в блоці
 tooltip.level.advanced=§6Розширений
 tooltip.level.nano=§8Нано
 tooltip.level.quantum=§3Квантовий
+tooltip.level.singular=§3Сингулярний
 tooltip.energyStorage.output=§7Вихід: §3%s§7 EU/t
 tooltip.energyStorage.capacity=§7Сховище: §3%s§7 EU
 tooltip.energyStorage.store=§7Зберігає: §3%s§7 EU
@@ -147,4 +166,7 @@ tooltip.generator.output=§7Вихід: §3%s§7 EU/t
 tooltip.solarPanel.generateInDay=§7Генерує в день: §3%s§7 EU/t
 tooltip.solarPanel.generateInNight=§7Генерує в ніч: §3%s§7 EU/t
 tooltip.solarPanel.output=§7Вихід: §3%s §7EU/t
-tooltip.ufc.pressShiftToClear=Shift + ПКМ щоб очистити 
+tooltip.ufc.pressShiftToClear=Shift + ЛКМ щоб очистити 
+tooltip.fluidGenerator.capacity=§7Сховище: §3%s §7mB
+tooltip.matter.generating=§7Генерує §3%s§7 матерії за §3%s§7 EU
+tooltip.matter.generate=§7Генерує: §3%s§7 mB/t

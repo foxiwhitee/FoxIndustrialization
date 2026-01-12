@@ -717,4 +717,62 @@ public class FIConfig {
 
     @ConfigValue(category = "UFC", name = "fluidStorage", desc = "The maximum amount of fluid that the block can hold in one fluid container")
     public static int ufcFluidStorage = 128_000;
+
+
+    // Fluid Generators
+    @ConfigValue(category = "Generator.Fluid.Water", name = "fluidStorage", desc = "The maximum amount of fluid that the block can hold in one fluid container")
+    public static int waterGeneratorFluidStorage = 128_000;
+
+    @ConfigValue(category = "Generator.Fluid.Lava", name = "fluidStorage", desc = "The maximum amount of fluid that the block can hold in one fluid container")
+    public static int lavaGeneratorFluidStorage = 128_000;
+
+
+    // Matter
+    @ConfigValue(category = "Matter.Advanced", name = "tank", desc = "The amount of matter that an Advanced Matter Generator can store")
+    public static int advancedMatterGeneratorTank = 32_000;
+
+    @ConfigValue(category = "Matter.Advanced", name = "generate", desc = "The amount of matter generated at a time")
+    public static int advancedMatterGeneratorGenerate = 2;
+
+    @ConfigValue(category = "Matter.Advanced", name = "energyNeed", desc = "The amount of energy required by block for generation")
+    public static double advancedMatterGeneratorEnergyNeed = 1_000_000;
+
+
+    @ConfigValue(category = "Matter.Nano", name = "tank", desc = "The amount of matter that a Nano Matter Generator can store")
+    public static int nanoMatterGeneratorTank = 96_000;
+
+    @ConfigValue(category = "Matter.Nano", name = "generate", desc = "The amount of matter generated at a time")
+    public static int nanoMatterGeneratorGenerate = 4;
+
+    @ConfigValue(category = "Matter.Nano", name = "energyNeed", desc = "The amount of energy required by block for generation")
+    public static double nanoMatterGeneratorEnergyNeed = 1_000_000;
+
+
+    @ConfigValue(category = "Matter.Quantum", name = "tank", desc = "The amount of matter that a Quantum Matter Generator can store")
+    public static int quantumMatterGeneratorTank = 128_000;
+
+    @ConfigValue(category = "Matter.Quantum", name = "generate", desc = "The amount of matter generated at a time")
+    public static int quantumMatterGeneratorGenerate = 8;
+
+    @ConfigValue(category = "Matter.Quantum", name = "energyNeed", desc = "The amount of energy required by block for generation")
+    public static double quantumMatterGeneratorEnergyNeed = 950_000;
+
+    @ConfigValue(category = "Matter.Quantum", name = "supportsRF", desc = "Does this block support RF energy?")
+    public static boolean quantumMatterGeneratorSupportsRF = true;
+
+
+    @ConfigValue(category = "Matter.Singular", name = "tank", desc = "The amount of matter that a Singular Matter Generator can store")
+    public static int singularMatterGeneratorTank = 256_000;
+
+    @ConfigValue(category = "Matter.Singular", name = "generate", desc = "The amount of matter generated at a time")
+    public static int singularMatterGeneratorGenerate = 16;
+
+    @ConfigValue(category = "Matter.Singular", name = "energyNeed", desc = "The amount of energy required by block for generation")
+    public static double singularMatterGeneratorEnergyNeed = 900_000;
+
+    @ConfigValue(category = "Matter.Singular", name = "supportsRF", desc = "Does this block support RF energy?")
+    public static boolean singularMatterGeneratorSupportsRF = true;
+
+    @ConfigValue(category = "Matter.Synthesizer", name = "supportsRF", desc = "Does this block support RF energy?")
+    public static boolean matterSynthesizerSupportsRF = true;
 }

@@ -70,7 +70,7 @@ public class TileSynthesizer extends TileIC2Inv implements IEnergySource, IEnerg
     private void pushEnergy() {
         boolean needUpdate = false;
         for (ForgeDirection side : ForgeDirection.VALID_DIRECTIONS) {
-            double pushedEnergy = EnergyUtility.pushEnergy(side, energy, output, this, true, false);
+            double pushedEnergy = EnergyUtility.pushEnergy(side, energy * FoxLibConfig.rfInEu, output, this, true, true);
             this.energy -= pushedEnergy;
             needUpdate |= pushedEnergy > 0;
         }
