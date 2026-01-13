@@ -15,7 +15,7 @@ public class ContainerMatterSynthesizer extends FoxBaseContainer {
 
         bindPlayerInventory(ip.inventory, 43, 200);
 
-        addSlotToContainer(new SlotFiltered(FilterInitializer.FILTER_FLUID_GENERATOR, myTile.getInternalInventory(), 0, 160, 96, ip.inventory));
+        addSlotToContainer(new SlotFiltered(FilterInitializer.FILTER_FLUID_GENERATOR, myTile.getRealInventory(), 0, 160, 96, ip.inventory));
         addSlotToContainer(new Slot(myTile.getOutputInventory(), 0, 160, 132) {
             @Override
             public boolean isItemValid(ItemStack stack) {
@@ -23,7 +23,7 @@ public class ContainerMatterSynthesizer extends FoxBaseContainer {
             }
         });
 
-        addSlotToContainer(new SlotFiltered(FilterInitializer.FILTER_SCRAP, myTile.getScrapInventory(), 0, 86, 114, ip.inventory));
+        addSlotToContainer(new SlotFiltered(FilterInitializer.FILTER_SCRAP, myTile.getInternalInventory(), 0, 86, 114, ip.inventory));
 
         for (int i = 0; i < 3; i++) {
             addSlotToContainer(new SlotUpgrade(myTile.getUpgradesInventory(), myTile, i, 23, 112 + i * 19));

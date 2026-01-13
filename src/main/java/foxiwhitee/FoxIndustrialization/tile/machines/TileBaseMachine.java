@@ -1,26 +1,20 @@
 package foxiwhitee.FoxIndustrialization.tile.machines;
 
-import foxiwhitee.FoxIndustrialization.api.IAdvancedUpgradeItem;
 import foxiwhitee.FoxIndustrialization.api.IHasActiveState;
 import foxiwhitee.FoxIndustrialization.api.IUpgradableTile;
 import foxiwhitee.FoxIndustrialization.recipes.IRecipeIC2;
 import foxiwhitee.FoxIndustrialization.tile.TileIC2Inv;
-import foxiwhitee.FoxIndustrialization.utils.ButtonInventoryMode;
-import foxiwhitee.FoxIndustrialization.utils.MachineTier;
-import foxiwhitee.FoxIndustrialization.utils.UpgradesTypes;
+import foxiwhitee.FoxIndustrialization.utils.*;
 import foxiwhitee.FoxLib.tile.event.TileEvent;
 import foxiwhitee.FoxLib.tile.event.TileEventType;
 import foxiwhitee.FoxLib.tile.inventory.FoxInternalInventory;
 import foxiwhitee.FoxLib.tile.inventory.InvOperation;
 import foxiwhitee.FoxLib.utils.helpers.ItemStackUtil;
 import foxiwhitee.FoxLib.utils.helpers.StackOreDict;
-import ic2.core.upgrade.IUpgradeItem;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
@@ -42,7 +36,7 @@ public abstract class TileBaseMachine extends TileIC2Inv implements IHasActiveSt
     private final int defaultItemsPerOp;
 
     private ForgeDirection[] pushSides = {}, pullSides = {};
-    private final ISidedInventory[] adjacentInventories = new ISidedInventory[6];
+    private final IInventory[] adjacentInventories = new IInventory[6];
     private int scanTimer = 0;
     private boolean hasEjector = false;
     private boolean hasPuller = false;
@@ -83,14 +77,16 @@ public abstract class TileBaseMachine extends TileIC2Inv implements IHasActiveSt
         super.tick();
 
         if (scanTimer-- <= 0) {
-            updateAdjacentCache();
+            UpgradeUtils.updateAdjacentCache(this, adjacentInventories);
             scanTimer = 20;
         }
         if (hasPuller) {
-            pullIfCan();
+            UpgradeUtils.pullIfCan(pullSides, adjacentInventories, inventory);
         }
         if (hasEjector) {
-            pushIfCan();
+            if (UpgradeUtils.pushIfCan(pushSides, adjacentInventories, output)) {
+                markForUpdate();
+            }
         }
 
         if (doInventoryUpdateByMode) {
@@ -115,7 +111,7 @@ public abstract class TileBaseMachine extends TileIC2Inv implements IHasActiveSt
                 if (recipe == null) continue;
 
                 if (energy < energyPerTick) continue;
-                if (!canInsert(output, recipe.getOut(), i)) continue;
+                if (!InventoryUtils.canInsert(output, recipe.getOut(), i)) continue;
 
                 ticks[i]++;
                 energy -= energyPerTick;
@@ -135,14 +131,14 @@ public abstract class TileBaseMachine extends TileIC2Inv implements IHasActiveSt
                     int need = getCountOfInput(recipe.getInput());
                     if (in.stackSize < need) break;
 
-                    if (!canInsert(output, recipe.getOut(), i)) break;
+                    if (!InventoryUtils.canInsert(output, recipe.getOut(), i)) break;
 
                     in.stackSize -= need;
                     if (in.stackSize == 0) {
                         inventory.setInventorySlotContents(i, null);
                     }
 
-                    insert(output, recipe.getOut().copy(), i);
+                    InventoryUtils.insert(output, recipe.getOut().copy(), i);
                 }
 
                 getRecipe(inventory.getStackInSlot(i), i);
@@ -268,132 +264,6 @@ public abstract class TileBaseMachine extends TileIC2Inv implements IHasActiveSt
         return 1;
     }
 
-    private void updateAdjacentCache() {
-        for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
-            if (worldObj.blockExists(xCoord + dir.offsetX, yCoord + dir.offsetY, zCoord + dir.offsetZ)) {
-                TileEntity te = worldObj.getTileEntity(xCoord + dir.offsetX, yCoord + dir.offsetY, zCoord + dir.offsetZ);
-                adjacentInventories[dir.ordinal()] = (te instanceof ISidedInventory) ? (ISidedInventory) te : null;
-            }
-        }
-    }
-
-    private void pullIfCan() {
-        for (ForgeDirection side : pullSides) {
-            ISidedInventory neighbor = adjacentInventories[side.ordinal()];
-            if (neighbor == null || ((TileEntity)neighbor).isInvalid()) continue;
-
-            int sideFrom = side.getOpposite().ordinal();
-
-            int[] accessibleSlots = neighbor.getAccessibleSlotsFromSide(sideFrom);
-
-            for (int slot : accessibleSlots) {
-                ItemStack stack = neighbor.getStackInSlot(slot);
-
-                if (stack != null && neighbor.canExtractItem(slot, stack, sideFrom)) {
-                    if (this.canInsert(inventory, stack)) {
-                        this.insert(inventory, stack);
-
-                        neighbor.setInventorySlotContents(slot, null);
-                        neighbor.markDirty();
-                    }
-                }
-            }
-        }
-    }
-
-    private void pushIfCan() {
-        for (ForgeDirection side : pushSides) {
-            IInventory neighbor = adjacentInventories[side.ordinal()];
-
-            if (neighbor instanceof ISidedInventory sidedNeighbor && !((TileEntity)neighbor).isInvalid()) {
-
-                for (int i = 0; i < output.getSizeInventory(); i++) {
-                    ItemStack stack = output.getStackInSlot(i);
-                    if (stack != null) {
-                        tryPushStack(stack, i, sidedNeighbor, side);
-                    }
-                }
-            }
-        }
-    }
-
-    private void tryPushStack(ItemStack stackToPush, int mySlot, ISidedInventory neighbor, ForgeDirection side) {
-        int sideTo = side.getOpposite().ordinal();
-
-        int[] accessibleSlots = neighbor.getAccessibleSlotsFromSide(sideTo);
-
-        for (int targetSlot : accessibleSlots) {
-            if (!neighbor.isItemValidForSlot(targetSlot, stackToPush) ||
-                !neighbor.canInsertItem(targetSlot, stackToPush, sideTo)) {
-                continue;
-            }
-
-            ItemStack stackInTarget = neighbor.getStackInSlot(targetSlot);
-
-            if (stackInTarget == null) {
-                neighbor.setInventorySlotContents(targetSlot, stackToPush.copy());
-                output.setInventorySlotContents(mySlot, null);
-                neighbor.markDirty();
-                this.markDirty();
-                break;
-            } else if (ItemStackUtil.stackEquals(stackInTarget, stackToPush)) {
-                int limit = Math.min(neighbor.getInventoryStackLimit(), stackInTarget.getMaxStackSize());
-                int spaceLeft = limit - stackInTarget.stackSize;
-
-                if (spaceLeft > 0) {
-                    int amountToTransfer = Math.min(stackToPush.stackSize, spaceLeft);
-                    stackInTarget.stackSize += amountToTransfer;
-                    stackToPush.stackSize -= amountToTransfer;
-
-                    if (stackToPush.stackSize <= 0) {
-                        output.setInventorySlotContents(mySlot, null);
-                    }
-
-                    neighbor.markDirty();
-                    this.markDirty();
-
-                    if (output.getStackInSlot(mySlot) == null) break;
-                }
-            }
-        }
-    }
-
-    protected boolean canInsert(FoxInternalInventory inv, ItemStack stack, int idx) {
-        ItemStack inSlot = inv.getStackInSlot(idx);
-        if (inSlot == null) return true;
-        return ItemStackUtil.stackEquals(stack, inSlot) && (inSlot.getMaxStackSize() - inSlot.stackSize) >= stack.stackSize;
-    }
-
-    protected boolean canInsert(FoxInternalInventory inv, ItemStack stack) {
-        for (int i = 0; i < inv.getSizeInventory(); i++) {
-            if (canInsert(inv, stack, i)) return true;
-        }
-        return false;
-    }
-
-    protected void insert(FoxInternalInventory inv, ItemStack stack) {
-        for (int i = 0; i < inv.getSizeInventory(); i++) {
-            boolean b = insert(inv, stack, i);
-            if (b) return;
-        }
-    }
-
-    protected boolean insert(FoxInternalInventory inv, ItemStack stack, int idx) {
-        ItemStack inSlot = inv.getStackInSlot(idx);
-        stack = stack.copy();
-        if (inSlot == null) {
-            inv.setInventorySlotContents(idx, stack);
-            return true;
-        }
-        if (ItemStackUtil.stackEquals(inSlot, stack)) {
-            int transfer = Math.min(stack.stackSize, inSlot.getMaxStackSize() - inSlot.stackSize);
-            inSlot.stackSize += transfer;
-            stack.stackSize -= transfer;
-            return stack.stackSize <= 0;
-        }
-        return false;
-    }
-
     @Override
     @TileEvent(TileEventType.SERVER_NBT_WRITE)
     public void writeToNbt_(NBTTagCompound data) {
@@ -404,28 +274,8 @@ public abstract class TileBaseMachine extends TileIC2Inv implements IHasActiveSt
         data.setInteger("ticksNeed", ticksNeed);
         data.setDouble("energyPerTick", energyPerTick);
         data.setInteger("itemsPerOp", itemsPerOp);
-        if (pullSides.length > 0) {
-            int[] pullSidesNbt = new int[pullSides.length];
-            for (int i = 0; i < pullSidesNbt.length; i++) {
-                if (pullSides[i] == null) {
-                    pullSidesNbt[i] = -1;
-                } else {
-                    pullSidesNbt[i] = pullSides[i].ordinal();
-                }
-            }
-            data.setIntArray("pullSides", pullSidesNbt);
-        }
-        if (pushSides.length > 0) {
-            int[] pushSidesNbt = new int[pushSides.length];
-            for (int i = 0; i < pushSides.length; i++) {
-                if (pullSides[i] == null) {
-                    pushSidesNbt[i] = -1;
-                } else {
-                    pushSidesNbt[i] = pushSides[i].ordinal();
-                }
-            }
-            data.setIntArray("pushSides", pushSidesNbt);
-        }
+        UpgradeUtils.writeDirectionsToNbt(data, "pullSides", pullSides);
+        UpgradeUtils.writeDirectionsToNbt(data, "pushSides", pushSides);
         data.setByte("invMode", (byte) inventoryMode.ordinal());
         data.setBoolean("hasEjector", hasEjector);
         data.setBoolean("hasPuller", hasPuller);
@@ -442,28 +292,8 @@ public abstract class TileBaseMachine extends TileIC2Inv implements IHasActiveSt
         ticksNeed = data.getInteger("ticksNeed");
         energyPerTick = data.getDouble("energyPerTick");
         itemsPerOp = data.getInteger("itemsPerOp");
-        if (data.hasKey("pullSides")) {
-            int[] pullSidesNbt = data.getIntArray("pullSides");
-            pullSides = new ForgeDirection[pullSidesNbt.length];
-            for (int i = 0; i < pullSidesNbt.length; i++) {
-                if (pullSidesNbt[i] == -1) {
-                    pullSides[i] = null;
-                } else {
-                    pullSides[i] = ForgeDirection.getOrientation(pullSidesNbt[i]);
-                }
-            }
-        }
-        if (data.hasKey("pushSides")) {
-            int[] pushSidesNbt = data.getIntArray("pushSides");
-            pushSides = new ForgeDirection[pushSidesNbt.length];
-            for (int i = 0; i < pushSidesNbt.length; i++) {
-                if (pushSidesNbt[i] == -1) {
-                    pushSides[i] = null;
-                } else {
-                    pushSides[i] = ForgeDirection.getOrientation(pushSidesNbt[i]);
-                }
-            }
-        }
+        pullSides = UpgradeUtils.readDirectionsFromNbt(data, "pullSides");
+        pushSides = UpgradeUtils.readDirectionsFromNbt(data, "pushSides");
         inventoryMode = ButtonInventoryMode.values()[data.getByte("invMode")];
         hasEjector = data.getBoolean("hasEjector");
         hasPuller = data.getBoolean("hasPuller");
@@ -565,63 +395,22 @@ public abstract class TileBaseMachine extends TileIC2Inv implements IHasActiveSt
     @Override
     public void onChangeInventory(IInventory iInv, int slot, InvOperation op, ItemStack removed, ItemStack added) {
         if (iInv == upgrades) {
-            this.maxEnergy = defaultMaxEnergy;
-            this.itemsPerOp = defaultItemsPerOp;
-            this.energyPerTick = defaultEnergyPerTick;
-            this.ticksNeed = 100;
+            var handler = UpgradeUtils.newHandler(this, upgrades)
+                .storage(defaultMaxEnergy)
+                .speed(100, defaultEnergyPerTick, defaultItemsPerOp, 64)
+                .ejector()
+                .puller()
+                .process();
 
-            List<Integer> newPushRaw = new ArrayList<>();
-            List<Integer> newPullRaw = new ArrayList<>();
+            this.maxEnergy = handler.getStorage();
+            this.energyPerTick = handler.getEnergyNeed();
+            this.itemsPerOp = handler.getOperations();
+            this.ticksNeed = handler.getTicksNeed();
+            this.hasEjector = handler.hasEjector();
+            this.hasPuller = handler.hasPuller();
+            this.pullSides = handler.getPushSides();
+            this.pullSides = handler.getPullSides();
 
-            List<UpgradesTypes> available = Arrays.asList(getAvailableTypes());
-            boolean canEject = available.contains(UpgradesTypes.EJECTOR);
-            boolean canPull = available.contains(UpgradesTypes.PULLING);
-
-            for (int j = 0; j < upgrades.getSizeInventory(); j++) {
-                ItemStack stack = upgrades.getStackInSlot(j);
-                if (stack == null) continue;
-
-                if (stack.getItem() instanceof IAdvancedUpgradeItem upgrade) {
-                    this.ticksNeed *= (int) upgrade.getSpeedMultiplier(stack);
-                    this.itemsPerOp += upgrade.getItemsPerOpAdd(stack);
-                    this.maxEnergy = safeMultiply(maxEnergy, upgrade.getStorageEnergyMultiplier(stack));
-                    this.energyPerTick *= upgrade.getEnergyUseMultiplier(stack);
-                } else if (stack.getItem() instanceof IUpgradeItem) {
-                    switch (stack.getItemDamage()) {
-                        case 0: // Speed
-                            this.ticksNeed *= (int) Math.pow(0.7, stack.stackSize);
-                            this.energyPerTick *= Math.pow(1.6, stack.stackSize);
-                            break;
-                        case 2: // Energy Storage
-                            this.maxEnergy += 10000 * stack.stackSize;
-                            break;
-                        case 3: // Ejector
-                            if (canEject) {
-                                NBTTagCompound nbt = stack.getTagCompound();
-                                newPushRaw.add((nbt != null && nbt.hasKey("dir")) ? (int)nbt.getByte("dir") : 0);
-                            }
-                            break;
-                        case 6: // Pulling
-                            if (canPull) {
-                                NBTTagCompound nbt = stack.getTagCompound();
-                                newPullRaw.add((nbt != null && nbt.hasKey("dir")) ? (int)nbt.getByte("dir") : 0);
-                            }
-                            break;
-                    }
-                }
-            }
-
-            this.pushSides = parseSides(newPushRaw);
-            this.pullSides = parseSides(newPullRaw);
-            this.hasEjector = pushSides.length > 0;
-            this.hasPuller = pullSides.length > 0;
-
-            if (this.ticksNeed < 1) {
-                this.ticksNeed = 1;
-            }
-            this.itemsPerOp = Math.min(this.itemsPerOp, 64);
-            this.maxEnergy = Math.max(this.maxEnergy, this.energyPerTick);
-            if (this.maxEnergy < 0) this.maxEnergy = Double.MAX_VALUE;
             this.energy = Math.min(this.maxEnergy, energy);
 
             markForUpdate();
@@ -642,24 +431,6 @@ public abstract class TileBaseMachine extends TileIC2Inv implements IHasActiveSt
                 markForUpdate();
             }
         }
-    }
-
-    private ForgeDirection[] parseSides(List<Integer> raw) {
-        if (raw.isEmpty()) return new ForgeDirection[0];
-        if (raw.contains(0)) return ForgeDirection.VALID_DIRECTIONS;
-
-        Set<ForgeDirection> dirs = new HashSet<>();
-        for (int s : raw) {
-            switch (s) {
-                case 1: dirs.add(ForgeDirection.WEST); break;
-                case 2: dirs.add(ForgeDirection.EAST); break;
-                case 3: dirs.add(ForgeDirection.DOWN); break;
-                case 4: dirs.add(ForgeDirection.UP); break;
-                case 5: dirs.add(ForgeDirection.NORTH); break;
-                case 6: dirs.add(ForgeDirection.SOUTH); break;
-            }
-        }
-        return dirs.toArray(new ForgeDirection[0]);
     }
 
     @Override

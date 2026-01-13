@@ -7,6 +7,7 @@ import foxiwhitee.FoxIndustrialization.api.IHasSynthesizerIntegration;
 import foxiwhitee.FoxIndustrialization.api.ISynthesizerSunUpgrade;
 import foxiwhitee.FoxIndustrialization.api.ISynthesizerUpgrade;
 import foxiwhitee.FoxIndustrialization.config.FIConfig;
+import foxiwhitee.FoxIndustrialization.utils.UpgradeUtils;
 import foxiwhitee.FoxLib.api.energy.IDoubleEnergyProvider;
 import foxiwhitee.FoxLib.config.FoxLibConfig;
 import foxiwhitee.FoxLib.tile.event.TileEvent;
@@ -173,8 +174,8 @@ public class TileSynthesizer extends TileIC2Inv implements IEnergySource, IEnerg
                     }
                     if (stack.getItem() instanceof ISynthesizerUpgrade item) {
                         this.bonus = item.getBonus(stack);
-                        this.output = safeMultiply(this.output, item.getOutputMultiplier(stack));
-                        this.maxEnergy = safeMultiply(this.maxEnergy, item.getStorageMultiplier(stack));
+                        this.output = UpgradeUtils.safeMultiply(this.output, item.getOutputMultiplier(stack));
+                        this.maxEnergy = UpgradeUtils.safeMultiply(this.maxEnergy, item.getStorageMultiplier(stack));
                     }
                 }
             }

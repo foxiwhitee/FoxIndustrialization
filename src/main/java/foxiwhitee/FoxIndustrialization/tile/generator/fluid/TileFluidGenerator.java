@@ -1,6 +1,7 @@
 package foxiwhitee.FoxIndustrialization.tile.generator.fluid;
 
 import foxiwhitee.FoxIndustrialization.tile.TileIC2Inv;
+import foxiwhitee.FoxIndustrialization.utils.InventoryUtils;
 import foxiwhitee.FoxLib.tile.event.TileEvent;
 import foxiwhitee.FoxLib.tile.event.TileEventType;
 import foxiwhitee.FoxLib.tile.inventory.FoxInternalInventory;
@@ -102,7 +103,7 @@ public abstract class TileFluidGenerator extends TileIC2Inv implements IFluidHan
     public void writeToNbt_(NBTTagCompound data) {
         super.writeToNbt_(data);
         output.writeToNBT(data, "output");
-        tank.writeToNBT(data.getCompoundTag("storageTank"));
+        InventoryUtils.writeTankToNbt(data, "tank", this.tank);
     }
 
     @Override
@@ -110,44 +111,22 @@ public abstract class TileFluidGenerator extends TileIC2Inv implements IFluidHan
     public void readFromNbt_(NBTTagCompound data) {
         super.readFromNbt_(data);
         output.readFromNBT(data, "output");
-        tank.readFromNBT(data.getCompoundTag("storageTank"));
+        InventoryUtils.readTankFromNbt(data, "tank", this.tank);
     }
 
     @Override
     @TileEvent(TileEventType.CLIENT_NBT_WRITE)
     public void writeToStream(ByteBuf data) {
         super.writeToStream(data);
-        FluidStack fs = tank.getFluid();
-        if (fs != null) {
-            data.writeBoolean(true);
-            data.writeInt(FluidRegistry.getFluidID(fs.getFluid()));
-            data.writeInt(fs.amount);
-        } else {
-            data.writeBoolean(false);
-        }
+        InventoryUtils.writeTankToStream(data, tank);
     }
 
     @Override
     @TileEvent(TileEventType.CLIENT_NBT_READ)
     public boolean readFromStream(ByteBuf data) {
         boolean old = super.readFromStream(data);
-        boolean changed = false;
-        boolean hasFluid = data.readBoolean();
-        if (hasFluid) {
-            int id = data.readInt();
-            int amount = data.readInt();
-            Fluid f = FluidRegistry.getFluid(id);
-            if (tank.getFluid() == null || tank.getFluid().getFluid() != f || tank.getFluid().amount != amount) {
-                tank.setFluid(new FluidStack(f, amount));
-                changed = true;
-            }
-        } else {
-            if (tank.getFluid() != null) {
-                tank.setFluid(null);
-                changed = true;
-            }
-        }
-        return changed || old;
+        boolean tankChanged = InventoryUtils.readTankFromStream(data, tank);
+        return tankChanged || old;
     }
 
     @Override

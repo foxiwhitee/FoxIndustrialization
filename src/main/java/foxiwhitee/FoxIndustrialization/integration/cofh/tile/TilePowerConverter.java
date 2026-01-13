@@ -1,12 +1,10 @@
 package foxiwhitee.FoxIndustrialization.integration.cofh.tile;
 
 import cofh.api.energy.IEnergyHandler;
-import cofh.api.energy.IEnergyReceiver;
-import foxiwhitee.FoxIndustrialization.FICore;
 import foxiwhitee.FoxIndustrialization.api.IAdvancedUpgradeItem;
 import foxiwhitee.FoxIndustrialization.api.IPowerConverterUpgradeItem;
+import foxiwhitee.FoxIndustrialization.utils.UpgradeUtils;
 import foxiwhitee.FoxLib.api.energy.IDoubleEnergyHandler;
-import foxiwhitee.FoxLib.api.energy.IDoubleEnergyReceiver;
 import foxiwhitee.FoxIndustrialization.config.FIConfig;
 import foxiwhitee.FoxIndustrialization.integration.cofh.utils.ButtonConverterMode;
 import foxiwhitee.FoxIndustrialization.tile.TileIC2Inv;
@@ -144,11 +142,11 @@ public class TilePowerConverter extends TileIC2Inv implements IEnergyHandler, ID
                 ItemStack stack = inventory.getStackInSlot(j);
                 if (stack != null) {
                     if (stack.getItem() instanceof IAdvancedUpgradeItem item) {
-                        this.maxEnergy = safeMultiply(maxEnergy, item.getStorageEnergyMultiplier(stack));
-                        this.maxEnergyRF = safeMultiply(maxEnergyRF, item.getStorageEnergyMultiplier(stack));
+                        this.maxEnergy = UpgradeUtils.safeMultiply(maxEnergy, item.getStorageEnergyMultiplier(stack));
+                        this.maxEnergyRF = UpgradeUtils.safeMultiply(maxEnergyRF, item.getStorageEnergyMultiplier(stack));
                     } else if (stack.getItem() instanceof IPowerConverterUpgradeItem item) {
-                        this.maxEnergy = safeMultiply(maxEnergy, item.getStorageEnergyEUMultiplier(stack));
-                        this.maxEnergyRF = safeMultiply(maxEnergyRF, item.getStorageEnergyRFMultiplier(stack));
+                        this.maxEnergy = UpgradeUtils.safeMultiply(maxEnergy, item.getStorageEnergyEUMultiplier(stack));
+                        this.maxEnergyRF = UpgradeUtils.safeMultiply(maxEnergyRF, item.getStorageEnergyRFMultiplier(stack));
                         this.outputEU *= item.getOutputEnergyEUMultiplier(stack);
                         this.outputRF *= item.getOutputEnergyRFMultiplier(stack);
                     }

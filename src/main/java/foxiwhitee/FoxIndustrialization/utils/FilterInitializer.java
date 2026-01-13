@@ -8,6 +8,7 @@ import foxiwhitee.FoxLib.api.energy.IDoubleEnergyContainerItem;
 import foxiwhitee.FoxLib.container.slots.SlotFiltered;
 import ic2.api.item.IElectricItem;
 import ic2.core.Ic2Items;
+import ic2.core.item.ItemCrystalMemory;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -64,6 +65,8 @@ public class FilterInitializer {
     public static final String FILTER_SCRAP = "scrap";
     public static final String FILTER_MATTER_SYNTHESIZER = "matterSynthesizer";
 
+    public static final String FILTER_SCANNER_CRYSTAL = "scannerCrystal";
+
     public static void initFilters() {
         SlotFiltered.filters.put(FILTER_BASIC_ENERGY_STORAGE, stack -> itemInstanceof(stack, IElectricItem.class));
         SlotFiltered.filters.put(FILTER_ADVANCED_ENERGY_STORAGE, stack -> itemInstanceof(stack, IElectricItem.class));
@@ -90,6 +93,8 @@ public class FilterInitializer {
         SlotFiltered.filters.put(FILTER_MATTER_GENERATOR, FluidContainerRegistry::isContainer);
         SlotFiltered.filters.put(FILTER_SCRAP, stack -> itemEquals(stack, Ic2Items.scrap.getItem()) || itemEquals(stack, Ic2Items.scrapBox.getItem()));
         SlotFiltered.filters.put(FILTER_MATTER_SYNTHESIZER, stack -> itemInstanceof(stack, IHasMatterSynthesizerIntegration.class) || Block.getBlockFromItem(stack.getItem()) == Block.getBlockFromItem(Ic2Items.massFabricator.getItem()));
+
+        SlotFiltered.filters.put(FILTER_SCANNER_CRYSTAL, stack -> itemInstanceof(stack, ItemCrystalMemory.class));
     }
 
     public static void addClassToFilterUltimateStorage(Class<?> clazz) {
@@ -112,17 +117,17 @@ public class FilterInitializer {
         filterInfinityGeneratorClasses.add(clazz);
     }
 
-    @SafeVarargs
-    private static boolean blockInstanceof(ItemStack stack, Class<? extends Block>... classes) {
-        boolean b = false;
-        for (Class<? extends Block> clazz : classes) {
-            if (clazz.isInstance(Block.getBlockFromItem(stack.getItem()))) {
-                b = true;
-                break;
-            }
-        }
-        return b;
-    }
+//    @SafeVarargs
+//    private static boolean blockInstanceof(ItemStack stack, Class<? extends Block>... classes) {
+//        boolean b = false;
+//        for (Class<? extends Block> clazz : classes) {
+//            if (clazz.isInstance(Block.getBlockFromItem(stack.getItem()))) {
+//                b = true;
+//                break;
+//            }
+//        }
+//        return b;
+//    }
 
     private static boolean itemInstanceof(ItemStack stack, Class<?>... classes) {
         boolean b = false;

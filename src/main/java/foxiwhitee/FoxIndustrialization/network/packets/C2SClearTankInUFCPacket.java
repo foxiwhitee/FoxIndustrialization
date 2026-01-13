@@ -1,9 +1,6 @@
 package foxiwhitee.FoxIndustrialization.network.packets;
 
 import foxiwhitee.FoxIndustrialization.tile.TileUniversalFluidComplex;
-import foxiwhitee.FoxIndustrialization.tile.machines.advanced.TileAdvancedMetalFormer;
-import foxiwhitee.FoxIndustrialization.tile.machines.nano.TileNanoMetalFormer;
-import foxiwhitee.FoxIndustrialization.tile.machines.quantum.TileQuantumMetalFormer;
 import foxiwhitee.FoxLib.network.BasePacket;
 import foxiwhitee.FoxLib.network.IInfoPacket;
 import io.netty.buffer.ByteBuf;
@@ -11,10 +8,10 @@ import io.netty.buffer.Unpooled;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 
-public class C2SClearTankInUFC extends BasePacket {
+public class C2SClearTankInUFCPacket extends BasePacket {
     private final int xCoord, yCoord, zCoord, tankId;
 
-    public C2SClearTankInUFC(ByteBuf data) {
+    public C2SClearTankInUFCPacket(ByteBuf data) {
         super(data);
         xCoord = data.readInt();
         yCoord = data.readInt();
@@ -22,7 +19,7 @@ public class C2SClearTankInUFC extends BasePacket {
         tankId = data.readInt();
     }
 
-    public C2SClearTankInUFC(int xCoord, int yCoord, int zCoord, int tankId) {
+    public C2SClearTankInUFCPacket(int xCoord, int yCoord, int zCoord, int tankId) {
         super();
         this.xCoord = xCoord;
         this.yCoord = yCoord;

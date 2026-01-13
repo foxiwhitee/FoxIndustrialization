@@ -2,7 +2,7 @@ package foxiwhitee.FoxIndustrialization.client.gui;
 
 import foxiwhitee.FoxIndustrialization.FICore;
 import foxiwhitee.FoxIndustrialization.container.ContainerUniversalFluidComplex;
-import foxiwhitee.FoxIndustrialization.network.packets.C2SClearTankInUFC;
+import foxiwhitee.FoxIndustrialization.network.packets.C2SClearTankInUFCPacket;
 import foxiwhitee.FoxIndustrialization.tile.TileUniversalFluidComplex;
 import foxiwhitee.FoxLib.network.NetworkManager;
 import foxiwhitee.FoxLib.utils.ProductivityUtil;
@@ -130,7 +130,7 @@ public class GuiUniversalFluidComplex extends FIGui {
                 mode = 0;
             }
 
-            NetworkManager.instance.sendToServer(new C2SClearTankInUFC(tile.xCoord, tile.yCoord, tile.zCoord, mode));
+            NetworkManager.instance.sendToServer(new C2SClearTankInUFCPacket(tile.xCoord, tile.yCoord, tile.zCoord, mode));
         }
     }
 

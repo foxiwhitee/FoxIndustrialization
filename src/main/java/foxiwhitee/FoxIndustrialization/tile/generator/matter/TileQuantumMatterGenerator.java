@@ -1,6 +1,5 @@
 package foxiwhitee.FoxIndustrialization.tile.generator.matter;
 
-import foxiwhitee.FoxIndustrialization.FICore;
 import foxiwhitee.FoxIndustrialization.config.FIConfig;
 import foxiwhitee.FoxIndustrialization.utils.MachineTier;
 
@@ -9,11 +8,6 @@ public class TileQuantumMatterGenerator extends TileMatterGenerator {
 
     public TileQuantumMatterGenerator() {
         super(FIConfig.quantumMatterGeneratorTank, FIConfig.quantumMatterGeneratorEnergyNeed, FIConfig.quantumMatterGeneratorGenerate);
-    }
-
-    @Override
-    protected boolean supportsRF() {
-        return FIConfig.quantumMatterGeneratorSupportsRF && FICore.ifCoFHCoreIsLoaded;
     }
 
     @Override

@@ -1,26 +1,24 @@
 package foxiwhitee.FoxIndustrialization.tile;
 
 import foxiwhitee.FoxIndustrialization.ModRecipes;
-import foxiwhitee.FoxIndustrialization.api.IAdvancedUpgradeItem;
 import foxiwhitee.FoxIndustrialization.api.IHasActiveState;
 import foxiwhitee.FoxIndustrialization.api.IUpgradableTile;
 import foxiwhitee.FoxIndustrialization.config.FIConfig;
-import foxiwhitee.FoxIndustrialization.items.ItemFluidGeneratorUpgrade;
 import foxiwhitee.FoxIndustrialization.recipes.IUniversalFluidComplexRecipe;
+import foxiwhitee.FoxIndustrialization.recipes.UniversalFluidComplexRecipe;
+import foxiwhitee.FoxIndustrialization.utils.InventoryUtils;
 import foxiwhitee.FoxIndustrialization.utils.MachineTier;
+import foxiwhitee.FoxIndustrialization.utils.UpgradeUtils;
 import foxiwhitee.FoxIndustrialization.utils.UpgradesTypes;
 import foxiwhitee.FoxLib.tile.event.TileEvent;
 import foxiwhitee.FoxLib.tile.event.TileEventType;
 import foxiwhitee.FoxLib.tile.inventory.FoxInternalInventory;
 import foxiwhitee.FoxLib.tile.inventory.InvOperation;
 import foxiwhitee.FoxLib.utils.helpers.ItemStackUtil;
-import ic2.core.upgrade.IUpgradeItem;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.*;
@@ -38,7 +36,7 @@ public class TileUniversalFluidComplex extends TileIC2Inv implements IUpgradable
     private final FluidTank outputTank;
 
     private int scanTimer, itemsPerOp, ticksNeed = 100, tick, energyPerTickMultiplier = 1;
-    private final ISidedInventory[] adjacentInventories = new ISidedInventory[6];
+    private final IInventory[] adjacentInventories = new IInventory[6];
     private final IFluidHandler[] adjacentFluidHandlers = new IFluidHandler[6];
     private ForgeDirection[] pushSides = {}, pushFluidSides = {}, pullSides = {};
     private boolean hasEjector, hasEjectorFluid, hasPuller, active, hasWaterGenerator, hasLavaGenerator, needFluidUpdate;
@@ -70,17 +68,21 @@ public class TileUniversalFluidComplex extends TileIC2Inv implements IUpgradable
             updateFluids();
         }
         if (scanTimer-- <= 0) {
-            updateAdjacentCache();
+            UpgradeUtils.updateAdjacentCache(this, adjacentInventories, adjacentFluidHandlers);
             scanTimer = 20;
         }
         if (hasPuller) {
-            pullIfCan();
+            UpgradeUtils.pullIfCan(pullSides, adjacentInventories, inventory);
         }
         if (hasEjector) {
-            pushIfCan();
+            if (UpgradeUtils.pushIfCan(pushSides, adjacentInventories, output)) {
+                markForUpdate();
+            }
         }
         if (hasEjectorFluid) {
-            pushFluidIfCan();
+            if (UpgradeUtils.pushFluidIfCan(outputTank, pushSides, adjacentFluidHandlers)) {
+                markForUpdate();
+            }
         }
 
         if (recipe == null) {
@@ -148,12 +150,12 @@ public class TileUniversalFluidComplex extends TileIC2Inv implements IUpgradable
             if (stack == null) {
                 continue;
             }
-            if (!canInsert(output, stack)) {
+            if (!InventoryUtils.canInsert(output, stack)) {
                 return false;
             }
         }
 
-        if (!canInsert(outputTank, recipe.getOutputFluid())) {
+        if (!InventoryUtils.canInsert(outputTank, recipe.getOutputFluid())) {
             return false;
         }
 
@@ -218,7 +220,7 @@ public class TileUniversalFluidComplex extends TileIC2Inv implements IUpgradable
 
     private boolean canFitOutputs(List<ItemStack> outputs) {
         if (outputs.size() == 1) {
-            return canInsert(output, outputs.get(0));
+            return InventoryUtils.canInsert(output, outputs.get(0));
         }
 
         int[] extraSize = new int[output.getSizeInventory()];
@@ -269,7 +271,7 @@ public class TileUniversalFluidComplex extends TileIC2Inv implements IUpgradable
         if (recipe.getOutputs() != null) {
             for (ItemStack outputStack : recipe.getOutputs()) {
                 if (outputStack != null) {
-                    insert(output, outputStack.copy());
+                    InventoryUtils.insert(output, outputStack.copy());
                 }
             }
         }
@@ -345,7 +347,40 @@ public class TileUniversalFluidComplex extends TileIC2Inv implements IUpgradable
                 return;
             }
         }
-        this.recipe = null;
+        this.recipe = findCellRecipe(stacks, fluidStacks);
+    }
+
+    private UniversalFluidComplexRecipe findCellRecipe(List<ItemStack> items, List<FluidStack> fluids) {
+        for (ItemStack stack : items) {
+            if (stack == null) continue;
+
+            FluidStack containedFluid = FluidContainerRegistry.getFluidForFilledItem(stack);
+            if (containedFluid != null) {
+                ItemStack copy = stack.copy();
+                copy.stackSize = 1;
+                ItemStack emptyContainer = FluidContainerRegistry.drainFluidContainer(copy);
+                return new UniversalFluidComplexRecipe(200, containedFluid, Collections.singletonList(emptyContainer), null, Collections.singletonList(copy));
+            }
+        }
+
+        for (ItemStack stack : items) {
+            if (stack == null) continue;
+
+            for (FluidStack availableFluid : fluids) {
+                if (availableFluid == null || availableFluid.amount <= 0) continue;
+
+                ItemStack filledStack = FluidContainerRegistry.fillFluidContainer(availableFluid, stack);
+
+                if (filledStack != null) {
+                    ItemStack copy = stack.copy();
+                    copy.stackSize = 1;
+                    FluidStack resultFluid = FluidContainerRegistry.getFluidForFilledItem(filledStack);
+                    return new UniversalFluidComplexRecipe(200, null, Collections.singletonList(filledStack), Collections.singletonList(resultFluid), Collections.singletonList(copy));
+                }
+            }
+        }
+
+        return null;
     }
 
     @Override
@@ -365,43 +400,14 @@ public class TileUniversalFluidComplex extends TileIC2Inv implements IUpgradable
         data.setInteger("energyPerTickMultiplier", energyPerTickMultiplier);
         data.setInteger("itemsPerOp", itemsPerOp);
         data.setBoolean("active", active);
-        inputTank1.writeToNBT(data.getCompoundTag("tank1"));
-        inputTank2.writeToNBT(data.getCompoundTag("tank2"));
-        inputTank3.writeToNBT(data.getCompoundTag("tank3"));
-        outputTank.writeToNBT(data.getCompoundTag("tankOut"));
-        if (pullSides.length > 0) {
-            int[] pullSidesNbt = new int[pullSides.length];
-            for (int i = 0; i < pullSidesNbt.length; i++) {
-                if (pullSides[i] == null) {
-                    pullSidesNbt[i] = -1;
-                } else {
-                    pullSidesNbt[i] = pullSides[i].ordinal();
-                }
-            }
-            data.setIntArray("pullSides", pullSidesNbt);
-        }
-        if (pushSides.length > 0) {
-            int[] pushSidesNbt = new int[pushSides.length];
-            for (int i = 0; i < pushSides.length; i++) {
-                if (pullSides[i] == null) {
-                    pushSidesNbt[i] = -1;
-                } else {
-                    pushSidesNbt[i] = pushSides[i].ordinal();
-                }
-            }
-            data.setIntArray("pushSides", pushSidesNbt);
-        }
-        if (pushFluidSides.length > 0) {
-            int[] pushFluidSidesNbt = new int[pushFluidSides.length];
-            for (int i = 0; i < pushFluidSides.length; i++) {
-                if (pullSides[i] == null) {
-                    pushFluidSidesNbt[i] = -1;
-                } else {
-                    pushFluidSidesNbt[i] = pushFluidSides[i].ordinal();
-                }
-            }
-            data.setIntArray("pushFluidSides", pushFluidSidesNbt);
-        }
+
+        InventoryUtils.writeTankToNbt(data, "tank1", this.inputTank1);
+        InventoryUtils.writeTankToNbt(data, "tank2", this.inputTank2);
+        InventoryUtils.writeTankToNbt(data, "tank3", this.inputTank3);
+        InventoryUtils.writeTankToNbt(data, "tankOut", this.outputTank);
+        UpgradeUtils.writeDirectionsToNbt(data, "pullSides", pullSides);
+        UpgradeUtils.writeDirectionsToNbt(data, "pushSides", pushSides);
+        UpgradeUtils.writeDirectionsToNbt(data, "pushFluidSides", pushFluidSides);
     }
 
     @Override
@@ -421,43 +427,13 @@ public class TileUniversalFluidComplex extends TileIC2Inv implements IUpgradable
         energyPerTickMultiplier = data.getInteger("energyPerTickMultiplier");
         itemsPerOp = data.getInteger("itemsPerOp");
         active = data.getBoolean("active");
-        inputTank1.readFromNBT(data.getCompoundTag("tank1"));
-        inputTank2.readFromNBT(data.getCompoundTag("tank2"));
-        inputTank3.readFromNBT(data.getCompoundTag("tank3"));
-        outputTank.readFromNBT(data.getCompoundTag("tankOut"));
-        if (data.hasKey("pullSides")) {
-            int[] pullSidesNbt = data.getIntArray("pullSides");
-            pullSides = new ForgeDirection[pullSidesNbt.length];
-            for (int i = 0; i < pullSidesNbt.length; i++) {
-                if (pullSidesNbt[i] == -1) {
-                    pullSides[i] = null;
-                } else {
-                    pullSides[i] = ForgeDirection.getOrientation(pullSidesNbt[i]);
-                }
-            }
-        }
-        if (data.hasKey("pushSides")) {
-            int[] pushSidesNbt = data.getIntArray("pushSides");
-            pushSides = new ForgeDirection[pushSidesNbt.length];
-            for (int i = 0; i < pushSidesNbt.length; i++) {
-                if (pushSidesNbt[i] == -1) {
-                    pushSides[i] = null;
-                } else {
-                    pushSides[i] = ForgeDirection.getOrientation(pushSidesNbt[i]);
-                }
-            }
-        }
-        if (data.hasKey("pushFluidSides")) {
-            int[] pushFluidSidesNbt = data.getIntArray("pushFluidSides");
-            pushFluidSides = new ForgeDirection[pushFluidSidesNbt.length];
-            for (int i = 0; i < pushFluidSidesNbt.length; i++) {
-                if (pushFluidSidesNbt[i] == -1) {
-                    pushFluidSides[i] = null;
-                } else {
-                    pushFluidSides[i] = ForgeDirection.getOrientation(pushFluidSidesNbt[i]);
-                }
-            }
-        }
+        InventoryUtils.readTankFromNbt(data, "tank1", this.inputTank1);
+        InventoryUtils.readTankFromNbt(data, "tank2", this.inputTank2);
+        InventoryUtils.readTankFromNbt(data, "tank3", this.inputTank3);
+        InventoryUtils.readTankFromNbt(data, "tankOut", this.outputTank);
+        pullSides = UpgradeUtils.readDirectionsFromNbt(data, "pullSides");
+        pushSides = UpgradeUtils.readDirectionsFromNbt(data, "pushSides");
+        pushFluidSides = UpgradeUtils.readDirectionsFromNbt(data, "pushFluidSides");
     }
 
     @Override
@@ -468,17 +444,10 @@ public class TileUniversalFluidComplex extends TileIC2Inv implements IUpgradable
         data.writeInt(this.ticksNeed);
         data.writeBoolean(this.active);
 
-        FluidTank[] allTanks = {inputTank1, inputTank2, inputTank3, outputTank};
-        for (FluidTank tank : allTanks) {
-            FluidStack fs = tank.getFluid();
-            if (fs != null) {
-                data.writeBoolean(true);
-                data.writeInt(FluidRegistry.getFluidID(fs.getFluid()));
-                data.writeInt(fs.amount);
-            } else {
-                data.writeBoolean(false);
-            }
-        }
+        InventoryUtils.writeTankToStream(data, this.inputTank1);
+        InventoryUtils.writeTankToStream(data, this.inputTank2);
+        InventoryUtils.writeTankToStream(data, this.inputTank3);
+        InventoryUtils.writeTankToStream(data, this.outputTank);
     }
 
     @Override
@@ -491,33 +460,12 @@ public class TileUniversalFluidComplex extends TileIC2Inv implements IUpgradable
         tick = data.readInt();
         ticksNeed = data.readInt();
         active = data.readBoolean();
-        boolean tanksChanged = false;
+        boolean tank1Changed = InventoryUtils.readTankFromStream(data, inputTank1);
+        boolean tank2Changed = InventoryUtils.readTankFromStream(data, inputTank2);
+        boolean tank3Changed = InventoryUtils.readTankFromStream(data, inputTank3);
+        boolean tankOutChanged = InventoryUtils.readTankFromStream(data, outputTank);
 
-        FluidTank[] allTanks = {inputTank1, inputTank2, inputTank3, outputTank};
-
-        for (FluidTank tank : allTanks) {
-            boolean hasFluid = data.readBoolean();
-            if (hasFluid) {
-                int fluidID = data.readInt();
-                int amount = data.readInt();
-                Fluid fluid = FluidRegistry.getFluid(fluidID);
-
-                if (tank.getFluid() == null ||
-                    tank.getFluid().getFluid() != fluid ||
-                    tank.getFluid().amount != amount) {
-
-                    tank.setFluid(new FluidStack(fluid, amount));
-                    tanksChanged = true;
-                }
-            } else {
-                if (tank.getFluid() != null) {
-                    tank.setFluid(null);
-                    tanksChanged = true;
-                }
-            }
-        }
-
-        return old || tanksChanged || oldActive != active || oldTicksNeed != ticksNeed || oldTick != tick;
+        return old || tank1Changed || tank2Changed || tank3Changed || tankOutChanged || oldActive != active || oldTicksNeed != ticksNeed || oldTick != tick;
     }
 
     public int getTick() {
@@ -589,89 +537,30 @@ public class TileUniversalFluidComplex extends TileIC2Inv implements IUpgradable
     @Override
     public void onChangeInventory(IInventory iInventory, int i, InvOperation invOperation, ItemStack itemStack, ItemStack itemStack1) {
         if (iInventory == upgrades) {
-            this.maxEnergy = FIConfig.ufcStorage;
-            this.itemsPerOp = FIConfig.ufcItemsPerOp;
-            this.energyPerTickMultiplier = 0;
-            this.ticksNeed = 100;
-            this.hasWaterGenerator = false;
-            this.hasLavaGenerator = false;
+            var handler = UpgradeUtils.newHandler(this, upgrades)
+                .storage(FIConfig.ufcStorage)
+                .speed(100, 0, FIConfig.ufcItemsPerOp, 64)
+                .ejector()
+                .ejectorFluid()
+                .puller()
+                .water()
+                .lava()
+                .process();
 
-            List<Integer> newPushRaw = new ArrayList<>();
-            List<Integer> newPushFluidRaw = new ArrayList<>();
-            List<Integer> newPullRaw = new ArrayList<>();
+            this.maxEnergy = handler.getStorage();
+            this.energyPerTickMultiplier = (int) handler.getEnergyNeed();
+            this.itemsPerOp = handler.getOperations();
+            this.ticksNeed = handler.getTicksNeed();
+            this.hasWaterGenerator = handler.hasWater();
+            this.hasLavaGenerator = handler.hasLava();
+            this.hasEjector = handler.hasEjector();
+            this.hasEjectorFluid = handler.hasEjectorFluid();
+            this.hasPuller = handler.hasPuller();
+            this.pushSides = handler.getPushSides();
+            this.pushFluidSides = handler.getPushFluidSides();
+            this.pullSides = handler.getPullSides();
 
-            List<UpgradesTypes> available = Arrays.asList(getAvailableTypes());
-            boolean canEject = available.contains(UpgradesTypes.EJECTOR);
-            boolean canEjectFluid = available.contains(UpgradesTypes.FLUID_EJECTOR);
-            boolean canPull = available.contains(UpgradesTypes.PULLING);
-            boolean canWater = available.contains(UpgradesTypes.WATER_GENERATOR);
-            boolean canLava = available.contains(UpgradesTypes.LAVA_GENERATOR);
-
-            for (int j = 0; j < upgrades.getSizeInventory(); j++) {
-                ItemStack stack = upgrades.getStackInSlot(j);
-                if (stack == null) continue;
-
-                if (stack.getItem() instanceof IAdvancedUpgradeItem upgrade) {
-                    this.ticksNeed *= (int) upgrade.getSpeedMultiplier(stack);
-                    this.itemsPerOp += upgrade.getItemsPerOpAdd(stack);
-                    this.maxEnergy = safeMultiply(maxEnergy, upgrade.getStorageEnergyMultiplier(stack));
-                    this.energyPerTickMultiplier += (int) upgrade.getEnergyUseMultiplier(stack);
-                } else if (stack.getItem() instanceof ItemFluidGeneratorUpgrade) {
-                    switch (stack.getItemDamage()) {
-                        case 0: {
-                            this.hasWaterGenerator = canWater;
-                            this.needFluidUpdate |= canWater;
-                            break;
-                        }
-                        case 1: {
-                            this.hasLavaGenerator = canLava;
-                            this.needFluidUpdate |= canLava;
-                            break;
-                        }
-                    }
-                } else if (stack.getItem() instanceof IUpgradeItem) {
-                    switch (stack.getItemDamage()) {
-                        case 0: // Speed
-                            this.ticksNeed *= (int) Math.pow(0.7, stack.stackSize);
-                            this.energyPerTickMultiplier += (int) Math.pow(1.6, stack.stackSize);
-                            break;
-                        case 2: // Energy Storage
-                            this.maxEnergy += 10000 * stack.stackSize;
-                            break;
-                        case 3: // Ejector
-                            if (canEject) {
-                                NBTTagCompound nbt = stack.getTagCompound();
-                                newPushRaw.add((nbt != null && nbt.hasKey("dir")) ? (int)nbt.getByte("dir") : 0);
-                            }
-                            break;
-                        case 4: // Ejector Fluid
-                            if (canEjectFluid) {
-                                NBTTagCompound nbt = stack.getTagCompound();
-                                newPushFluidRaw.add((nbt != null && nbt.hasKey("dir")) ? (int)nbt.getByte("dir") : 0);
-                            }
-                            break;
-                        case 6: // Pulling
-                            if (canPull) {
-                                NBTTagCompound nbt = stack.getTagCompound();
-                                newPullRaw.add((nbt != null && nbt.hasKey("dir")) ? (int)nbt.getByte("dir") : 0);
-                            }
-                            break;
-                    }
-                }
-            }
-            this.energyPerTickMultiplier = Math.max(1, this.energyPerTickMultiplier);
-            this.pushSides = parseSides(newPushRaw);
-            this.pushFluidSides = parseSides(newPushFluidRaw);
-            this.pullSides = parseSides(newPullRaw);
-            this.hasEjector = pushSides.length > 0;
-            this.hasEjectorFluid = pushFluidSides.length > 0;
-            this.hasPuller = pullSides.length > 0;
-
-            if (this.ticksNeed < 1) {
-                this.ticksNeed = 1;
-            }
-            this.itemsPerOp = Math.min(this.itemsPerOp, 64);
-            if (this.maxEnergy < 0) this.maxEnergy = Double.MAX_VALUE;
+            this.needFluidUpdate = true;
             this.energy = Math.min(this.maxEnergy, energy);
 
             markForUpdate();
@@ -693,193 +582,6 @@ public class TileUniversalFluidComplex extends TileIC2Inv implements IUpgradable
         if (needUpdate) {
             markForUpdate();
         }
-    }
-
-    private ForgeDirection[] parseSides(List<Integer> raw) {
-        if (raw.isEmpty()) return new ForgeDirection[0];
-        if (raw.contains(0)) return ForgeDirection.VALID_DIRECTIONS;
-
-        Set<ForgeDirection> dirs = new HashSet<>();
-        for (int s : raw) {
-            switch (s) {
-                case 1: dirs.add(ForgeDirection.WEST); break;
-                case 2: dirs.add(ForgeDirection.EAST); break;
-                case 3: dirs.add(ForgeDirection.DOWN); break;
-                case 4: dirs.add(ForgeDirection.UP); break;
-                case 5: dirs.add(ForgeDirection.NORTH); break;
-                case 6: dirs.add(ForgeDirection.SOUTH); break;
-            }
-        }
-        return dirs.toArray(new ForgeDirection[0]);
-    }
-
-    private void updateAdjacentCache() {
-        for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
-            if (worldObj.blockExists(xCoord + dir.offsetX, yCoord + dir.offsetY, zCoord + dir.offsetZ)) {
-                TileEntity te = worldObj.getTileEntity(xCoord + dir.offsetX, yCoord + dir.offsetY, zCoord + dir.offsetZ);
-                adjacentInventories[dir.ordinal()] = (te instanceof ISidedInventory) ? (ISidedInventory) te : null;
-                adjacentFluidHandlers[dir.ordinal()] = (te instanceof IFluidHandler) ? (IFluidHandler) te : null;
-            }
-        }
-    }
-
-    private void pushFluidIfCan() {
-        if (outputTank.getFluidAmount() <= 0) return;
-
-        for (ForgeDirection side : pushFluidSides) {
-            IFluidHandler neighbor = adjacentFluidHandlers[side.ordinal()];
-
-            if (neighbor instanceof IFluidHandler  && !((TileEntity)neighbor).isInvalid()) {
-                tryPushFluid(neighbor, side);
-            }
-        }
-    }
-
-    private void tryPushFluid(IFluidHandler neighbor, ForgeDirection side) {
-        ForgeDirection sideTo = side.getOpposite();
-        FluidStack stackToPush = outputTank.getFluid().copy();
-
-        if (neighbor.canFill(sideTo, stackToPush.getFluid())) {
-            int filled = neighbor.fill(sideTo, stackToPush, true);
-
-            if (filled > 0) {
-                outputTank.drain(filled, true);
-
-                this.markForUpdate();
-                if (neighbor instanceof TileEntity tile) {
-                    tile.markDirty();
-                }
-            }
-        }
-    }
-
-    private void pullIfCan() {
-        for (ForgeDirection side : pullSides) {
-            ISidedInventory neighbor = adjacentInventories[side.ordinal()];
-            if (neighbor == null || ((TileEntity)neighbor).isInvalid()) continue;
-
-            int sideFrom = side.getOpposite().ordinal();
-
-            int[] accessibleSlots = neighbor.getAccessibleSlotsFromSide(sideFrom);
-
-            for (int slot : accessibleSlots) {
-                ItemStack stack = neighbor.getStackInSlot(slot);
-
-                if (stack != null && neighbor.canExtractItem(slot, stack, sideFrom)) {
-                    if (this.canInsert(inventory, stack)) {
-                        this.insert(inventory, stack);
-
-                        neighbor.setInventorySlotContents(slot, null);
-                        neighbor.markDirty();
-                    }
-                }
-            }
-        }
-    }
-
-    private void pushIfCan() {
-        for (ForgeDirection side : pushSides) {
-            ISidedInventory neighbor = adjacentInventories[side.ordinal()];
-
-            if (neighbor instanceof ISidedInventory && !((TileEntity)neighbor).isInvalid()) {
-
-                for (int i = 0; i < output.getSizeInventory(); i++) {
-                    ItemStack stack = output.getStackInSlot(i);
-                    if (stack != null) {
-                        tryPushStack(stack, i, neighbor, side);
-                    }
-                }
-            }
-        }
-    }
-
-    private void tryPushStack(ItemStack stackToPush, int mySlot, ISidedInventory neighbor, ForgeDirection side) {
-        int sideTo = side.getOpposite().ordinal();
-
-        int[] accessibleSlots = neighbor.getAccessibleSlotsFromSide(sideTo);
-
-        for (int targetSlot : accessibleSlots) {
-            if (!neighbor.isItemValidForSlot(targetSlot, stackToPush) ||
-                !neighbor.canInsertItem(targetSlot, stackToPush, sideTo)) {
-                continue;
-            }
-
-            ItemStack stackInTarget = neighbor.getStackInSlot(targetSlot);
-
-            if (stackInTarget == null) {
-                neighbor.setInventorySlotContents(targetSlot, stackToPush.copy());
-                output.setInventorySlotContents(mySlot, null);
-                neighbor.markDirty();
-                this.markDirty();
-                break;
-            } else if (ItemStackUtil.stackEquals(stackInTarget, stackToPush)) {
-                int limit = Math.min(neighbor.getInventoryStackLimit(), stackInTarget.getMaxStackSize());
-                int spaceLeft = limit - stackInTarget.stackSize;
-
-                if (spaceLeft > 0) {
-                    int amountToTransfer = Math.min(stackToPush.stackSize, spaceLeft);
-                    stackInTarget.stackSize += amountToTransfer;
-                    stackToPush.stackSize -= amountToTransfer;
-
-                    if (stackToPush.stackSize <= 0) {
-                        output.setInventorySlotContents(mySlot, null);
-                    }
-
-                    neighbor.markDirty();
-                    this.markDirty();
-
-                    if (output.getStackInSlot(mySlot) == null) break;
-                }
-            }
-        }
-    }
-
-    protected boolean canInsert(FoxInternalInventory inv, ItemStack stack, int idx) {
-        ItemStack inSlot = inv.getStackInSlot(idx);
-        if (inSlot == null) return true;
-        return ItemStackUtil.stackEquals(stack, inSlot) && (inSlot.getMaxStackSize() - inSlot.stackSize) >= stack.stackSize;
-    }
-
-    protected boolean canInsert(FoxInternalInventory inv, ItemStack stack) {
-        for (int i = 0; i < inv.getSizeInventory(); i++) {
-            if (canInsert(inv, stack, i)) return true;
-        }
-        return false;
-    }
-
-    protected void insert(FoxInternalInventory inv, ItemStack stack) {
-        for (int i = 0; i < inv.getSizeInventory(); i++) {
-            boolean b = insert(inv, stack, i);
-            if (b) return;
-        }
-    }
-
-    protected boolean insert(FoxInternalInventory inv, ItemStack stack, int idx) {
-        ItemStack inSlot = inv.getStackInSlot(idx);
-        stack = stack.copy();
-        if (inSlot == null) {
-            inv.setInventorySlotContents(idx, stack);
-            return true;
-        }
-        if (ItemStackUtil.stackEquals(inSlot, stack)) {
-            int transfer = Math.min(stack.stackSize, inSlot.getMaxStackSize() - inSlot.stackSize);
-            inSlot.stackSize += transfer;
-            stack.stackSize -= transfer;
-            return stack.stackSize <= 0;
-        }
-        return false;
-    }
-
-    protected boolean canInsert(FluidTank tank, FluidStack stack) {
-        if (stack == null || stack.getFluid() == null) return true;
-
-        FluidStack inTank = tank.getFluid();
-
-        if (inTank == null) {
-            return tank.getCapacity() >= stack.amount;
-        }
-
-        return inTank.isFluidEqual(stack) && (tank.getCapacity() - inTank.amount) >= stack.amount;
     }
 
     @Override
@@ -937,7 +639,7 @@ public class TileUniversalFluidComplex extends TileIC2Inv implements IUpgradable
     @Override
     public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain) {
         FluidStack drained = outputTank.drain(maxDrain, doDrain);
-        if (drained.amount > 0) {
+        if (drained != null && drained.amount > 0) {
             markForUpdate();
         }
         return drained;

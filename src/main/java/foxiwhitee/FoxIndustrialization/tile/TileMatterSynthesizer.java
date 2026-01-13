@@ -1,8 +1,6 @@
 package foxiwhitee.FoxIndustrialization.tile;
 
-import foxiwhitee.FoxIndustrialization.FICore;
 import foxiwhitee.FoxIndustrialization.api.IHasMatterSynthesizerIntegration;
-import foxiwhitee.FoxIndustrialization.config.FIConfig;
 import foxiwhitee.FoxIndustrialization.tile.generator.matter.TileMatterGenerator;
 import foxiwhitee.FoxIndustrialization.utils.MachineTier;
 import foxiwhitee.FoxLib.tile.inventory.FoxInternalInventory;
@@ -65,10 +63,5 @@ public class TileMatterSynthesizer extends TileMatterGenerator {
 
             markForUpdate();
         }
-    }
-
-    @Override
-    protected boolean supportsRF() {
-        return FIConfig.matterSynthesizerSupportsRF && FICore.ifCoFHCoreIsLoaded;
     }
 }
