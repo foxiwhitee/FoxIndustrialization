@@ -6,9 +6,9 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import foxiwhitee.FoxIndustrialization.ModBlocks;
 import foxiwhitee.FoxIndustrialization.ModItems;
 import foxiwhitee.FoxIndustrialization.ModRecipes;
-import foxiwhitee.FoxIndustrialization.helper.RecipeHelper;
 import foxiwhitee.FoxIndustrialization.integration.IntegrationLoader;
-import foxiwhitee.FoxIndustrialization.network.packets.C2SClearTankInUFC;
+import foxiwhitee.FoxIndustrialization.network.packets.C2SClearTankInUFCPacket;
+import foxiwhitee.FoxIndustrialization.network.packets.C2SScannerButtonActionPacket;
 import foxiwhitee.FoxIndustrialization.network.packets.C2SUpdateMachineInventoryModePacket;
 import foxiwhitee.FoxIndustrialization.network.packets.C2SUpdateMetalFormerModePacket;
 import foxiwhitee.FoxIndustrialization.recipes.UniversalFluidComplexJSONRecipe;
@@ -26,7 +26,8 @@ public class CommonProxy {
     public void init(FMLInitializationEvent event) {
         FoxLibApi.instance.registries().registerPacket().register(C2SUpdateMachineInventoryModePacket.class);
         FoxLibApi.instance.registries().registerPacket().register(C2SUpdateMetalFormerModePacket.class);
-        FoxLibApi.instance.registries().registerPacket().register(C2SClearTankInUFC.class);
+        FoxLibApi.instance.registries().registerPacket().register(C2SClearTankInUFCPacket.class);
+        FoxLibApi.instance.registries().registerPacket().register(C2SScannerButtonActionPacket.class);
         FoxLibApi.instance.registries().registerJsonRecipe().register(UniversalFluidComplexJSONRecipe.class, "universalFluidComplex");
         IntegrationLoader.init(event);
     }

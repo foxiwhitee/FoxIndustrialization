@@ -757,9 +757,6 @@ public class FIConfig {
     @ConfigValue(category = "Matter.Quantum", name = "energyNeed", desc = "The amount of energy required by block for generation")
     public static double quantumMatterGeneratorEnergyNeed = 950_000;
 
-    @ConfigValue(category = "Matter.Quantum", name = "supportsRF", desc = "Does this block support RF energy?")
-    public static boolean quantumMatterGeneratorSupportsRF = true;
-
 
     @ConfigValue(category = "Matter.Singular", name = "tank", desc = "The amount of matter that a Singular Matter Generator can store")
     public static int singularMatterGeneratorTank = 256_000;
@@ -770,9 +767,7 @@ public class FIConfig {
     @ConfigValue(category = "Matter.Singular", name = "energyNeed", desc = "The amount of energy required by block for generation")
     public static double singularMatterGeneratorEnergyNeed = 900_000;
 
-    @ConfigValue(category = "Matter.Singular", name = "supportsRF", desc = "Does this block support RF energy?")
-    public static boolean singularMatterGeneratorSupportsRF = true;
 
-    @ConfigValue(category = "Matter.Synthesizer", name = "supportsRF", desc = "Does this block support RF energy?")
-    public static boolean matterSynthesizerSupportsRF = true;
+    @ConfigValue(category = "Scanner", name = "ticksNeed", desc = "Number of ticks for which the Advanced Scanner scans")
+    public static int advancedScannerTicksNeed = 10;
 }

@@ -47,6 +47,9 @@ public class ContentConfig {
     @ConfigValue(category = "Content", desc = "Enable Matter Synthesizer?")
     public static boolean enableMatterSynthesizer = true;
 
+    @ConfigValue(category = "Content", desc = "Enable Advanced Scanner?")
+    public static boolean enableAdvancedScanner = true;
+
 
     // Machines Advanced
     @ConfigValue(category = "Content.Machines.Advanced", desc = "Enable Advanced Compressor?")

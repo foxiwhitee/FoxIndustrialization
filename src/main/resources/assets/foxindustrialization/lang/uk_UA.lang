@@ -74,6 +74,8 @@ tile.singularMatterGenerator.name=Сингулярний генератор ма
 tile.synthesizer.name=Синтезатор енергії
 tile.matterSynthesizer.name=Синтезатор матерії
 
+tile.advancedScanner.name=Розширений сканер
+
 # Items
 item.speedUpgrade.Advanced.name=Розширене поліпшення швидкості
 item.speedUpgrade.Nano.name=Нано поліпшення швидкості
@@ -170,3 +172,14 @@ tooltip.ufc.pressShiftToClear=Shift + ЛКМ щоб очистити
 tooltip.fluidGenerator.capacity=§7Сховище: §3%s §7mB
 tooltip.matter.generating=§7Генерує §3%s§7 матерії за §3%s§7 EU
 tooltip.matter.generate=§7Генерує: §3%s§7 mB/t
+tooltip.advancedScanner.idle=Неактивний
+tooltip.advancedScanner.info1=Сканування....
+tooltip.advancedScanner.info2=Очікування..немає пам'яті
+tooltip.advancedScanner.info3=Помилка: втрата енергії
+tooltip.advancedScanner.info4=Сканування завершено
+tooltip.advancedScanner.info5=Результат сканування
+tooltip.advancedScanner.info6=!! Помилка !!
+tooltip.advancedScanner.info7=Помилка: немає пам'яті
+tooltip.advancedScanner.info8=Помилка: уже записано
+tooltip.advancedScanner.button.delete=Видалити
+tooltip.advancedScanner.button.save=Зберегти

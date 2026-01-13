@@ -75,6 +75,8 @@ tile.nanoMatterGenerator.name=Nano Matter Generator
 tile.quantumMatterGenerator.name=Quantum Matter Generator
 tile.singularMatterGenerator.name=Singular Matter Generator
 
+tile.advancedScanner.name=Advanced Scanner
+
 # Items
 item.speedUpgrade.Advanced.name=Advanced Speed Upgrade
 item.speedUpgrade.Nano.name=Nano Speed Upgrade
@@ -171,3 +173,14 @@ tooltip.ufc.pressShiftToClear=Shift + LMB to clear
 tooltip.fluidGenerator.capacity=§7Capacity: §3%s §7mB
 tooltip.matter.generating=§7Generates §3%s§7 matter for §3%s§7 EU
 tooltip.matter.generate=§7Generates: §3%s§7 mB/t
+tooltip.advancedScanner.idle=Idle
+tooltip.advancedScanner.info1=Scanning....
+tooltip.advancedScanner.info2=Waiting..no storage
+tooltip.advancedScanner.info3=Error: energy loss
+tooltip.advancedScanner.info4=Scan Completed
+tooltip.advancedScanner.info5=Scan Result
+tooltip.advancedScanner.info6=!! Error !!
+tooltip.advancedScanner.info7=Error: no storage
+tooltip.advancedScanner.info8=Already recorded
+tooltip.advancedScanner.button.delete=Delete
+tooltip.advancedScanner.button.save=Save

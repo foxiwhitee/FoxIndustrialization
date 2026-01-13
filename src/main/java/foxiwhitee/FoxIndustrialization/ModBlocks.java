@@ -1,9 +1,6 @@
 package foxiwhitee.FoxIndustrialization;
 
-import foxiwhitee.FoxIndustrialization.blocks.BlockCasing;
-import foxiwhitee.FoxIndustrialization.blocks.BlockMatterSynthesizer;
-import foxiwhitee.FoxIndustrialization.blocks.BlockSynthesizer;
-import foxiwhitee.FoxIndustrialization.blocks.BlockUniversalFluidComplex;
+import foxiwhitee.FoxIndustrialization.blocks.*;
 import foxiwhitee.FoxIndustrialization.blocks.generator.fluid.BlockLavaGenerator;
 import foxiwhitee.FoxIndustrialization.blocks.generator.fluid.BlockWaterGenerator;
 import foxiwhitee.FoxIndustrialization.blocks.generator.fuel.BlockAdvancedGenerator;
@@ -24,6 +21,7 @@ import foxiwhitee.FoxIndustrialization.blocks.machines.quantum.*;
 import foxiwhitee.FoxIndustrialization.blocks.storage.*;
 import foxiwhitee.FoxIndustrialization.config.ContentConfig;
 import foxiwhitee.FoxIndustrialization.items.block.*;
+import foxiwhitee.FoxIndustrialization.tile.TileAdvancedScanner;
 import foxiwhitee.FoxIndustrialization.tile.TileMatterSynthesizer;
 import foxiwhitee.FoxIndustrialization.tile.TileSynthesizer;
 import foxiwhitee.FoxIndustrialization.tile.TileUniversalFluidComplex;
@@ -120,6 +118,8 @@ public class ModBlocks {
     public static final Block quantumMatterGenerator = new BlockQuantumMatterGenerator("quantumMatterGenerator");
     public static final Block singularMatterGenerator = new BlockSingularMatterGenerator("singularMatterGenerator");
 
+    public static final Block advancedScanner = new BlockAdvancedScanner("advancedScanner");
+
     public static void registerBlocks() {
         registerCasings();
         registerUniversalFluidComplex();
@@ -128,11 +128,19 @@ public class ModBlocks {
         registerNanoMachines();
         registerQuantumMachines();
         registerMatterGenerators();
+        registerAdvancedScanner();
         registerGenerators();
         registerEnergyStorages();
         registerCustomSolarPanels();
         registerInfinityGenerator();
         registerSynthesizers();
+    }
+
+    private static void registerAdvancedScanner() {
+        if (ContentConfig.enableAdvancedScanner) {
+            RegisterUtils.registerBlock(advancedScanner);
+            RegisterUtils.registerTile(TileAdvancedScanner.class);
+        }
     }
 
     private static void registerMatterGenerators() {
@@ -320,7 +328,7 @@ public class ModBlocks {
             RegisterUtils.registerTile(TileSynthesizer.class);
         }
         if (ContentConfig.enableMatterSynthesizer) {
-            RegisterUtils.registerBlock(ItemBlockMatterSynthesizer.class, matterSynthesizer);
+            RegisterUtils.registerBlock(matterSynthesizer);
             RegisterUtils.registerTile(TileMatterSynthesizer.class);
         }
     }
