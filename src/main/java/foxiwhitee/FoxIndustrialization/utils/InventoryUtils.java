@@ -10,6 +10,11 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.BiPredicate;
+import java.util.function.Predicate;
+
 public class InventoryUtils {
     public static boolean canInsert(FluidTank tank, FluidStack stack) {
         if (stack == null || stack.getFluid() == null) return true;
@@ -100,5 +105,79 @@ public class InventoryUtils {
             }
         }
         return changed;
+    }
+
+    public static void doMergeInventory(FoxInternalInventory inventory) {
+        for (int i = 0; i < inventory.getSizeInventory(); i++) {
+            ItemStack currentStack = inventory.getStackInSlot(i);
+
+            if (currentStack != null && currentStack.stackSize < currentStack.getMaxStackSize()) {
+                for (int j = i + 1; j < inventory.getSizeInventory(); j++) {
+                    ItemStack nextStack = inventory.getStackInSlot(j);
+
+                    if (ItemStackUtil.stackEquals(currentStack, nextStack)) {
+                        int spaceLeft = currentStack.getMaxStackSize() - currentStack.stackSize;
+                        int amountToMove = Math.min(spaceLeft, nextStack.stackSize);
+
+                        currentStack.stackSize += amountToMove;
+                        nextStack.stackSize -= amountToMove;
+
+                        if (nextStack.stackSize <= 0) {
+                            inventory.setInventorySlotContents(j, null);
+                        }
+
+                        if (currentStack.stackSize >= currentStack.getMaxStackSize()) {
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public static void doFillInventory(FoxInternalInventory inventory) {
+        doFillInventory(inventory, (integer, stack) -> true);
+    }
+
+    public static void doFillInventory(FoxInternalInventory inventory, BiPredicate<Integer, ItemStack> filter) {
+        for (int i = 0; i < inventory.getSizeInventory(); i++) {
+            ItemStack current = inventory.getStackInSlot(i);
+            if (current == null) continue;
+
+            List<Integer> targetSlots = new ArrayList<>();
+            int totalAmount = 0;
+
+            for (int j = 0; j < inventory.getSizeInventory(); j++) {
+                ItemStack stack = inventory.getStackInSlot(j);
+                if (stack == null) {
+                    if (filter.test(j, current)) {
+                        targetSlots.add(j);
+                    }
+                } else if (ItemStackUtil.stackEquals(current, stack)) {
+                    if (filter.test(j, current)) {
+                        targetSlots.add(j);
+                        totalAmount += stack.stackSize;
+                    }
+                }
+            }
+
+            if (targetSlots.size() > 1 && totalAmount > 0) {
+                int countPerSlot = totalAmount / targetSlots.size();
+                int remainder = totalAmount % targetSlots.size();
+
+                for (int k = 0; k < targetSlots.size(); k++) {
+                    int slotIndex = targetSlots.get(k);
+                    int amountToSet = countPerSlot + (k < remainder ? 1 : 0);
+
+                    if (amountToSet > 0) {
+                        ItemStack newStack = current.copy();
+                        newStack.stackSize = amountToSet;
+                        inventory.setInventorySlotContents(slotIndex, newStack);
+                    } else {
+                        inventory.setInventorySlotContents(slotIndex, null);
+                    }
+                }
+            }
+        }
     }
 }

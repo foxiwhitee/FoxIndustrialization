@@ -53,6 +53,9 @@ public class ContentConfig {
     @ConfigValue(category = "Content", desc = "Enable Quantum Replicator?")
     public static boolean enableQuantumReplicator = true;
 
+    @ConfigValue(category = "Content", desc = "Enable Wither Killer?")
+    public static boolean enableWitherKiller = true;
+
 
     // Machines Advanced
     @ConfigValue(category = "Content.Machines.Advanced", desc = "Enable Advanced Compressor?")

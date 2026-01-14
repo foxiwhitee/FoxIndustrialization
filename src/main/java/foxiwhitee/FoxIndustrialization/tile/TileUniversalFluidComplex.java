@@ -537,7 +537,7 @@ public class TileUniversalFluidComplex extends TileIC2Inv implements IUpgradable
     @Override
     public void onChangeInventory(IInventory iInventory, int i, InvOperation invOperation, ItemStack itemStack, ItemStack itemStack1) {
         if (iInventory == upgrades) {
-            var handler = UpgradeUtils.newHandler(this, upgrades)
+            var handler = UpgradeUtils.newHandler(this)
                 .storage(FIConfig.ufcStorage)
                 .speed(100, 0, FIConfig.ufcItemsPerOp, 64)
                 .ejector()
@@ -586,7 +586,7 @@ public class TileUniversalFluidComplex extends TileIC2Inv implements IUpgradable
 
     @Override
     public UpgradesTypes[] getAvailableTypes() {
-        return UpgradesTypes.values();
+        return new UpgradesTypes[]{UpgradesTypes.SPEED, UpgradesTypes.STORAGE, UpgradesTypes.EJECTOR, UpgradesTypes.PULLING, UpgradesTypes.FLUID_EJECTOR, UpgradesTypes.WATER_GENERATOR, UpgradesTypes.LAVA_GENERATOR};
     }
 
     @Override

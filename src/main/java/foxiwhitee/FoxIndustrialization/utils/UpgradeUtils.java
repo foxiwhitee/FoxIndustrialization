@@ -2,6 +2,7 @@ package foxiwhitee.FoxIndustrialization.utils;
 
 import foxiwhitee.FoxIndustrialization.api.IAdvancedUpgradeItem;
 import foxiwhitee.FoxIndustrialization.api.IUpgradableTile;
+import foxiwhitee.FoxIndustrialization.api.IWitherKillerUpgrade;
 import foxiwhitee.FoxIndustrialization.items.ItemFluidGeneratorUpgrade;
 import foxiwhitee.FoxLib.tile.inventory.FoxInternalInventory;
 import foxiwhitee.FoxLib.utils.helpers.ItemStackUtil;
@@ -227,8 +228,8 @@ public class UpgradeUtils {
         return a * b;
     }
 
-    public static Handler newHandler(IUpgradableTile tile, FoxInternalInventory inventory) {
-        return new Handler(tile, inventory);
+    public static Handler newHandler(IUpgradableTile tile) {
+        return new Handler(tile);
     }
 
     public static class Handler {
@@ -236,10 +237,10 @@ public class UpgradeUtils {
         private final Set<UpgradesTypes> enabledTypes = EnumSet.noneOf(UpgradesTypes.class);
         private boolean canEject, canEjectFluid, canPull, canWater, canLava;
         private double defaultStorage, defaultEnergyNeed;
-        private int defaultOperations, defaultTicksNeed, operationsLimit = Integer.MAX_VALUE;
+        private int defaultOperations, defaultTicksNeed, operationsLimit = Integer.MAX_VALUE, defaultBonus;
 
-        private Handler(IUpgradableTile tile, FoxInternalInventory inventory) {
-            this.inventory = inventory;
+        private Handler(IUpgradableTile tile) {
+            this.inventory = tile.getUpgradesInventory();
             Collections.addAll(enabledTypes, tile.getAvailableTypes());
         }
 
@@ -248,18 +249,28 @@ public class UpgradeUtils {
         }
 
         public Handler storage(double defaultValue) {
-            if (enabledTypes.contains(UpgradesTypes.STORAGE)) {
+            if (containsType(UpgradesTypes.STORAGE)) {
                 this.defaultStorage = defaultValue;
             }
             return this;
         }
 
         public Handler speed(int defaultTicks, double defaultEnergy, int defaultOps, int opsLimit) {
-            if (enabledTypes.contains(UpgradesTypes.SPEED)) {
+            if (containsType(UpgradesTypes.SPEED)) {
                 this.defaultTicksNeed = defaultTicks;
                 this.defaultEnergyNeed = defaultEnergy;
                 this.defaultOperations = defaultOps;
                 this.operationsLimit = opsLimit;
+            }
+            return this;
+        }
+
+        public Handler wither(int defaultStorage, double defaultEnergy, int defaultTicks, int defaultBonus) {
+            if (containsType(UpgradesTypes.WITHER)) {
+                this.defaultStorage = defaultStorage;
+                this.defaultEnergyNeed = defaultEnergy;
+                this.defaultTicksNeed = defaultTicks;
+                this.defaultBonus = defaultBonus;
             }
             return this;
         }
@@ -294,6 +305,7 @@ public class UpgradeUtils {
             double energyNeed = defaultEnergyNeed;
             int operations = defaultOperations;
             int ticksNeed = defaultTicksNeed;
+            int bonus = defaultBonus;
 
             boolean hasWater = false, hasLava = false;
 
@@ -306,12 +318,12 @@ public class UpgradeUtils {
                 if (stack == null || stack.getItem() == null) continue;
 
                 if (stack.getItem() instanceof IAdvancedUpgradeItem upgrade) {
-                    if (enabledTypes.contains(UpgradesTypes.SPEED)) {
-                        ticksNeed *= (int) upgrade.getSpeedMultiplier(stack);
+                    if (containsType(UpgradesTypes.SPEED)) {
+                        ticksNeed = (int) (ticksNeed * upgrade.getSpeedMultiplier(stack));
                         operations += upgrade.getItemsPerOpAdd(stack);
                         energyNeed = safeMultiply(energyNeed, upgrade.getEnergyUseMultiplier(stack));
                     }
-                    if (enabledTypes.contains(UpgradesTypes.STORAGE)) {
+                    if (containsType(UpgradesTypes.STORAGE)) {
                         storage = safeMultiply(storage, upgrade.getStorageEnergyMultiplier(stack));
                     }
                 } else if (stack.getItem() instanceof ItemFluidGeneratorUpgrade) {
@@ -325,31 +337,38 @@ public class UpgradeUtils {
                             break;
                         }
                     }
+                } else if (stack.getItem() instanceof IWitherKillerUpgrade item) {
+                    if (containsType(UpgradesTypes.WITHER)) {
+                        storage = safeMultiply(storage, item.getStorageEnergyMultiplier(stack));
+                        energyNeed = safeMultiply(energyNeed, item.getEnergyUseMultiplier(stack));
+                        ticksNeed = (int) (ticksNeed * item.getSpeedMultiplier(stack));
+                        bonus += item.getBonusStars(stack);
+                    }
                 } else if (stack.getItem() instanceof IUpgradeItem) {
                     switch (stack.getItemDamage()) {
                         case 0: // Speed
-                            if (enabledTypes.contains(UpgradesTypes.SPEED)) {
-                                ticksNeed *= (int) Math.pow(0.7, stack.stackSize);
+                            if (containsType(UpgradesTypes.SPEED)) {
+                                ticksNeed = (int) (ticksNeed * Math.pow(0.7, stack.stackSize));
                                 energyNeed *= Math.pow(1.6, stack.stackSize);
                             }
                             break;
                         case 2: // Energy Storage
-                            if (enabledTypes.contains(UpgradesTypes.STORAGE)) {
+                            if (containsType(UpgradesTypes.STORAGE)) {
                                 storage += 10000 * stack.stackSize;
                             }
                             break;
                         case 3: // Ejector
-                            if (enabledTypes.contains(UpgradesTypes.EJECTOR)) {
+                            if (containsType(UpgradesTypes.EJECTOR)) {
                                 extractDir(stack, pushRaw);
                             }
                             break;
                         case 4: // Ejector Fluid
-                            if (enabledTypes.contains(UpgradesTypes.FLUID_EJECTOR)) {
+                            if (containsType(UpgradesTypes.FLUID_EJECTOR)) {
                                 extractDir(stack, pushFRaw);
                             }
                             break;
                         case 6: // Pulling
-                            if (enabledTypes.contains(UpgradesTypes.PULLING)) {
+                            if (containsType(UpgradesTypes.PULLING)) {
                                 extractDir(stack, pullRaw);
                             }
                             break;
@@ -362,7 +381,7 @@ public class UpgradeUtils {
             storage = Math.max(storage, energyNeed);
 
             return new HandlerResults(enabledTypes)
-                .setStats(storage, energyNeed, operations, ticksNeed)
+                .setStats(storage, energyNeed, operations, ticksNeed, bonus)
                 .setStats(canEject, canEjectFluid, canPull, hasWater, hasLava)
                 .setSides(parseSides(pushRaw), parseSides(pushFRaw), parseSides(pullRaw));
         }
@@ -375,7 +394,7 @@ public class UpgradeUtils {
         public static class HandlerResults {
             private final Set<UpgradesTypes> enabledTypes;
             private double storage, energyNeed;
-            private int operations, ticksNeed;
+            private int operations, ticksNeed, bonus;
             private boolean canEject, canEjectFluid, canPull, hasWater, hasLava;
             private ForgeDirection[] pushSides = new ForgeDirection[0];
             private ForgeDirection[] pushFluidSides = new ForgeDirection[0];
@@ -385,11 +404,12 @@ public class UpgradeUtils {
                 this.enabledTypes = enabledTypes;
             }
 
-            protected HandlerResults setStats(double s, double e, int o, int t) {
+            protected HandlerResults setStats(double s, double e, int o, int t, int b) {
                 this.storage = s;
                 this.energyNeed = e;
                 this.operations = o;
                 this.ticksNeed = t;
+                this.bonus = b;
                 return this;
             }
 
@@ -410,11 +430,11 @@ public class UpgradeUtils {
             }
 
             public double getStorage() {
-                return enabledTypes.contains(UpgradesTypes.STORAGE) ? storage : 0;
+                return enabledTypes.contains(UpgradesTypes.STORAGE) || enabledTypes.contains(UpgradesTypes.WITHER) ? storage : 0;
             }
 
             public double getEnergyNeed() {
-                return enabledTypes.contains(UpgradesTypes.SPEED) ? energyNeed : 0;
+                return enabledTypes.contains(UpgradesTypes.SPEED) || enabledTypes.contains(UpgradesTypes.WITHER) ? energyNeed : 0;
             }
 
             public int getOperations() {
@@ -422,7 +442,11 @@ public class UpgradeUtils {
             }
 
             public int getTicksNeed() {
-                return enabledTypes.contains(UpgradesTypes.SPEED) ? ticksNeed : 20;
+                return enabledTypes.contains(UpgradesTypes.SPEED) || enabledTypes.contains(UpgradesTypes.WITHER) ? ticksNeed : 20;
+            }
+
+            public int getBonus() {
+                return enabledTypes.contains(UpgradesTypes.WITHER) ? bonus : 0;
             }
 
             public boolean hasEjector() {

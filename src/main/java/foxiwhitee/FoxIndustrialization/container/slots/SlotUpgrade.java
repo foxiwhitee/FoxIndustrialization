@@ -2,6 +2,7 @@ package foxiwhitee.FoxIndustrialization.container.slots;
 
 import foxiwhitee.FoxIndustrialization.api.IAdvancedUpgradeItem;
 import foxiwhitee.FoxIndustrialization.api.IUpgradableTile;
+import foxiwhitee.FoxIndustrialization.api.IWitherKillerUpgrade;
 import foxiwhitee.FoxIndustrialization.items.ItemFluidGeneratorUpgrade;
 import foxiwhitee.FoxIndustrialization.items.ItemSpeedUpgrade;
 import foxiwhitee.FoxIndustrialization.items.ItemStorageUpgrade;
@@ -52,6 +53,21 @@ public class SlotUpgrade extends FoxSlot {
                     case 3: return types.contains(UpgradesTypes.EJECTOR);
                     case 4: return types.contains(UpgradesTypes.FLUID_EJECTOR);
                     case 6: return types.contains(UpgradesTypes.PULLING);
+                }
+            } else if (i.getItem() instanceof IWitherKillerUpgrade) {
+                boolean can = types.contains(UpgradesTypes.WITHER);
+                if (can) {
+                    boolean has = false;
+                    for (int j = 0; j < tile.getUpgradesInventory().getSizeInventory(); j++) {
+                        ItemStack stack = tile.getUpgradesInventory().getStackInSlot(j);
+                        if (stack != null && stack.getItem() instanceof IWitherKillerUpgrade) {
+                            has = true;
+                            break;
+                        }
+                    }
+                    return !has;
+                } else {
+                    return false;
                 }
             }
 

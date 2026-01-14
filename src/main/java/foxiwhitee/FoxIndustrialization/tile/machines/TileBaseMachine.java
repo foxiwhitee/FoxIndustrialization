@@ -5,6 +5,7 @@ import foxiwhitee.FoxIndustrialization.api.IUpgradableTile;
 import foxiwhitee.FoxIndustrialization.recipes.IRecipeIC2;
 import foxiwhitee.FoxIndustrialization.tile.TileIC2Inv;
 import foxiwhitee.FoxIndustrialization.utils.*;
+import foxiwhitee.FoxLib.container.slots.SlotFiltered;
 import foxiwhitee.FoxLib.tile.event.TileEvent;
 import foxiwhitee.FoxLib.tile.event.TileEventType;
 import foxiwhitee.FoxLib.tile.inventory.FoxInternalInventory;
@@ -92,10 +93,10 @@ public abstract class TileBaseMachine extends TileIC2Inv implements IHasActiveSt
         if (doInventoryUpdateByMode) {
             switch (inventoryMode) {
                 case MERGE:
-                    doMergeInventory();
+                    InventoryUtils.doMergeInventory(inventory);
                     break;
                 case FILL:
-                    doFillInventory();
+                    InventoryUtils.doFillInventory(inventory);
                     break;
             }
             doInventoryUpdateByMode = false;
@@ -171,72 +172,6 @@ public abstract class TileBaseMachine extends TileIC2Inv implements IHasActiveSt
             }
         }
         return false;
-    }
-
-    private void doMergeInventory() {
-        for (int i = 0; i < inventory.getSizeInventory(); i++) {
-            ItemStack currentStack = inventory.getStackInSlot(i);
-
-            if (currentStack != null && currentStack.stackSize < currentStack.getMaxStackSize()) {
-                for (int j = i + 1; j < inventory.getSizeInventory(); j++) {
-                    ItemStack nextStack = inventory.getStackInSlot(j);
-
-                    if (ItemStackUtil.stackEquals(currentStack, nextStack)) {
-                        int spaceLeft = currentStack.getMaxStackSize() - currentStack.stackSize;
-                        int amountToMove = Math.min(spaceLeft, nextStack.stackSize);
-
-                        currentStack.stackSize += amountToMove;
-                        nextStack.stackSize -= amountToMove;
-
-                        if (nextStack.stackSize <= 0) {
-                            inventory.setInventorySlotContents(j, null);
-                        }
-
-                        if (currentStack.stackSize >= currentStack.getMaxStackSize()) {
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    private void doFillInventory() {
-        for (int i = 0; i < inventory.getSizeInventory(); i++) {
-            ItemStack current = inventory.getStackInSlot(i);
-            if (current == null) continue;
-
-            List<Integer> targetSlots = new ArrayList<>();
-            int totalAmount = 0;
-
-            for (int j = 0; j < inventory.getSizeInventory(); j++) {
-                ItemStack stack = inventory.getStackInSlot(j);
-                if (stack == null) {
-                    targetSlots.add(j);
-                } else if (ItemStackUtil.stackEquals(current, stack)) {
-                    targetSlots.add(j);
-                    totalAmount += stack.stackSize;
-                }
-            }
-
-            if (targetSlots.size() > 1 && totalAmount > 0) {
-                int countPerSlot = totalAmount / targetSlots.size();
-                int remainder = totalAmount % targetSlots.size();
-
-                for (int k = 0; k < targetSlots.size(); k++) {
-                    int slotIndex = targetSlots.get(k);
-                    int amountToSet = countPerSlot + (k < remainder ? 1 : 0);
-
-                    if (amountToSet > 0) {
-                        ItemStack newStack = current.copy();
-                        newStack.stackSize = amountToSet;
-                        inventory.setInventorySlotContents(slotIndex, newStack);
-                    } else {
-                        inventory.setInventorySlotContents(slotIndex, null);
-                    }
-                }
-            }
-        }
     }
 
     protected void getRecipe(ItemStack stack, int idx) {
@@ -395,7 +330,7 @@ public abstract class TileBaseMachine extends TileIC2Inv implements IHasActiveSt
     @Override
     public void onChangeInventory(IInventory iInv, int slot, InvOperation op, ItemStack removed, ItemStack added) {
         if (iInv == upgrades) {
-            var handler = UpgradeUtils.newHandler(this, upgrades)
+            var handler = UpgradeUtils.newHandler(this)
                 .storage(defaultMaxEnergy)
                 .speed(100, defaultEnergyPerTick, defaultItemsPerOp, 64)
                 .ejector()

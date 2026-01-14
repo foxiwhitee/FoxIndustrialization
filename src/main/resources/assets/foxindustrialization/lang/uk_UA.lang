@@ -78,6 +78,8 @@ tile.advancedScanner.name=Розширений сканер
 
 tile.quantumReplicator.name=Квантовий реплікатор
 
+tile.witherKiller.name=Вбився висушувачів
+
 # Items
 item.speedUpgrade.Advanced.name=Розширене поліпшення швидкості
 item.speedUpgrade.Nano.name=Нано поліпшення швидкості
@@ -110,6 +112,10 @@ item.synthesizerUpgrade.10.name=Поліпшення синтезатора 10
 item.fluidUpgrades.Water.name=Поліпшення: генератр води
 item.fluidUpgrades.Lava.name=Поліпшення: генератор лави
 
+item.witherKillerUpgrade.1.name=Поліпшення вбивці висушувачів 1
+item.witherKillerUpgrade.2.name=Поліпшення вбивці висушувачів 2
+item.witherKillerUpgrade.3.name=Поліпшення вбивці висушувачів 3
+
 # Tooltips 
 tooltip.upgrade.addPerOp=§7Збільшує кількість перероблених предметів за операцію на §3%s
 tooltip.upgrade.speed=§7Зменшує час роботи до §3%s%%
@@ -120,7 +126,8 @@ tooltip.upgrade.pc.storageMult=§7Збільшує кількість збері
 tooltip.upgrade.pc.outputMult=§7Збільшує швидкість виходу %s%s енергії§7 у §3%s§7 разів
 tooltip.upgrade.outputMult=§7Збільшує швидкість виходу енергії у §3%s§7 разів 
 tooltip.upgrade.synthesizerBonus=§7Бонус енергії що виробляється §3%s%%
-tooltip.upgrade.sun.desc=§7Сонячні панелі генерують стільки ж енергії вночі, скільки й вдень.
+tooltip.upgrade.sun.desc=§7Сонячні панелі генерують стільки ж енергії вночі, скільки й вдень
+tooltip.upgrade.stars=§7Збільшує кількість зірок, що виробляються на §3%s
 tooltip.fluidUpgrade.Water.desc=§7Нескінченно генерує воду в блоці
 tooltip.fluidUpgrade.Lava.desc=§7Нескінченно генерує лаву в блоці
 tooltip.level.advanced=§6Розширений

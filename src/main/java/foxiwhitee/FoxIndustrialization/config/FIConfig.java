@@ -165,6 +165,46 @@ public class FIConfig {
     public static double synthesizerUpgrade10OutputMultiplier = 25000;
 
 
+    // Upgrades Wither Killer
+    @ConfigValue(category = "Upgrades.WitherKiller.Level1", name = "storageMultiplier", desc = "How many times will the mechanism's storage be increased with each upgrade?")
+    public static double witherKillerUpgrade1StorageMultiplier = 4;
+
+    @ConfigValue(category = "Upgrades.WitherKiller.Level1", name = "speedMultiplier", min = "0", desc = "How many times will the mechanism's speed be increased with each upgrade?")
+    public static double witherKillerUpgrade1SpeedMultiplier = 0.8;
+
+    @ConfigValue(category = "Upgrades.WitherKiller.Level1", name = "itemsPerOpAdd", desc = "How much will the maximum number of processed items be increased with each upgrade?")
+    public static int witherKillerUpgrade1BonusStars = 1;
+
+    @ConfigValue(category = "Upgrades.WitherKiller.Level1", name = "useMultiplier", desc = "How many times will the energy consumption of the mechanism increase with each improvement?")
+    public static double witherKillerUpgrade1UseMultiplier = 1.5;
+
+
+    @ConfigValue(category = "Upgrades.WitherKiller.Level2", name = "storageMultiplier", desc = "How many times will the mechanism's storage be increased with each upgrade?")
+    public static double witherKillerUpgrade2StorageMultiplier = 25;
+
+    @ConfigValue(category = "Upgrades.WitherKiller.Level2", name = "speedMultiplier", min = "0", desc = "How many times will the mechanism's speed be increased with each upgrade?")
+    public static double witherKillerUpgrade2SpeedMultiplier = 0.3;
+
+    @ConfigValue(category = "Upgrades.WitherKiller.Level2", name = "itemsPerOpAdd", desc = "How much will the maximum number of processed items be increased with each upgrade?")
+    public static int witherKillerUpgrade2BonusStars = 2;
+
+    @ConfigValue(category = "Upgrades.WitherKiller.Level2", name = "useMultiplier", desc = "How many times will the energy consumption of the mechanism increase with each improvement?")
+    public static double witherKillerUpgrade2UseMultiplier = 3.5;
+
+
+    @ConfigValue(category = "Upgrades.WitherKiller.Level3", name = "storageMultiplier", desc = "How many times will the mechanism's storage be increased with each upgrade?")
+    public static double witherKillerUpgrade3StorageMultiplier = 50;
+
+    @ConfigValue(category = "Upgrades.WitherKiller.Level3", name = "speedMultiplier", min = "0", desc = "How many times will the mechanism's speed be increased with each upgrade?")
+    public static double witherKillerUpgrade3SpeedMultiplier = 0.0005;
+
+    @ConfigValue(category = "Upgrades.WitherKiller.Level3", name = "itemsPerOpAdd", desc = "How much will the maximum number of processed items be increased with each upgrade?")
+    public static int witherKillerUpgrade3BonusStars = 3;
+
+    @ConfigValue(category = "Upgrades.WitherKiller.Level3", name = "useMultiplier", desc = "How many times will the energy consumption of the mechanism increase with each improvement?")
+    public static double witherKillerUpgrade3UseMultiplier = 6;
+
+
 
     // Energy Storage Basic
     @ConfigValue(category = "Storage.Basic", name = "tier", desc = "The energy level of the unit. Affects the speed of charging and discharging energy. For example, MFSU has level 4")
@@ -777,4 +817,14 @@ public class FIConfig {
 
     @ConfigValue(category = "Replicator", name = "tank", desc = "The amount of matter that a Quantum Replicator can store")
     public static int quantumReplicatorTank = 256_000;
+
+
+    @ConfigValue(category = "WitherKiller", name = "ticksNeed", desc = "How many ticks does it take for a block to craft an item?")
+    public static int witherKillerTicksNeed = 1800;
+
+    @ConfigValue(category = "WitherKiller", name = "energyNeed", desc = "How much energy is needed to kill the wither?")
+    public static double witherKillerEnergyNeed = 500_000;
+
+    @ConfigValue(category = "WitherKiller", name = "іещкфпу", desc = "The maximum amount of energy that the block can hold")
+    public static int witherKillerStorage = 1_000_000;
 }

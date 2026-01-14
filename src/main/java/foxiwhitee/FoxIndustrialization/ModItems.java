@@ -23,6 +23,8 @@ public class ModItems {
     public static final Item quantumEnergyCrystal = new ItemQuantumEnergyCrystal("quantumEnergyCrystal");
     public static final Item singularEnergyCrystal = new ItemSingularEnergyCrystal("singularEnergyCrystal");
 
+    public static final Item witherKillerUpgrade = new ItemWitherKillerUpgrade("witherKillerUpgrade");
+
     public static void registerItems() {
         if (ContentConfig.enableSpeedUpgrades) {
             RegisterUtils.registerItem(speedUpgrade);
@@ -38,6 +40,9 @@ public class ModItems {
         }
         if (ContentConfig.enableEnergyCrystals) {
             RegisterUtils.registerItems(advancedEnergyCrystal, nanoEnergyCrystal, quantumEnergyCrystal, singularEnergyCrystal);
+        }
+        if (ContentConfig.enableWitherKiller) {
+            RegisterUtils.registerItem(witherKillerUpgrade);
         }
     }
 }

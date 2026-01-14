@@ -116,11 +116,13 @@ public class ModBlocks {
     public static final Block singularMatterGenerator = new BlockSingularMatterGenerator("singularMatterGenerator");
 
     public static final Block advancedScanner = new BlockAdvancedScanner("advancedScanner");
-
     public static final Block quantumReplicator = new BlockQuantumReplicator("quantumReplicator");
+
+    public static final Block witherKiller = new BlockWitherKiller("witherKiller");
 
     public static void registerBlocks() {
         registerCasings();
+        registerWitherKiller();
         registerUniversalFluidComplex();
         registerFluidGenerators();
         registerAdvancedMachines();
@@ -134,6 +136,13 @@ public class ModBlocks {
         registerCustomSolarPanels();
         registerInfinityGenerator();
         registerSynthesizers();
+    }
+
+    private static void registerWitherKiller() {
+        if (ContentConfig.enableWitherKiller) {
+            RegisterUtils.registerBlock(witherKiller);
+            RegisterUtils.registerTile(TileWitherKiller.class);
+        }
     }
 
     private static void registerReplicator() {

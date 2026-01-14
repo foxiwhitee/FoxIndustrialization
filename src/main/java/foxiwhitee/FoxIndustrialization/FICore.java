@@ -33,11 +33,13 @@ public class FICore {
     public static CommonProxy proxy;
 
     public static boolean ifCoFHCoreIsLoaded;
+    public static boolean ifExtraUtilitesIsLoaded;
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent e) {
         proxy.preInit(e);
         ifCoFHCoreIsLoaded = cpw.mods.fml.common.Loader.isModLoaded("CoFHCore");
+        ifExtraUtilitesIsLoaded = cpw.mods.fml.common.Loader.isModLoaded("ExtraUtilites");
     }
 
     @Mod.EventHandler

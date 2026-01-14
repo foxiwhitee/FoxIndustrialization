@@ -7,5 +7,6 @@ public enum UpgradesTypes {
     FLUID_EJECTOR,
     PULLING,
     WATER_GENERATOR,
-    LAVA_GENERATOR
+    LAVA_GENERATOR,
+    WITHER
 }

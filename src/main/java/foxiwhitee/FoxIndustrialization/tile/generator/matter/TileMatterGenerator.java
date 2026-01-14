@@ -207,7 +207,7 @@ public abstract class TileMatterGenerator extends TileIC2Inv implements IFluidHa
     @Override
     public void onChangeInventory(IInventory iInventory, int i, InvOperation invOperation, ItemStack itemStack, ItemStack itemStack1) {
         if (iInventory == upgrades) {
-            var handler = UpgradeUtils.newHandler(this, upgrades)
+            var handler = UpgradeUtils.newHandler(this)
                 .ejector()
                 .ejectorFluid()
                 .puller()
