@@ -138,6 +138,9 @@ public abstract class TileMatterGenerator extends TileIC2Inv implements IFluidHa
         scrap.writeToNBT(data, "scrap");
         upgrades.writeToNBT(data, "upgrades");
         InventoryUtils.writeTankToNbt(data, "tank", this.tank);
+        UpgradeUtils.writeDirectionsToNbt(data, "pullSides", pullSides);
+        UpgradeUtils.writeDirectionsToNbt(data, "pushSides", pushSides);
+        UpgradeUtils.writeDirectionsToNbt(data, "pushFluidSides", pushFluidSides);
         data.setInteger("amplifier", amplifier);
         data.setBoolean("hasPuller", hasPuller);
         data.setBoolean("hasEjector", hasEjector);
@@ -152,6 +155,9 @@ public abstract class TileMatterGenerator extends TileIC2Inv implements IFluidHa
         scrap.readFromNBT(data, "scrap");
         upgrades.readFromNBT(data, "upgrades");
         InventoryUtils.readTankFromNbt(data, "tank", this.tank);
+        pullSides = UpgradeUtils.readDirectionsFromNbt(data, "pullSides");
+        pushSides = UpgradeUtils.readDirectionsFromNbt(data, "pushSides");
+        pushFluidSides = UpgradeUtils.readDirectionsFromNbt(data, "pushFluidSides");
         amplifier = data.getInteger("amplifier");
         hasPuller = data.getBoolean("hasPuller");
         hasEjector = data.getBoolean("hasEjector");

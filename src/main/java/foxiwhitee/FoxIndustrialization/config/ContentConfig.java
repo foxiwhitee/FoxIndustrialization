@@ -50,6 +50,9 @@ public class ContentConfig {
     @ConfigValue(category = "Content", desc = "Enable Advanced Scanner?")
     public static boolean enableAdvancedScanner = true;
 
+    @ConfigValue(category = "Content", desc = "Enable Quantum Replicator?")
+    public static boolean enableQuantumReplicator = true;
+
 
     // Machines Advanced
     @ConfigValue(category = "Content.Machines.Advanced", desc = "Enable Advanced Compressor?")

@@ -15,7 +15,7 @@ public class ContainerAdvancedScanner extends FoxBaseContainer {
 
         bindPlayerInventory(ip.inventory, 43, 173);
 
-        addSlotToContainer(new Slot(myTile.getInternalInventory(), 0, 123, 66));
+        addSlotToContainer(new SlotFiltered(FilterInitializer.FILTER_SCANNER_SLOT, myTile.getInternalInventory(), 0, 123, 66, ip.inventory));
         addSlotToContainer(new SlotFiltered(FilterInitializer.FILTER_SCANNER_CRYSTAL, myTile.getDiskInventory(), 0, 123, 109, ip.inventory));
     }
 }

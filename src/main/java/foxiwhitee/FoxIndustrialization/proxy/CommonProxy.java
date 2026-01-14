@@ -7,10 +7,7 @@ import foxiwhitee.FoxIndustrialization.ModBlocks;
 import foxiwhitee.FoxIndustrialization.ModItems;
 import foxiwhitee.FoxIndustrialization.ModRecipes;
 import foxiwhitee.FoxIndustrialization.integration.IntegrationLoader;
-import foxiwhitee.FoxIndustrialization.network.packets.C2SClearTankInUFCPacket;
-import foxiwhitee.FoxIndustrialization.network.packets.C2SScannerButtonActionPacket;
-import foxiwhitee.FoxIndustrialization.network.packets.C2SUpdateMachineInventoryModePacket;
-import foxiwhitee.FoxIndustrialization.network.packets.C2SUpdateMetalFormerModePacket;
+import foxiwhitee.FoxIndustrialization.network.packets.*;
 import foxiwhitee.FoxIndustrialization.recipes.UniversalFluidComplexJSONRecipe;
 import foxiwhitee.FoxIndustrialization.utils.FilterInitializer;
 import foxiwhitee.FoxLib.api.FoxLibApi;
@@ -28,6 +25,7 @@ public class CommonProxy {
         FoxLibApi.instance.registries().registerPacket().register(C2SUpdateMetalFormerModePacket.class);
         FoxLibApi.instance.registries().registerPacket().register(C2SClearTankInUFCPacket.class);
         FoxLibApi.instance.registries().registerPacket().register(C2SScannerButtonActionPacket.class);
+        FoxLibApi.instance.registries().registerPacket().register(C2SSetModeInReplicatorPacket.class);
         FoxLibApi.instance.registries().registerJsonRecipe().register(UniversalFluidComplexJSONRecipe.class, "universalFluidComplex");
         IntegrationLoader.init(event);
     }

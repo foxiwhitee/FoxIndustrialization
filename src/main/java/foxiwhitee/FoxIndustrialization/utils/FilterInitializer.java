@@ -9,6 +9,8 @@ import foxiwhitee.FoxLib.container.slots.SlotFiltered;
 import ic2.api.item.IElectricItem;
 import ic2.core.Ic2Items;
 import ic2.core.item.ItemCrystalMemory;
+import ic2.core.uu.UuGraph;
+import ic2.core.uu.UuIndex;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -66,6 +68,7 @@ public class FilterInitializer {
     public static final String FILTER_MATTER_SYNTHESIZER = "matterSynthesizer";
 
     public static final String FILTER_SCANNER_CRYSTAL = "scannerCrystal";
+    public static final String FILTER_SCANNER_SLOT = "scannerSlot";
 
     public static void initFilters() {
         SlotFiltered.filters.put(FILTER_BASIC_ENERGY_STORAGE, stack -> itemInstanceof(stack, IElectricItem.class));
@@ -95,6 +98,10 @@ public class FilterInitializer {
         SlotFiltered.filters.put(FILTER_MATTER_SYNTHESIZER, stack -> itemInstanceof(stack, IHasMatterSynthesizerIntegration.class) || Block.getBlockFromItem(stack.getItem()) == Block.getBlockFromItem(Ic2Items.massFabricator.getItem()));
 
         SlotFiltered.filters.put(FILTER_SCANNER_CRYSTAL, stack -> itemInstanceof(stack, ItemCrystalMemory.class));
+        SlotFiltered.filters.put(FILTER_SCANNER_SLOT, stack -> {
+            ItemStack copy = UuGraph.find(stack);
+            return copy != null && UuIndex.instance.get(copy) < Double.POSITIVE_INFINITY;
+        });
     }
 
     public static void addClassToFilterUltimateStorage(Class<?> clazz) {

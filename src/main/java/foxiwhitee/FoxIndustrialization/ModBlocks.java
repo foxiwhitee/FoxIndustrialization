@@ -21,10 +21,7 @@ import foxiwhitee.FoxIndustrialization.blocks.machines.quantum.*;
 import foxiwhitee.FoxIndustrialization.blocks.storage.*;
 import foxiwhitee.FoxIndustrialization.config.ContentConfig;
 import foxiwhitee.FoxIndustrialization.items.block.*;
-import foxiwhitee.FoxIndustrialization.tile.TileAdvancedScanner;
-import foxiwhitee.FoxIndustrialization.tile.TileMatterSynthesizer;
-import foxiwhitee.FoxIndustrialization.tile.TileSynthesizer;
-import foxiwhitee.FoxIndustrialization.tile.TileUniversalFluidComplex;
+import foxiwhitee.FoxIndustrialization.tile.*;
 import foxiwhitee.FoxIndustrialization.tile.generator.fluid.TileLavaGenerator;
 import foxiwhitee.FoxIndustrialization.tile.generator.fluid.TileWaterGenerator;
 import foxiwhitee.FoxIndustrialization.tile.generator.fuel.TileAdvancedGenerator;
@@ -120,6 +117,8 @@ public class ModBlocks {
 
     public static final Block advancedScanner = new BlockAdvancedScanner("advancedScanner");
 
+    public static final Block quantumReplicator = new BlockQuantumReplicator("quantumReplicator");
+
     public static void registerBlocks() {
         registerCasings();
         registerUniversalFluidComplex();
@@ -129,11 +128,19 @@ public class ModBlocks {
         registerQuantumMachines();
         registerMatterGenerators();
         registerAdvancedScanner();
+        registerReplicator();
         registerGenerators();
         registerEnergyStorages();
         registerCustomSolarPanels();
         registerInfinityGenerator();
         registerSynthesizers();
+    }
+
+    private static void registerReplicator() {
+        if (ContentConfig.enableQuantumReplicator) {
+            RegisterUtils.registerBlock(quantumReplicator, ItemBlockQuantumReplicator.class);
+            RegisterUtils.registerTile(TileQuantumReplicator.class);
+        }
     }
 
     private static void registerAdvancedScanner() {

@@ -770,4 +770,11 @@ public class FIConfig {
 
     @ConfigValue(category = "Scanner", name = "ticksNeed", desc = "Number of ticks for which the Advanced Scanner scans")
     public static int advancedScannerTicksNeed = 10;
+
+
+    @ConfigValue(category = "Replicator", name = "storage", desc = "The maximum amount of energy that the block can hold")
+    public static double quantumReplicatorStorage = 10_000_000;
+
+    @ConfigValue(category = "Replicator", name = "tank", desc = "The amount of matter that a Quantum Replicator can store")
+    public static int quantumReplicatorTank = 256_000;
 }

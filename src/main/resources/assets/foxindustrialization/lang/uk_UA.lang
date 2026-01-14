@@ -76,6 +76,8 @@ tile.matterSynthesizer.name=Синтезатор матерії
 
 tile.advancedScanner.name=Розширений сканер
 
+tile.quantumReplicator.name=Квантовий реплікатор
+
 # Items
 item.speedUpgrade.Advanced.name=Розширене поліпшення швидкості
 item.speedUpgrade.Nano.name=Нано поліпшення швидкості
@@ -183,3 +185,9 @@ tooltip.advancedScanner.info7=Помилка: немає пам'яті
 tooltip.advancedScanner.info8=Помилка: уже записано
 tooltip.advancedScanner.button.delete=Видалити
 tooltip.advancedScanner.button.save=Зберегти
+tooltip.replicator.button.stop=Зупинити
+tooltip.replicator.button.single=Одиночний запуск
+tooltip.replicator.button.repeat=Повторний запуск
+tooltip.replicator.desc1=§7Не потребує сховищ шаблонів
+tooltip.replicator.desc2=§7Шаблон береться з предмета в слоті
+tooltip.replicator.desc3=§7Генерує предмет за 1 тік
