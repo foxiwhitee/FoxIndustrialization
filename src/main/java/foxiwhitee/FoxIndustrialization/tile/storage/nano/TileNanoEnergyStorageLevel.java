@@ -1,6 +1,5 @@
 package foxiwhitee.FoxIndustrialization.tile.storage.nano;
 
-import foxiwhitee.FoxIndustrialization.tile.storage.TileEnergyStorage;
 import foxiwhitee.FoxIndustrialization.tile.storage.advanced.TileAdvancedEnergyStorageLevel;
 
 public abstract class TileNanoEnergyStorageLevel extends TileAdvancedEnergyStorageLevel {

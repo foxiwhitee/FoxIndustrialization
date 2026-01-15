@@ -4,6 +4,7 @@ import cofh.api.energy.IEnergyProvider;
 import cpw.mods.fml.common.Optional;
 import foxiwhitee.FoxIndustrialization.FICore;
 import foxiwhitee.FoxIndustrialization.config.FIConfig;
+import foxiwhitee.FoxIndustrialization.utils.GuiInfo;
 import foxiwhitee.FoxLib.api.energy.IDoubleEnergyProvider;
 import foxiwhitee.FoxLib.config.FoxLibConfig;
 import foxiwhitee.FoxLib.tile.event.TileEvent;
@@ -13,8 +14,6 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 @Optional.Interface(iface = "cofh.api.energy.IEnergyProvider", modid = "CoFHCore")
 public class TileQuantumKineticGenerator extends TileKineticGenerator implements IEnergyProvider, IDoubleEnergyProvider {
-    private final static InfoGui info = new InfoGui("guiQuantumKineticGenerator", 0, 273, 149);
-
     public TileQuantumKineticGenerator() {
         super(FIConfig.kineticGeneratorQuantumOutput, FIConfig.kineticGeneratorQuantumStorage);
     }
@@ -105,7 +104,7 @@ public class TileQuantumKineticGenerator extends TileKineticGenerator implements
     }
 
     @Override
-    public InfoGui getInfoAboutGui() {
-        return info;
+    public GuiInfo getGuiInfo() {
+        return GuiInfo.QUANTUM_KINETIC_GENERATOR;
     }
 }

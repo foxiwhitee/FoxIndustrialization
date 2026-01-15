@@ -1,6 +1,5 @@
 package foxiwhitee.FoxIndustrialization.client.gui.machine;
 
-import foxiwhitee.FoxIndustrialization.container.machine.ContainerAdvancedMachine;
 import foxiwhitee.FoxIndustrialization.container.machine.ContainerNanoMachine;
 import foxiwhitee.FoxLib.utils.ProductivityUtil;
 import foxiwhitee.FoxLib.utils.helpers.UtilGui;
@@ -31,10 +30,5 @@ public class GuiNanoMachine extends GuiMachine {
             double l = ProductivityUtil.gauge(13, tick3, ticksNeed);
             UtilGui.drawTexture(165, 89, 272, 0, 4, (int) l, 4, (int) l);
         }
-    }
-
-    @Override
-    protected String getBackground() {
-        return "gui/guiNanoMachine.png";
     }
 }

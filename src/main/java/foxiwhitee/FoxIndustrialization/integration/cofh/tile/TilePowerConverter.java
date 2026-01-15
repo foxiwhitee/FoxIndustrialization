@@ -3,6 +3,7 @@ package foxiwhitee.FoxIndustrialization.integration.cofh.tile;
 import cofh.api.energy.IEnergyHandler;
 import foxiwhitee.FoxIndustrialization.api.IAdvancedUpgradeItem;
 import foxiwhitee.FoxIndustrialization.api.IPowerConverterUpgradeItem;
+import foxiwhitee.FoxIndustrialization.utils.GuiInfo;
 import foxiwhitee.FoxIndustrialization.utils.UpgradeUtils;
 import foxiwhitee.FoxLib.api.energy.IDoubleEnergyHandler;
 import foxiwhitee.FoxIndustrialization.config.FIConfig;
@@ -283,6 +284,11 @@ public class TilePowerConverter extends TileIC2Inv implements IEnergyHandler, ID
     @Override
     public boolean acceptsEnergyFrom(TileEntity tileEntity, ForgeDirection forgeDirection) {
         return mode == ButtonConverterMode.RF;
+    }
+
+    @Override
+    public GuiInfo getGuiInfo() {
+        return GuiInfo.POWER_CONVERTER;
     }
 
     public void setMode(ButtonConverterMode mode) {

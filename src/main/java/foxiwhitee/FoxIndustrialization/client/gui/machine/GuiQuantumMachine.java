@@ -1,6 +1,5 @@
 package foxiwhitee.FoxIndustrialization.client.gui.machine;
 
-import foxiwhitee.FoxIndustrialization.container.machine.ContainerNanoMachine;
 import foxiwhitee.FoxIndustrialization.container.machine.ContainerQuantumMachine;
 import foxiwhitee.FoxLib.utils.ProductivityUtil;
 import foxiwhitee.FoxLib.utils.helpers.UtilGui;
@@ -36,10 +35,5 @@ public class GuiQuantumMachine extends GuiMachine {
             double l = ProductivityUtil.gauge(13, tick4, ticksNeed);
             UtilGui.drawTexture(183, 89, 272, 0, 4, (int) l, 4, (int) l);
         }
-    }
-
-    @Override
-    protected String getBackground() {
-        return "gui/guiQuantumMachine.png";
     }
 }

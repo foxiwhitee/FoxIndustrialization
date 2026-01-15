@@ -18,21 +18,6 @@ public abstract class GuiGenerator extends FIGui {
     }
 
     @Override
-    public void drawBG(int offsetX, int offsetY, int mouseX, int mouseY) {
-        super.drawBG(offsetX, offsetY, mouseX, mouseY);
-        this.bindTexture(FICore.MODID, "gui/names.png");
-        int x = 72 - (getLength() / 2);
-        UtilGui.drawTexture(offsetX + 55 + x, offsetY + 6, getXStart(), getYStart(), getLength(), 7, getLength(), 7, 512, 512);
-        this.bindTexture(FICore.MODID, this.getBackground());
-    }
-
-    protected abstract int getYStart();
-
-    protected abstract int getXStart();
-
-    protected abstract int getLength();
-
-    @Override
     public void drawFG(int offsetX, int offsetY, int mouseX, int mouseY) {
         this.bindTexture(FICore.MODID, this.getBackground());
 

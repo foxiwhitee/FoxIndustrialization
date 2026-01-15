@@ -12,7 +12,6 @@ import ic2.core.item.ItemCrystalMemory;
 import ic2.core.uu.UuGraph;
 import ic2.core.uu.UuIndex;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockSkull;
 import net.minecraft.block.BlockSoulSand;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;

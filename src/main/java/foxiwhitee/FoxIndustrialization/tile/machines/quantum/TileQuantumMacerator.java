@@ -2,15 +2,13 @@ package foxiwhitee.FoxIndustrialization.tile.machines.quantum;
 
 import foxiwhitee.FoxIndustrialization.ModRecipes;
 import foxiwhitee.FoxIndustrialization.config.FIConfig;
-import foxiwhitee.FoxIndustrialization.helper.RecipeHelper;
 import foxiwhitee.FoxIndustrialization.recipes.IRecipeIC2;
+import foxiwhitee.FoxIndustrialization.utils.GuiInfo;
 import foxiwhitee.FoxIndustrialization.utils.MachineTier;
 
 import java.util.List;
 
 public class TileQuantumMacerator extends TileQuantumMachine {
-    private static final InfoGui info = new InfoGui(0, 120, 101);
-
     public TileQuantumMacerator() {
         super(MachineTier.QUANTUM, FIConfig.quantumMaceratorStorage, FIConfig.quantumMaceratorItemsPerOp, FIConfig.quantumMaceratorEnergyPerTick);
     }
@@ -21,8 +19,8 @@ public class TileQuantumMacerator extends TileQuantumMachine {
     }
 
     @Override
-    public InfoGui getInfoAboutGui() {
-        return info;
+    public GuiInfo getGuiInfo() {
+        return GuiInfo.QUANTUM_MACERATOR;
     }
 
     @Override

@@ -4,16 +4,13 @@ import foxiwhitee.FoxIndustrialization.FICore;
 import foxiwhitee.FoxIndustrialization.container.ContainerAdvancedScanner;
 import foxiwhitee.FoxIndustrialization.network.packets.C2SScannerButtonActionPacket;
 import foxiwhitee.FoxIndustrialization.tile.TileAdvancedScanner;
-import foxiwhitee.FoxIndustrialization.tile.storage.TileEnergyStorage;
 import foxiwhitee.FoxLib.client.gui.buttons.NoTextureButton;
 import foxiwhitee.FoxLib.network.NetworkManager;
 import foxiwhitee.FoxLib.utils.ProductivityUtil;
 import foxiwhitee.FoxLib.utils.helpers.EnergyUtility;
 import foxiwhitee.FoxLib.utils.helpers.LocalizationUtils;
 import foxiwhitee.FoxLib.utils.helpers.UtilGui;
-import ic2.core.util.Util;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.inventory.Container;
 
 import static ic2.core.block.machine.tileentity.TileEntityScanner.State.*;
 
@@ -33,15 +30,6 @@ public class GuiAdvancedScanner extends FIGui {
         this.info[6] = LocalizationUtils.localize("tooltip.advancedScanner.info6");
         this.info[7] = LocalizationUtils.localize("tooltip.advancedScanner.info7");
         this.info[8] = LocalizationUtils.localize("tooltip.advancedScanner.info8");
-    }
-
-    @Override
-    public void drawBG(int offsetX, int offsetY, int mouseX, int mouseY) {
-        super.drawBG(offsetX, offsetY, mouseX, mouseY);
-
-        this.bindTexture(FICore.MODID, "gui/names.png");
-        int x = 72 - (89 / 2);
-        UtilGui.drawTexture(offsetX + 55 + x, offsetY + 6, 0, 345, 89, 7, 89, 7, 512, 512);
     }
 
     @Override
@@ -94,11 +82,6 @@ public class GuiAdvancedScanner extends FIGui {
                 this.fontRendererObj.drawString(this.info[7], infoCordX, infoCordY, 14094352);
                 break;
         }
-    }
-
-    @Override
-    protected String getBackground() {
-        return "gui/guiAdvancedScanner.png";
     }
 
     @Override

@@ -5,7 +5,6 @@ import foxiwhitee.FoxIndustrialization.api.IUpgradableTile;
 import foxiwhitee.FoxIndustrialization.recipes.IRecipeIC2;
 import foxiwhitee.FoxIndustrialization.tile.TileIC2Inv;
 import foxiwhitee.FoxIndustrialization.utils.*;
-import foxiwhitee.FoxLib.container.slots.SlotFiltered;
 import foxiwhitee.FoxLib.tile.event.TileEvent;
 import foxiwhitee.FoxLib.tile.event.TileEventType;
 import foxiwhitee.FoxLib.tile.inventory.FoxInternalInventory;
@@ -410,31 +409,4 @@ public abstract class TileBaseMachine extends TileIC2Inv implements IHasActiveSt
     }
 
     protected abstract List<? extends IRecipeIC2> getRecipes();
-
-    public abstract InfoGui getInfoAboutGui();
-
-    public static class InfoGui {
-        private final int yStart;
-        private final int xStart;
-        private final int length;
-
-        public InfoGui(int xStart, int yStart, int length) {
-            this.yStart = yStart;
-            this.xStart = xStart;
-            this.length = length;
-        }
-
-        public int getLength() {
-            return length;
-        }
-
-        public int getXStart() {
-            return xStart;
-        }
-
-        public int getYStart() {
-            return yStart;
-        }
-
-    }
 }

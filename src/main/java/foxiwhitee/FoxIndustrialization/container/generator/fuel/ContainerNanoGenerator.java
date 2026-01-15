@@ -1,6 +1,5 @@
 package foxiwhitee.FoxIndustrialization.container.generator.fuel;
 
-import foxiwhitee.FoxIndustrialization.tile.generator.fuel.TileAdvancedGenerator;
 import foxiwhitee.FoxIndustrialization.tile.generator.fuel.TileNanoGenerator;
 import foxiwhitee.FoxIndustrialization.utils.FilterInitializer;
 import foxiwhitee.FoxLib.container.slots.SlotFiltered;

@@ -126,7 +126,7 @@ public class TileWitherKiller extends TileIC2Inv implements IUpgradableTile {
         for (int i = 0; i < inventory.getSizeInventory(); i++) {
             ItemStack stack = inventory.getStackInSlot(i);
             if (stack == null) {
-                canInsert = false;
+                canConsume = false;
                 break;
             }
         }
@@ -182,6 +182,11 @@ public class TileWitherKiller extends TileIC2Inv implements IUpgradableTile {
         ticksNeed = data.readInt();
         tick = data.readInt();
         return old || oldTicksNeed != ticksNeed || oldTick != tick;
+    }
+
+    @Override
+    public GuiInfo getGuiInfo() {
+        return GuiInfo.WITHER_KILLER;
     }
 
     @Override

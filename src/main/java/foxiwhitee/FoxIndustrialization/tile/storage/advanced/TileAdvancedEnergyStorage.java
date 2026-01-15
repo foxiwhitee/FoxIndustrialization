@@ -1,19 +1,17 @@
 package foxiwhitee.FoxIndustrialization.tile.storage.advanced;
 
 import foxiwhitee.FoxIndustrialization.config.FIConfig;
-import foxiwhitee.FoxIndustrialization.tile.storage.TileEnergyStorage;
 import foxiwhitee.FoxIndustrialization.utils.FilterInitializer;
+import foxiwhitee.FoxIndustrialization.utils.GuiInfo;
 
 public class TileAdvancedEnergyStorage extends TileAdvancedEnergyStorageLevel {
-    private static final InfoGui info = new InfoGui("guiAdvancedEnergyStorage", 0, 152, 131);
-
     public TileAdvancedEnergyStorage() {
         super(FIConfig.energyStorageAdvancedTier, FIConfig.energyStorageAdvancedStorage, FIConfig.energyStorageAdvancedOutput);
     }
 
     @Override
-    public InfoGui getInfoAboutGui() {
-        return info;
+    public GuiInfo getGuiInfo() {
+        return GuiInfo.ADVANCED_ENERGY_STORAGE;
     }
 
     @Override

@@ -3,6 +3,7 @@ package foxiwhitee.FoxIndustrialization.tile.machines.nano;
 import foxiwhitee.FoxIndustrialization.config.FIConfig;
 import foxiwhitee.FoxIndustrialization.recipes.BasicIC2MachineRecipe;
 import foxiwhitee.FoxIndustrialization.recipes.IRecipeIC2;
+import foxiwhitee.FoxIndustrialization.utils.GuiInfo;
 import foxiwhitee.FoxIndustrialization.utils.MachineTier;
 import ic2.core.Ic2Items;
 import ic2.core.block.machine.tileentity.TileEntityRecycler;
@@ -12,8 +13,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class TileNanoRecycler extends TileNanoMachine {
-    private static final InfoGui info = new InfoGui(0, 80, 77);
-
     public TileNanoRecycler() {
         super(MachineTier.NANO, FIConfig.nanoRecyclerStorage, FIConfig.nanoRecyclerItemsPerOp, FIConfig.nanoRecyclerEnergyPerTick);
     }
@@ -39,7 +38,7 @@ public class TileNanoRecycler extends TileNanoMachine {
     }
 
     @Override
-    public InfoGui getInfoAboutGui() {
-        return info;
+    public GuiInfo getGuiInfo() {
+        return GuiInfo.NANO_RECYCLER;
     }
 }

@@ -2,17 +2,16 @@ package foxiwhitee.FoxIndustrialization.tile.storage.nano;
 
 import foxiwhitee.FoxIndustrialization.config.FIConfig;
 import foxiwhitee.FoxIndustrialization.utils.FilterInitializer;
+import foxiwhitee.FoxIndustrialization.utils.GuiInfo;
 
 public class TileHybridChargePad extends TileNanoChargePadLevel {
-    private static final InfoGui info = new InfoGui("guiNanoEnergyStorage", 0, 160, 125);
-
     public TileHybridChargePad() {
         super(FIConfig.energyStorageHybridTier, FIConfig.energyStorageHybridStorage, FIConfig.energyStorageHybridOutput);
     }
 
     @Override
-    public InfoGui getInfoAboutGui() {
-        return info;
+    public GuiInfo getGuiInfo() {
+        return GuiInfo.HYBRID_ENERGY_STORAGE;
     }
 
     @Override

@@ -2,9 +2,9 @@ package foxiwhitee.FoxIndustrialization.tile.machines.nano;
 
 import foxiwhitee.FoxIndustrialization.ModRecipes;
 import foxiwhitee.FoxIndustrialization.config.FIConfig;
-import foxiwhitee.FoxIndustrialization.helper.RecipeHelper;
 import foxiwhitee.FoxIndustrialization.recipes.IRecipeIC2;
 import foxiwhitee.FoxIndustrialization.utils.ButtonMetalFormerMode;
+import foxiwhitee.FoxIndustrialization.utils.GuiInfo;
 import foxiwhitee.FoxIndustrialization.utils.MachineTier;
 import foxiwhitee.FoxLib.tile.event.TileEvent;
 import foxiwhitee.FoxLib.tile.event.TileEventType;
@@ -15,7 +15,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class TileNanoMetalFormer extends TileNanoMachine {
-    private static final InfoGui info = new InfoGui(0, 88, 101);
     private ButtonMetalFormerMode mode = ButtonMetalFormerMode.ROLLING;
 
     public TileNanoMetalFormer() {
@@ -62,8 +61,8 @@ public class TileNanoMetalFormer extends TileNanoMachine {
     }
 
     @Override
-    public InfoGui getInfoAboutGui() {
-        return info;
+    public GuiInfo getGuiInfo() {
+        return GuiInfo.NANO_METAL_FORMER;
     }
 
     public void changeMode() {

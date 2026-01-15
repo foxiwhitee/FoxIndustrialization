@@ -6,10 +6,8 @@ import foxiwhitee.FoxIndustrialization.utils.FilterInitializer;
 import foxiwhitee.FoxLib.container.FoxBaseContainer;
 import foxiwhitee.FoxLib.container.slots.SlotFiltered;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 
 public class ContainerWitherKiller extends FoxBaseContainer {
     public ContainerWitherKiller(EntityPlayer ip, TileWitherKiller myTile) {

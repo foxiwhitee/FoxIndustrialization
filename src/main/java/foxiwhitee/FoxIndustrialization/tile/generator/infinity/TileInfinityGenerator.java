@@ -5,6 +5,7 @@ import cpw.mods.fml.common.Optional;
 import foxiwhitee.FoxIndustrialization.FICore;
 import foxiwhitee.FoxIndustrialization.config.FIConfig;
 import foxiwhitee.FoxIndustrialization.tile.generator.panel.TileCustomSolarPanel;
+import foxiwhitee.FoxIndustrialization.utils.GuiInfo;
 import foxiwhitee.FoxLib.api.energy.IDoubleEnergyProvider;
 import foxiwhitee.FoxLib.config.FoxLibConfig;
 import foxiwhitee.FoxLib.tile.event.TileEvent;
@@ -126,5 +127,10 @@ public class TileInfinityGenerator extends TileCustomSolarPanel implements IEner
     @Override
     public boolean canConnectDoubleEnergy(ForgeDirection direction) {
         return supportsRF();
+    }
+
+    @Override
+    public GuiInfo getGuiInfo() {
+        return GuiInfo.INFINITY_GENERATOR;
     }
 }

@@ -2,18 +2,13 @@ package foxiwhitee.FoxIndustrialization.tile;
 
 import foxiwhitee.FoxIndustrialization.api.IUpgradableTile;
 import foxiwhitee.FoxIndustrialization.config.FIConfig;
-import foxiwhitee.FoxIndustrialization.utils.InventoryUtils;
-import foxiwhitee.FoxIndustrialization.utils.MachineTier;
-import foxiwhitee.FoxIndustrialization.utils.UpgradeUtils;
-import foxiwhitee.FoxIndustrialization.utils.UpgradesTypes;
+import foxiwhitee.FoxIndustrialization.utils.*;
 import foxiwhitee.FoxLib.tile.event.TileEvent;
 import foxiwhitee.FoxLib.tile.event.TileEventType;
 import foxiwhitee.FoxLib.tile.inventory.FoxInternalInventory;
 import foxiwhitee.FoxLib.tile.inventory.InvOperation;
 import foxiwhitee.FoxLib.utils.helpers.ItemStackUtil;
-import ic2.api.recipe.IPatternStorage;
 import ic2.core.block.machine.tileentity.TileEntityReplicator;
-import ic2.core.util.StackUtil;
 import ic2.core.uu.UuIndex;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.inventory.IInventory;
@@ -146,6 +141,11 @@ public class TileQuantumReplicator extends TileIC2Inv implements IFluidHandler, 
         boolean old = super.readFromStream(data);
         boolean changedTank = InventoryUtils.readTankFromStream(data, tank);
         return old || changedTank;
+    }
+
+    @Override
+    public GuiInfo getGuiInfo() {
+        return GuiInfo.QUANTUM_REPLICATOR;
     }
 
     @Override

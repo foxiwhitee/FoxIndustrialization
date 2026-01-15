@@ -1,18 +1,17 @@
 package foxiwhitee.FoxIndustrialization.tile.generator.matter;
 
 import foxiwhitee.FoxIndustrialization.config.FIConfig;
+import foxiwhitee.FoxIndustrialization.utils.GuiInfo;
 import foxiwhitee.FoxIndustrialization.utils.MachineTier;
 
 public class TileQuantumMatterGenerator extends TileMatterGenerator {
-    private final static InfoGui info = new InfoGui("guiQuantumMatter", 0, 321, 143);
-
     public TileQuantumMatterGenerator() {
         super(FIConfig.quantumMatterGeneratorTank, FIConfig.quantumMatterGeneratorEnergyNeed, FIConfig.quantumMatterGeneratorGenerate);
     }
 
     @Override
-    public InfoGui getInfoAboutGui() {
-        return info;
+    public GuiInfo getGuiInfo() {
+        return GuiInfo.QUANTUM_MATTER_GENERATOR;
     }
 
     @Override

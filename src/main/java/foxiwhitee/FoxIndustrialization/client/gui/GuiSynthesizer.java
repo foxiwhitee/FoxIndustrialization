@@ -17,15 +17,6 @@ public class GuiSynthesizer extends FIGui {
     }
 
     @Override
-    public void drawBG(int offsetX, int offsetY, int mouseX, int mouseY) {
-        super.drawBG(offsetX, offsetY, mouseX, mouseY);
-
-        this.bindTexture(FICore.MODID, "gui/names.png");
-        int x = 72 - (107 / 2);
-        UtilGui.drawTexture(offsetX + 55 + x, offsetY + 6, 0, 249, 107, 7, 107, 7, 512, 512);
-    }
-
-    @Override
     public void drawFG(int offsetX, int offsetY, int mouseX, int mouseY) {
         this.bindTexture(FICore.MODID, getBackground());
         double storedEnergy = tile.getEnergy();
@@ -38,10 +29,5 @@ public class GuiSynthesizer extends FIGui {
                 LocalizationUtils.localize("tooltip.solarPanel.output", EnergyUtility.formatNumber(tile.getOutput()));
             drawIfInMouse(mouseX, mouseY, 67, 61, 20, 80, text);
         }
-    }
-
-    @Override
-    protected String getBackground() {
-        return "gui/guiSynthesizer.png";
     }
 }

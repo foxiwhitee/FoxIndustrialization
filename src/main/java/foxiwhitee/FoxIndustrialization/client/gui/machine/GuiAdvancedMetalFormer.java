@@ -41,9 +41,4 @@ public class GuiAdvancedMetalFormer extends GuiAdvancedMachine {
             NetworkManager.instance.sendToServer(new C2SUpdateMetalFormerModePacket(tile.xCoord,  tile.yCoord, tile.zCoord));
         }
     }
-
-    @Override
-    protected String getBackground() {
-        return "gui/guiAdvancedMetalFormer.png";
-    }
 }

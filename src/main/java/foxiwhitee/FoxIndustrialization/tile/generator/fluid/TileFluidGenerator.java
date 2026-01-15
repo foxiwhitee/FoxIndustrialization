@@ -193,31 +193,4 @@ public abstract class TileFluidGenerator extends TileIC2Inv implements IFluidHan
     public FluidTank getTank() {
         return tank;
     }
-
-    public abstract InfoGui getInfoAboutGui();
-
-    public static class InfoGui {
-        private final int yStart;
-        private final int xStart;
-        private final int length;
-
-        public InfoGui(int xStart, int yStart, int length) {
-            this.yStart = yStart;
-            this.xStart = xStart;
-            this.length = length;
-        }
-
-        public int getLength() {
-            return length;
-        }
-
-        public int getXStart() {
-            return xStart;
-        }
-
-        public int getYStart() {
-            return yStart;
-        }
-
-    }
 }

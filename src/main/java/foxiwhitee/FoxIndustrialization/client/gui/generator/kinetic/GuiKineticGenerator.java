@@ -18,18 +18,6 @@ public class GuiKineticGenerator extends FIGui {
     }
 
     @Override
-    public void drawBG(int offsetX, int offsetY, int mouseX, int mouseY) {
-        this.bindTexture(FICore.MODID, this.getBackground());
-        UtilGui.drawTexture(offsetX, offsetY, 0,0, this.xSize, this.ySize, this.xSize, this.ySize, 512, 512);
-
-        this.bindTexture(FICore.MODID, "gui/names.png");
-        TileKineticGenerator.InfoGui info = tile.getInfoAboutGui();
-        int x = 75 - (info.getLength() / 2);
-        UtilGui.drawTexture(offsetX + 51 + x, offsetY + 6, info.getXStart(), info.getYStart(), info.getLength(), 7, info.getLength(), 7, 512, 512);
-
-    }
-
-    @Override
     public void drawFG(int offsetX, int offsetY, int mouseX, int mouseY) {
         this.bindTexture(FICore.MODID, this.getBackground());
         double storedEnergy = tile.getEnergy();
@@ -41,10 +29,5 @@ public class GuiKineticGenerator extends FIGui {
                 LocalizationUtils.localize("tooltip.generator.generate", EnergyUtility.formatNumber(tile.getProduction()));
             drawIfInMouse(mouseX, mouseY, 119, 56, 22, 77, text);
         }
-    }
-
-    @Override
-    protected String getBackground() {
-        return "gui/" + tile.getInfoAboutGui().getTextureName() + ".png";
     }
 }

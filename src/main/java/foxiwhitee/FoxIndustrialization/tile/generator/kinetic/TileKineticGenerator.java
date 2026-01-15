@@ -1,7 +1,6 @@
 package foxiwhitee.FoxIndustrialization.tile.generator.kinetic;
 
 import foxiwhitee.FoxIndustrialization.tile.TileIC2;
-import foxiwhitee.FoxIndustrialization.tile.storage.TileEnergyStorage;
 import foxiwhitee.FoxLib.tile.event.TileEvent;
 import foxiwhitee.FoxLib.tile.event.TileEventType;
 import ic2.api.energy.EnergyNet;
@@ -128,37 +127,5 @@ public abstract class TileKineticGenerator extends TileIC2 implements IEnergySou
 
     public double getProduction() {
         return production;
-    }
-
-    public abstract InfoGui getInfoAboutGui();
-
-    public static class InfoGui {
-        private final String textureName;
-        private final int yStart;
-        private final int xStart;
-        private final int length;
-
-        public InfoGui(String textureName, int xStart, int yStart, int length) {
-            this.textureName = textureName;
-            this.yStart = yStart;
-            this.xStart = xStart;
-            this.length = length;
-        }
-
-        public int getLength() {
-            return length;
-        }
-
-        public int getXStart() {
-            return xStart;
-        }
-
-        public int getYStart() {
-            return yStart;
-        }
-
-        public String getTextureName() {
-            return textureName;
-        }
     }
 }

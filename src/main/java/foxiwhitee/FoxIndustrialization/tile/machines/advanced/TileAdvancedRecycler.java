@@ -3,6 +3,7 @@ package foxiwhitee.FoxIndustrialization.tile.machines.advanced;
 import foxiwhitee.FoxIndustrialization.config.FIConfig;
 import foxiwhitee.FoxIndustrialization.recipes.BasicIC2MachineRecipe;
 import foxiwhitee.FoxIndustrialization.recipes.IRecipeIC2;
+import foxiwhitee.FoxIndustrialization.utils.GuiInfo;
 import foxiwhitee.FoxIndustrialization.utils.MachineTier;
 import ic2.core.Ic2Items;
 import ic2.core.block.machine.tileentity.TileEntityRecycler;
@@ -12,8 +13,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class TileAdvancedRecycler extends TileAdvancedMachine {
-    private static final InfoGui info = new InfoGui(0, 32, 95);
-
     public TileAdvancedRecycler() {
         super(MachineTier.ADVANCED, FIConfig.advancedRecyclerStorage, FIConfig.advancedRecyclerItemsPerOp, FIConfig.advancedRecyclerEnergyPerTick);
     }
@@ -39,7 +38,7 @@ public class TileAdvancedRecycler extends TileAdvancedMachine {
     }
 
     @Override
-    public InfoGui getInfoAboutGui() {
-        return info;
+    public GuiInfo getGuiInfo() {
+        return GuiInfo.ADVANCED_RECYCLER;
     }
 }

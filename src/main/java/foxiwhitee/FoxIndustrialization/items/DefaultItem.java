@@ -1,4 +1,5 @@
 package foxiwhitee.FoxIndustrialization.items;
+
 import foxiwhitee.FoxIndustrialization.FICore;
 import net.minecraft.item.Item;
 

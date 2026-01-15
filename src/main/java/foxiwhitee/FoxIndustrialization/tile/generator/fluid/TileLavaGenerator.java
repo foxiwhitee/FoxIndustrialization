@@ -1,12 +1,11 @@
 package foxiwhitee.FoxIndustrialization.tile.generator.fluid;
 
 import foxiwhitee.FoxIndustrialization.config.FIConfig;
+import foxiwhitee.FoxIndustrialization.utils.GuiInfo;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 
 public class TileLavaGenerator extends TileFluidGenerator {
-    private final static InfoGui info = new InfoGui(0, 297, 82);
-
     public TileLavaGenerator() {
         super(FIConfig.lavaGeneratorFluidStorage);
     }
@@ -17,7 +16,7 @@ public class TileLavaGenerator extends TileFluidGenerator {
     }
 
     @Override
-    public InfoGui getInfoAboutGui() {
-        return info;
+    public GuiInfo getGuiInfo() {
+        return GuiInfo.LAVA_GENERATOR;
     }
 }

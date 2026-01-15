@@ -26,11 +26,6 @@ public class GuiQuantumReplicator extends FIGui {
     public void drawBG(int offsetX, int offsetY, int mouseX, int mouseY) {
         super.drawBG(offsetX, offsetY, mouseX, mouseY);
 
-        this.bindTexture(FICore.MODID, "gui/names.png");
-        int x = 72 - (107 / 2);
-        UtilGui.drawTexture(offsetX + 55 + x, offsetY + 6, 0, 353, 107, 7, 107, 7, 512, 512);
-
-        this.bindTexture(FICore.MODID, this.getBackground());
         FluidTank tank = tile.getTank();
         if (tank.getFluidAmount() > 0) {
             double l = ProductivityUtil.gauge(73,  tank.getFluidAmount(), tank.getCapacity());
@@ -59,11 +54,6 @@ public class GuiQuantumReplicator extends FIGui {
             drawIfInMouse(mouseX, mouseY, 68, 58, 20, 75, text);
             this.bindTexture(FICore.MODID, getBackground());
         }
-    }
-
-    @Override
-    protected String getBackground() {
-        return "gui/guiQuantumReplicator.png";
     }
 
     @Override

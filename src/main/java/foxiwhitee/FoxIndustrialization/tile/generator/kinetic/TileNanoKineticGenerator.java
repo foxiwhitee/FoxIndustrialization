@@ -1,16 +1,15 @@
 package foxiwhitee.FoxIndustrialization.tile.generator.kinetic;
 
 import foxiwhitee.FoxIndustrialization.config.FIConfig;
+import foxiwhitee.FoxIndustrialization.utils.GuiInfo;
 
-public class TileNanoKineticGenerator extends TileKineticGenerator{
-    private final static InfoGui info = new InfoGui("guiNanoKineticGenerator", 0, 265, 131);
-
+public class TileNanoKineticGenerator extends TileKineticGenerator {
     public TileNanoKineticGenerator() {
         super(FIConfig.kineticGeneratorNanoOutput, FIConfig.kineticGeneratorNanoStorage);
     }
 
     @Override
-    public InfoGui getInfoAboutGui() {
-        return info;
+    public GuiInfo getGuiInfo() {
+        return GuiInfo.NANO_KINETIC_GENERATOR;
     }
 }

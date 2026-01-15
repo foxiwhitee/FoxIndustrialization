@@ -22,18 +22,6 @@ public abstract class GuiMachine extends FIGui {
     }
 
     @Override
-    public void drawBG(int offsetX, int offsetY, int mouseX, int mouseY) {
-        super.drawBG(offsetX, offsetY, mouseX, mouseY);
-
-        this.bindTexture(FICore.MODID, "gui/names.png");
-        TileBaseMachine.InfoGui info = tile.getInfoAboutGui();
-        int x = 72 - (info.getLength() / 2);
-        UtilGui.drawTexture(offsetX + 55 + x, offsetY + 6, info.getXStart(), info.getYStart(), info.getLength(), 7, info.getLength(), 7, 512, 512);
-
-        this.bindTexture(FICore.MODID, this.getBackground());
-    }
-
-    @Override
     public void drawFG(int offsetX, int offsetY, int mouseX, int mouseY) {
         this.bindTexture(FICore.MODID, this.getBackground());
         ButtonInventoryMode inventoryMode = tile.getInventoryMode();

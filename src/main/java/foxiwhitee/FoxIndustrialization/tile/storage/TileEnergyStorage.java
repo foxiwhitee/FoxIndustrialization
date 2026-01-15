@@ -8,14 +8,10 @@ import foxiwhitee.FoxLib.tile.inventory.InvOperation;
 import ic2.api.energy.tile.IEnergySource;
 import ic2.api.info.Info;
 import ic2.api.item.ElectricItem;
-import ic2.api.network.INetworkClientTileEntityEventListener;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
-
-import java.util.List;
 
 public abstract class TileEnergyStorage extends TileIC2Inv implements IEnergySource {
     private final FoxInternalInventory inventory = new FoxInternalInventory(this, 2, 1);
@@ -127,37 +123,5 @@ public abstract class TileEnergyStorage extends TileIC2Inv implements IEnergySou
         markForUpdate();
     }
 
-    public abstract InfoGui getInfoAboutGui();
-
     public abstract String getInventoryFilter();
-
-    public static class InfoGui {
-        private final String textureName;
-        private final int yStart;
-        private final int xStart;
-        private final int length;
-
-        public InfoGui(String textureName, int xStart, int yStart, int length) {
-            this.textureName = textureName;
-            this.yStart = yStart;
-            this.xStart = xStart;
-            this.length = length;
-        }
-
-        public int getLength() {
-            return length;
-        }
-
-        public int getXStart() {
-            return xStart;
-        }
-
-        public int getYStart() {
-            return yStart;
-        }
-
-        public String getTextureName() {
-            return textureName;
-        }
-    }
 }

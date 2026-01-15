@@ -2,6 +2,7 @@ package foxiwhitee.FoxIndustrialization.tile;
 
 import foxiwhitee.FoxIndustrialization.api.IHasMatterSynthesizerIntegration;
 import foxiwhitee.FoxIndustrialization.tile.generator.matter.TileMatterGenerator;
+import foxiwhitee.FoxIndustrialization.utils.GuiInfo;
 import foxiwhitee.FoxIndustrialization.utils.MachineTier;
 import foxiwhitee.FoxLib.tile.inventory.FoxInternalInventory;
 import foxiwhitee.FoxLib.tile.inventory.InvOperation;
@@ -11,21 +12,21 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 
 public class TileMatterSynthesizer extends TileMatterGenerator {
-    private final static InfoGui info = new InfoGui("", 0, 337, 107);
     private final FoxInternalInventory generators = new FoxInternalInventory(this, 9);
 
     public TileMatterSynthesizer() {
         super(1000, 0, 0);
     }
 
+    @Override
+    public GuiInfo getGuiInfo() {
+        return GuiInfo.MATTER_SYNTHESIZER;
+    }
+
     public FoxInternalInventory getGeneratorsInventory() {
         return generators;
     }
 
-    @Override
-    public InfoGui getInfoAboutGui() {
-        return info;
-    }
 
     @Override
     public MachineTier getTier() {

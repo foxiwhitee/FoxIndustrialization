@@ -6,10 +6,7 @@ import foxiwhitee.FoxIndustrialization.api.IUpgradableTile;
 import foxiwhitee.FoxIndustrialization.config.FIConfig;
 import foxiwhitee.FoxIndustrialization.recipes.IUniversalFluidComplexRecipe;
 import foxiwhitee.FoxIndustrialization.recipes.UniversalFluidComplexRecipe;
-import foxiwhitee.FoxIndustrialization.utils.InventoryUtils;
-import foxiwhitee.FoxIndustrialization.utils.MachineTier;
-import foxiwhitee.FoxIndustrialization.utils.UpgradeUtils;
-import foxiwhitee.FoxIndustrialization.utils.UpgradesTypes;
+import foxiwhitee.FoxIndustrialization.utils.*;
 import foxiwhitee.FoxLib.tile.event.TileEvent;
 import foxiwhitee.FoxLib.tile.event.TileEventType;
 import foxiwhitee.FoxLib.tile.inventory.FoxInternalInventory;
@@ -466,6 +463,11 @@ public class TileUniversalFluidComplex extends TileIC2Inv implements IUpgradable
         boolean tankOutChanged = InventoryUtils.readTankFromStream(data, outputTank);
 
         return old || tank1Changed || tank2Changed || tank3Changed || tankOutChanged || oldActive != active || oldTicksNeed != ticksNeed || oldTick != tick;
+    }
+
+    @Override
+    public GuiInfo getGuiInfo() {
+        return GuiInfo.UNIVERSAL_FLUID_COMPLEX;
     }
 
     public int getTick() {

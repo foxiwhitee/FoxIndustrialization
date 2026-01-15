@@ -1,6 +1,7 @@
 package foxiwhitee.FoxIndustrialization.tile;
 
 import foxiwhitee.FoxIndustrialization.config.FIConfig;
+import foxiwhitee.FoxIndustrialization.utils.GuiInfo;
 import foxiwhitee.FoxLib.tile.event.TileEvent;
 import foxiwhitee.FoxLib.tile.event.TileEventType;
 import foxiwhitee.FoxLib.tile.inventory.FoxInternalInventory;
@@ -13,7 +14,6 @@ import ic2.core.uu.UuGraph;
 import ic2.core.uu.UuIndex;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -245,6 +245,11 @@ public class TileAdvancedScanner extends TileIC2Inv {
         state = TileEntityScanner.State.values()[data.readInt()];
         progress = data.readInt();
         return old || oldState != state || oldProgress != progress;
+    }
+
+    @Override
+    public GuiInfo getGuiInfo() {
+        return GuiInfo.ADVANCED_SCANNER;
     }
 
     @Override

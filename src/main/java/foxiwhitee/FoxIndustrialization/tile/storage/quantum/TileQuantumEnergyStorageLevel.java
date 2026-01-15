@@ -1,21 +1,15 @@
 package foxiwhitee.FoxIndustrialization.tile.storage.quantum;
 
-import cofh.api.energy.IEnergyContainerItem;
 import cofh.api.energy.IEnergyHandler;
-import cofh.api.energy.IEnergyReceiver;
 import cpw.mods.fml.common.Optional;
 import foxiwhitee.FoxIndustrialization.FICore;
-import foxiwhitee.FoxLib.api.energy.IDoubleEnergyContainerItem;
 import foxiwhitee.FoxLib.api.energy.IDoubleEnergyHandler;
-import foxiwhitee.FoxLib.api.energy.IDoubleEnergyReceiver;
-import foxiwhitee.FoxIndustrialization.config.FIConfig;
 import foxiwhitee.FoxIndustrialization.tile.storage.nano.TileNanoEnergyStorageLevel;
 import foxiwhitee.FoxLib.config.FoxLibConfig;
 import foxiwhitee.FoxLib.tile.event.TileEvent;
 import foxiwhitee.FoxLib.tile.event.TileEventType;
 import foxiwhitee.FoxLib.utils.helpers.EnergyUtility;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 
 @Optional.Interface(iface = "cofh.api.energy.IEnergyHandler", modid = "CoFHCore")

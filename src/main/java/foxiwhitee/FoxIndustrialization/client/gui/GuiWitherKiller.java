@@ -6,7 +6,6 @@ import foxiwhitee.FoxIndustrialization.tile.TileWitherKiller;
 import foxiwhitee.FoxLib.utils.ProductivityUtil;
 import foxiwhitee.FoxLib.utils.helpers.EnergyUtility;
 import foxiwhitee.FoxLib.utils.helpers.UtilGui;
-import net.minecraft.inventory.Container;
 
 public class GuiWitherKiller extends FIGui {
     private final TileWitherKiller tile;
@@ -14,15 +13,6 @@ public class GuiWitherKiller extends FIGui {
     public GuiWitherKiller(ContainerWitherKiller container) {
         super(container, 262, 255);
         tile = (TileWitherKiller) container.getTileEntity();
-    }
-
-    @Override
-    public void drawBG(int offsetX, int offsetY, int mouseX, int mouseY) {
-        super.drawBG(offsetX, offsetY, mouseX, mouseY);
-
-        this.bindTexture(FICore.MODID, "gui/names.png");
-        int x = 72 - (77 / 2);
-        UtilGui.drawTexture(offsetX + 55 + x, offsetY + 6, 0, 361, 77, 7, 77, 7, 512, 512);
     }
 
     @Override
@@ -42,10 +32,5 @@ public class GuiWitherKiller extends FIGui {
             drawIfInMouse(mouseX, mouseY, 222, 80, 8, 52, EnergyUtility.formatNumber(storedEnergy) + " / " + EnergyUtility.formatNumber(maxStoredEnergy) + " EU");
             this.bindTexture(FICore.MODID, this.getBackground());
         }
-    }
-
-    @Override
-    protected String getBackground() {
-        return "gui/guiWitherKiller.png";
     }
 }

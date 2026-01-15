@@ -23,12 +23,6 @@ public class GuiUniversalFluidComplex extends FIGui {
     public void drawBG(int offsetX, int offsetY, int mouseX, int mouseY) {
         super.drawBG(offsetX, offsetY, mouseX, mouseY);
 
-        this.bindTexture(FICore.MODID, "gui/names.png");
-        int x = 72 - (137 / 2);
-        UtilGui.drawTexture(offsetX + 63 + x, offsetY + 6, 0, 281, 137, 7, 137, 7, 512, 512);
-
-        this.bindTexture(FICore.MODID, this.getBackground());
-
         FluidTank tank1 = tile.getInputTank1();
         FluidTank tank2 = tile.getInputTank2();
         FluidTank tank3 = tile.getInputTank3();
@@ -132,10 +126,5 @@ public class GuiUniversalFluidComplex extends FIGui {
 
             NetworkManager.instance.sendToServer(new C2SClearTankInUFCPacket(tile.xCoord, tile.yCoord, tile.zCoord, mode));
         }
-    }
-
-    @Override
-    protected String getBackground() {
-        return "gui/guiUniversalFluidComplex.png";
     }
 }

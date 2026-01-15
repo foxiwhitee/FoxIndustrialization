@@ -18,17 +18,6 @@ public class GuiCustomSolarPanel extends FIGui {
     }
 
     @Override
-    public void drawBG(int offsetX, int offsetY, int mouseX, int mouseY) {
-        this.bindTexture(FICore.MODID, this.getBackground());
-        UtilGui.drawTexture(offsetX, offsetY, 0,0, this.xSize, this.ySize, this.xSize, this.ySize, 512, 512);
-
-        this.bindTexture(FICore.MODID, "gui/names.png");
-        int x = 72 - (65 / 2);
-        UtilGui.drawTexture(offsetX + 55 + x, offsetY + 6, 0, 233, 65, 7, 65, 7, 512, 512);
-
-    }
-
-    @Override
     public void drawFG(int offsetX, int offsetY, int mouseX, int mouseY) {
         this.bindTexture(FICore.MODID, this.getBackground());
         double storedEnergy = tile.getEnergy();
@@ -40,10 +29,5 @@ public class GuiCustomSolarPanel extends FIGui {
                 LocalizationUtils.localize("tooltip.generator.generate", EnergyUtility.formatNumber(tile.getGenerating()));
             drawIfInMouse(mouseX, mouseY, 120, 56, 20, 77, text);
         }
-    }
-
-    @Override
-    protected String getBackground() {
-        return "gui/guiCustomSolarPanel.png";
     }
 }

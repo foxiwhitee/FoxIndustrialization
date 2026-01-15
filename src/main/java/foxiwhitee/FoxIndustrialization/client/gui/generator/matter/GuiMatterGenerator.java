@@ -21,12 +21,6 @@ public class GuiMatterGenerator extends FIGui {
     public void drawBG(int offsetX, int offsetY, int mouseX, int mouseY) {
         super.drawBG(offsetX, offsetY, mouseX, mouseY);
 
-        this.bindTexture(FICore.MODID, "gui/names.png");
-        TileMatterGenerator.InfoGui info = tile.getInfoAboutGui();
-        int x = 75 - (info.getLength() / 2);
-        UtilGui.drawTexture(offsetX + 51 + x, offsetY + 6, info.getXStart(), info.getYStart(), info.getLength(), 7, info.getLength(), 7, 512, 512);
-
-        this.bindTexture(FICore.MODID, getBackground());
         FluidTank tank = tile.getTank();
         if (tank.getFluidAmount() > 0) {
             double l = ProductivityUtil.gauge(75,  tank.getFluidAmount(), tank.getCapacity());
@@ -56,10 +50,5 @@ public class GuiMatterGenerator extends FIGui {
             drawIfInMouse(mouseX, mouseY, 121, 57, 20, 77, text);
             this.bindTexture(FICore.MODID, getBackground());
         }
-    }
-
-    @Override
-    protected String getBackground() {
-        return "gui/" + tile.getInfoAboutGui().getTextureName() + ".png";
     }
 }

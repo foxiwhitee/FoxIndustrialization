@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface IRecipeIC2 extends IFoxRecipe {
     Object getInput();
+
     boolean matches(ItemStack input);
 
     default List<Object> getInputs() {

@@ -1,6 +1,7 @@
 package foxiwhitee.FoxIndustrialization.tile.generator.panel;
 
 import foxiwhitee.FoxIndustrialization.tile.TileIC2Inv;
+import foxiwhitee.FoxIndustrialization.utils.GuiInfo;
 import foxiwhitee.FoxLib.tile.event.TileEvent;
 import foxiwhitee.FoxLib.tile.event.TileEventType;
 import foxiwhitee.FoxLib.tile.inventory.FoxInternalInventory;
@@ -184,5 +185,10 @@ public abstract class TileCustomSolarPanel extends TileIC2Inv implements IEnergy
     @Override
     public boolean emitsEnergyTo(TileEntity tileEntity, ForgeDirection forgeDirection) {
         return true;
+    }
+
+    @Override
+    public GuiInfo getGuiInfo() {
+        return GuiInfo.SOLAR_PANEL;
     }
 }

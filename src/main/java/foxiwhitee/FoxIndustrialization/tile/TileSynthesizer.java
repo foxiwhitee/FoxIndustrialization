@@ -7,6 +7,7 @@ import foxiwhitee.FoxIndustrialization.api.IHasSynthesizerIntegration;
 import foxiwhitee.FoxIndustrialization.api.ISynthesizerSunUpgrade;
 import foxiwhitee.FoxIndustrialization.api.ISynthesizerUpgrade;
 import foxiwhitee.FoxIndustrialization.config.FIConfig;
+import foxiwhitee.FoxIndustrialization.utils.GuiInfo;
 import foxiwhitee.FoxIndustrialization.utils.UpgradeUtils;
 import foxiwhitee.FoxLib.api.energy.IDoubleEnergyProvider;
 import foxiwhitee.FoxLib.config.FoxLibConfig;
@@ -215,6 +216,11 @@ public class TileSynthesizer extends TileIC2Inv implements IEnergySource, IEnerg
     @Override
     public boolean acceptsEnergyFrom(TileEntity tileEntity, ForgeDirection forgeDirection) {
         return false;
+    }
+
+    @Override
+    public GuiInfo getGuiInfo() {
+        return GuiInfo.ENERGY_SYNTHESIZER;
     }
 
     @Override

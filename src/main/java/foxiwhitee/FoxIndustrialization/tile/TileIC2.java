@@ -1,5 +1,6 @@
 package foxiwhitee.FoxIndustrialization.tile;
 
+import foxiwhitee.FoxIndustrialization.utils.GuiInfo;
 import foxiwhitee.FoxLib.tile.FoxBaseTile;
 import foxiwhitee.FoxLib.tile.event.TileEvent;
 import foxiwhitee.FoxLib.tile.event.TileEventType;
@@ -135,4 +136,6 @@ public abstract class TileIC2 extends FoxBaseTile implements IEnergySink {
     public boolean acceptsEnergyFrom(TileEntity tileEntity, ForgeDirection forgeDirection) {
         return true;
     }
+
+    public abstract GuiInfo getGuiInfo();
 }

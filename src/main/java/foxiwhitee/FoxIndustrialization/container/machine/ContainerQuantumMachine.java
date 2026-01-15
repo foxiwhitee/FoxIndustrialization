@@ -1,6 +1,5 @@
 package foxiwhitee.FoxIndustrialization.container.machine;
 
-import foxiwhitee.FoxIndustrialization.tile.machines.advanced.TileAdvancedMachine;
 import foxiwhitee.FoxIndustrialization.tile.machines.quantum.TileQuantumMachine;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Slot;

@@ -3,6 +3,7 @@ package foxiwhitee.FoxIndustrialization.tile.machines.quantum;
 import foxiwhitee.FoxIndustrialization.config.FIConfig;
 import foxiwhitee.FoxIndustrialization.recipes.BasicIC2MachineRecipe;
 import foxiwhitee.FoxIndustrialization.recipes.IRecipeIC2;
+import foxiwhitee.FoxIndustrialization.utils.GuiInfo;
 import foxiwhitee.FoxIndustrialization.utils.MachineTier;
 import ic2.core.Ic2Items;
 import ic2.core.block.machine.tileentity.TileEntityRecycler;
@@ -12,8 +13,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class TileQuantumRecycler extends TileQuantumMachine {
-    private static final InfoGui info = new InfoGui(0, 128, 95);
-
     public TileQuantumRecycler() {
         super(MachineTier.QUANTUM, FIConfig.quantumRecyclerStorage, FIConfig.quantumRecyclerItemsPerOp, FIConfig.quantumRecyclerEnergyPerTick);
     }
@@ -39,8 +38,8 @@ public class TileQuantumRecycler extends TileQuantumMachine {
     }
 
     @Override
-    public InfoGui getInfoAboutGui() {
-        return info;
+    public GuiInfo getGuiInfo() {
+        return GuiInfo.QUANTUM_RECYCLER;
     }
 
     @Override

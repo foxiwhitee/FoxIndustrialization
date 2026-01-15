@@ -1,8 +1,6 @@
 package foxiwhitee.FoxIndustrialization.client.gui.machine;
 
-import foxiwhitee.FoxIndustrialization.FICore;
 import foxiwhitee.FoxIndustrialization.container.machine.ContainerAdvancedMachine;
-import foxiwhitee.FoxIndustrialization.container.machine.ContainerMachine;
 import foxiwhitee.FoxLib.utils.ProductivityUtil;
 import foxiwhitee.FoxLib.utils.helpers.UtilGui;
 
@@ -27,10 +25,5 @@ public class GuiAdvancedMachine extends GuiMachine {
             double l = ProductivityUtil.gauge(13, tick2, ticksNeed);
             UtilGui.drawTexture(147, 89, 272, 0, 4, (int) l, 4, (int) l);
         }
-    }
-
-    @Override
-    protected String getBackground() {
-        return "gui/guiAdvancedMachine.png";
     }
 }
