@@ -81,6 +81,8 @@ tile.quantumReplicator.name=Quantum Replicator
 
 tile.witherKiller.name=Wither Killer
 
+tile.molecularTransformer.name=Molecular Transformer
+
 # Items
 item.speedUpgrade.Advanced.name=Advanced Speed Upgrade
 item.speedUpgrade.Nano.name=Nano Speed Upgrade
@@ -198,3 +200,5 @@ tooltip.replicator.button.repeat=Repeat run
 tooltip.replicator.desc1=§7Does not require pattern storage
 tooltip.replicator.desc2=§7The pattern is taken from the item in the slot
 tooltip.replicator.desc3=§7Generates an item in 1 tick
+tooltip.molecularTransformer.energyNeed=Required: %s EU
+tooltip.molecularTransformer.energyConsumed=Consumed: %s EU

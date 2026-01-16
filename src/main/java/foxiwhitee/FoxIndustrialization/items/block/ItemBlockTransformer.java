@@ -10,18 +10,17 @@ import net.minecraft.item.ItemStack;
 
 import java.util.List;
 
-public class ItemBlockQuantumReplicator extends ModItemBlock {
-    public ItemBlockQuantumReplicator(Block b) {
+public class ItemBlockTransformer extends ModItemBlock {
+    public ItemBlockTransformer(Block b) {
         super(b);
     }
 
     @Override
     public void addInformation(ItemStack stack, EntityPlayer p_77624_2_, List<String> list, boolean p_77624_4_) {
         if (FIConfig.enableTooltips) {
-            if (isBlock(ModBlocks.quantumReplicator)) {
-                list.add(LocalizationUtils.localize("tooltip.replicator.desc1"));
-                list.add(LocalizationUtils.localize("tooltip.replicator.desc2"));
-                list.add(LocalizationUtils.localize("tooltip.replicator.desc3"));
+            if (isBlock(ModBlocks.molecularTransformer)) {
+                list.add(LocalizationUtils.localize("tooltip.machine.capacity", FIConfig.molecularTransformerStorage));
+                list.add(LocalizationUtils.localize("tooltip.fluidGenerator.capacity", FIConfig.molecularTransformerTank));
             }
         }
     }

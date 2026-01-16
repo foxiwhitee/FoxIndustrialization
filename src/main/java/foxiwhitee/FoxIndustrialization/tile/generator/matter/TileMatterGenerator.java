@@ -2,13 +2,13 @@ package foxiwhitee.FoxIndustrialization.tile.generator.matter;
 
 import foxiwhitee.FoxIndustrialization.api.IUpgradableTile;
 import foxiwhitee.FoxIndustrialization.tile.TileIC2Inv;
-import foxiwhitee.FoxIndustrialization.utils.InventoryUtils;
 import foxiwhitee.FoxIndustrialization.utils.UpgradeUtils;
 import foxiwhitee.FoxIndustrialization.utils.UpgradesTypes;
 import foxiwhitee.FoxLib.tile.event.TileEvent;
 import foxiwhitee.FoxLib.tile.event.TileEventType;
 import foxiwhitee.FoxLib.tile.inventory.FoxInternalInventory;
 import foxiwhitee.FoxLib.tile.inventory.InvOperation;
+import foxiwhitee.FoxLib.utils.helpers.InventoryUtils;
 import ic2.core.Ic2Items;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.inventory.IInventory;

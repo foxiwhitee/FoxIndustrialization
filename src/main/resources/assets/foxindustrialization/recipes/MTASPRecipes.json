@@ -1,0 +1,106 @@
+{
+  "crafts": [
+    {
+      "type": "molecularTransformer",
+      "energy": 250000000,
+      "output": "<minecraft:nether_star>",
+      "inputs": ["<minecraft:skull.1>"]
+    },
+    {
+      "type": "molecularTransformer",
+      "energy": 9000000,
+      "output": "<IC2:itemOreIridium>",
+      "inputs": ["<minecraft:iron_ingot>"]
+    },
+    {
+      "type": "molecularTransformer",
+      "energy": 70000,
+      "output": "<minecraft:gunpowder:2>",
+      "inputs": ["<minecraft:netherrack>"]
+    },
+    {
+      "type": "molecularTransformer",
+      "energy": 50000,
+      "output": "<minecraft:gravel>",
+      "inputs": ["<minecraft:sand>"]
+    },
+    {
+      "type": "molecularTransformer",
+      "energy": 50000,
+      "output": "<minecraft:clay>",
+      "inputs": ["<minecraft:dirt>"]
+    },
+    {
+      "type": "molecularTransformer",
+      "energy": 60000,
+      "output": "<minecraft:coal.0>",
+      "inputs": ["<minecraft:coal.1>"]
+    },
+    {
+      "type": "molecularTransformer",
+      "energy": 1000000,
+      "output": "<AdvancedSolarPanel:asp_crafting_items.9>",
+      "inputs": ["<minecraft:glowstone_dust>"]
+    },
+    {
+      "type": "molecularTransformer",
+      "energy": 9000000,
+      "output": "<AdvancedSolarPanel:asp_crafting_items>",
+      "inputs": ["<minecraft:glowstone>"]
+    },
+    {
+      "type": "molecularTransformer",
+      "energy": 500000,
+      "output": "<minecraft:glowstone>",
+      "inputs": ["<minecraft:wool.4>"]
+    },
+    {
+      "type": "molecularTransformer",
+      "energy": 500000,
+      "output": "<minecraft:lapis_block>",
+      "inputs": ["<minecraft:wool.11>"]
+    },
+    {
+      "type": "molecularTransformer",
+      "energy": 500000,
+      "output": "<minecraft:redstone_block>",
+      "inputs": ["<minecraft:wool.14>"]
+    },
+    {
+      "type": "molecularTransformer",
+      "energy": 9000000,
+      "output": "<IC2:itemPartIndustrialDiamond>",
+      "inputs": ["<minecraft:coal>"]
+    },
+    {
+      "type": "molecularTransformer",
+      "energy": 1000000,
+      "output": "<minecraft:diamond>",
+      "inputs": ["<IC2:itemPartIndustrialDiamond>"]
+    },
+    {
+      "type": "molecularTransformer",
+      "energy": 300000,
+      "output": "<ThermalFoundation:material.68>",
+      "inputs": ["<ore:ingotCopper>"]
+    },
+    {
+      "type": "molecularTransformer",
+      "energy": 500000,
+      "output": "<IC2:itemIngot.6>",
+      "inputs": ["<ore:ingotTin>"]
+    },
+    {
+      "type": "molecularTransformer",
+      "energy": 500000,
+      "output": "<minecraft:gold_ingot>",
+      "inputs": ["<ore:ingotSilver>"]
+    },
+    {
+      "type": "molecularTransformer",
+      "energy": 9000000,
+      "output": "<ThermalFoundation:material.69>",
+      "inputs": ["<ore:ingotGold>"]
+    }
+  ]
+}

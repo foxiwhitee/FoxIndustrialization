@@ -80,6 +80,8 @@ tile.quantumReplicator.name=Квантовий реплікатор
 
 tile.witherKiller.name=Вбився висушувачів
 
+tile.molecularTransformer.name=Молекулярний перетворювач
+
 # Items
 item.speedUpgrade.Advanced.name=Розширене поліпшення швидкості
 item.speedUpgrade.Nano.name=Нано поліпшення швидкості
@@ -198,3 +200,5 @@ tooltip.replicator.button.repeat=Повторний запуск
 tooltip.replicator.desc1=§7Не потребує сховищ шаблонів
 tooltip.replicator.desc2=§7Шаблон береться з предмета в слоті
 tooltip.replicator.desc3=§7Генерує предмет за 1 тік
+tooltip.molecularTransformer.energyNeed=Потребує: %s EU
+tooltip.molecularTransformer.energyConsumed=Спожито: %s EU

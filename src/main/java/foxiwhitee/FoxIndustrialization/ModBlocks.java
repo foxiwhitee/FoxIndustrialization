@@ -47,6 +47,7 @@ public class ModBlocks {
     public static final Block casingQuantum = new BlockCasing("casingQuantum");
 
     public static final Block universalFluidComplex = new BlockUniversalFluidComplex("universalFluidComplex");
+    public static final Block molecularTransformer = new BlockMolecularTransformer("molecularTransformer");
 
     public static final Block advancedCompressor = new BlockAdvancedCompressor("advancedCompressor");
     public static final Block advancedExtractor = new BlockAdvancedExtractor("advancedExtractor");
@@ -124,6 +125,7 @@ public class ModBlocks {
         registerCasings();
         registerWitherKiller();
         registerUniversalFluidComplex();
+        registerMolecularTransformer();
         registerFluidGenerators();
         registerAdvancedMachines();
         registerNanoMachines();
@@ -138,6 +140,15 @@ public class ModBlocks {
         registerSynthesizers();
     }
 
+    private static void registerCasings() {
+        if (ContentConfig.enableNanoCasing) {
+            RegisterUtils.registerBlock(casingNano);
+        }
+        if (ContentConfig.enableQuantumCasing) {
+            RegisterUtils.registerBlock(casingQuantum);
+        }
+    }
+
     private static void registerWitherKiller() {
         if (ContentConfig.enableWitherKiller) {
             RegisterUtils.registerBlock(witherKiller);
@@ -145,36 +156,17 @@ public class ModBlocks {
         }
     }
 
-    private static void registerReplicator() {
-        if (ContentConfig.enableQuantumReplicator) {
-            RegisterUtils.registerBlock(quantumReplicator, ItemBlockQuantumReplicator.class);
-            RegisterUtils.registerTile(TileQuantumReplicator.class);
+    private static void registerUniversalFluidComplex() {
+        if (ContentConfig.enableUniversalFluidComplex) {
+            RegisterUtils.registerBlock(universalFluidComplex, ItemBlockUFC.class);
+            RegisterUtils.registerTile(TileUniversalFluidComplex.class);
         }
     }
 
-    private static void registerAdvancedScanner() {
-        if (ContentConfig.enableAdvancedScanner) {
-            RegisterUtils.registerBlock(advancedScanner);
-            RegisterUtils.registerTile(TileAdvancedScanner.class);
-        }
-    }
-
-    private static void registerMatterGenerators() {
-        if (ContentConfig.enableAdvancedMatterGenerator) {
-            RegisterUtils.registerBlock(advancedMatterGenerator, ItemBlockMatterGenerator.class);
-            RegisterUtils.registerTile(TileAdvancedMatterGenerator.class);
-        }
-        if (ContentConfig.enableNanoMatterGenerator) {
-            RegisterUtils.registerBlock(nanoMatterGenerator, ItemBlockMatterGenerator.class);
-            RegisterUtils.registerTile(TileNanoMatterGenerator.class);
-        }
-        if (ContentConfig.enableQuantumMatterGenerator) {
-            RegisterUtils.registerBlock(quantumMatterGenerator, ItemBlockMatterGenerator.class);
-            RegisterUtils.registerTile(TileQuantumMatterGenerator.class);
-        }
-        if (ContentConfig.enableSingularMatterGenerator) {
-            RegisterUtils.registerBlock(singularMatterGenerator, ItemBlockMatterGenerator.class);
-            RegisterUtils.registerTile(TileSingularMatterGenerator.class);
+    private static void registerMolecularTransformer() {
+        if (ContentConfig.enableMolecularTransformer) {
+            RegisterUtils.registerBlock(molecularTransformer, ItemBlockTransformer.class);
+            RegisterUtils.registerTile(TileMolecularTransformer.class);
         }
     }
 
@@ -186,22 +178,6 @@ public class ModBlocks {
         if (ContentConfig.enableLavaGenerator) {
             RegisterUtils.registerBlock(lavaGenerator, ItemBlockFluidGenerator.class);
             RegisterUtils.registerTile(TileLavaGenerator.class);
-        }
-    }
-
-    private static void registerUniversalFluidComplex() {
-        if (ContentConfig.enableUniversalFluidComplex) {
-            RegisterUtils.registerBlock(universalFluidComplex, ItemBlockUFC.class);
-            RegisterUtils.registerTile(TileUniversalFluidComplex.class);
-        }
-    }
-
-    private static void registerCasings() {
-        if (ContentConfig.enableNanoCasing) {
-            RegisterUtils.registerBlock(casingNano);
-        }
-        if (ContentConfig.enableQuantumCasing) {
-            RegisterUtils.registerBlock(casingQuantum);
         }
     }
 
@@ -286,14 +262,36 @@ public class ModBlocks {
         }
     }
 
-    private static void registerEnergyStorages() {
-        if (ContentConfig.enableNewEnergyStorages) {
-            RegisterUtils.registerBlocks(ItemBlockEnergyStorage.class, basicEnergyStorage, advancedEnergyStorage, hybridEnergyStorage, nanoEnergyStorage, ultimateEnergyStorage, quantumEnergyStorage, singularEnergyStorage);
-            RegisterUtils.registerBlocks(ItemBlockEnergyStorage.class, basicChargePad, advancedChargePad, hybridChargePad, nanoChargePad, ultimateChargePad, quantumChargePad, singularChargePad);
-            RegisterUtils.findClasses("foxiwhitee.FoxIndustrialization.tile.storage.advanced", TileEntity.class).forEach(RegisterUtils::registerTile);
-            RegisterUtils.findClasses("foxiwhitee.FoxIndustrialization.tile.storage.nano", TileEntity.class).forEach(RegisterUtils::registerTile);
-            RegisterUtils.findClasses("foxiwhitee.FoxIndustrialization.tile.storage.quantum", TileEntity.class).forEach(RegisterUtils::registerTile);
-            RegisterUtils.findClasses("foxiwhitee.FoxIndustrialization.tile.storage.singular", TileEntity.class).forEach(RegisterUtils::registerTile);
+    private static void registerMatterGenerators() {
+        if (ContentConfig.enableAdvancedMatterGenerator) {
+            RegisterUtils.registerBlock(advancedMatterGenerator, ItemBlockMatterGenerator.class);
+            RegisterUtils.registerTile(TileAdvancedMatterGenerator.class);
+        }
+        if (ContentConfig.enableNanoMatterGenerator) {
+            RegisterUtils.registerBlock(nanoMatterGenerator, ItemBlockMatterGenerator.class);
+            RegisterUtils.registerTile(TileNanoMatterGenerator.class);
+        }
+        if (ContentConfig.enableQuantumMatterGenerator) {
+            RegisterUtils.registerBlock(quantumMatterGenerator, ItemBlockMatterGenerator.class);
+            RegisterUtils.registerTile(TileQuantumMatterGenerator.class);
+        }
+        if (ContentConfig.enableSingularMatterGenerator) {
+            RegisterUtils.registerBlock(singularMatterGenerator, ItemBlockMatterGenerator.class);
+            RegisterUtils.registerTile(TileSingularMatterGenerator.class);
+        }
+    }
+
+    private static void registerAdvancedScanner() {
+        if (ContentConfig.enableAdvancedScanner) {
+            RegisterUtils.registerBlock(advancedScanner);
+            RegisterUtils.registerTile(TileAdvancedScanner.class);
+        }
+    }
+
+    private static void registerReplicator() {
+        if (ContentConfig.enableQuantumReplicator) {
+            RegisterUtils.registerBlock(quantumReplicator, ItemBlockQuantumReplicator.class);
+            RegisterUtils.registerTile(TileQuantumReplicator.class);
         }
     }
 
@@ -321,6 +319,17 @@ public class ModBlocks {
         if (ContentConfig.enableQuantumKineticGenerator) {
             RegisterUtils.registerBlock(quantumKineticGenerator, ItemBlockKineticGenerator.class);
             RegisterUtils.registerTile(TileQuantumKineticGenerator.class);
+        }
+    }
+
+    private static void registerEnergyStorages() {
+        if (ContentConfig.enableNewEnergyStorages) {
+            RegisterUtils.registerBlocks(ItemBlockEnergyStorage.class, basicEnergyStorage, advancedEnergyStorage, hybridEnergyStorage, nanoEnergyStorage, ultimateEnergyStorage, quantumEnergyStorage, singularEnergyStorage);
+            RegisterUtils.registerBlocks(ItemBlockEnergyStorage.class, basicChargePad, advancedChargePad, hybridChargePad, nanoChargePad, ultimateChargePad, quantumChargePad, singularChargePad);
+            RegisterUtils.findClasses("foxiwhitee.FoxIndustrialization.tile.storage.advanced", TileEntity.class).forEach(RegisterUtils::registerTile);
+            RegisterUtils.findClasses("foxiwhitee.FoxIndustrialization.tile.storage.nano", TileEntity.class).forEach(RegisterUtils::registerTile);
+            RegisterUtils.findClasses("foxiwhitee.FoxIndustrialization.tile.storage.quantum", TileEntity.class).forEach(RegisterUtils::registerTile);
+            RegisterUtils.findClasses("foxiwhitee.FoxIndustrialization.tile.storage.singular", TileEntity.class).forEach(RegisterUtils::registerTile);
         }
     }
 

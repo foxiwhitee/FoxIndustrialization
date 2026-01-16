@@ -1,7 +1,7 @@
 package foxiwhitee.FoxIndustrialization.tile.machines.nano;
 
 import foxiwhitee.FoxIndustrialization.config.FIConfig;
-import foxiwhitee.FoxIndustrialization.recipes.BasicIC2MachineRecipe;
+import foxiwhitee.FoxIndustrialization.recipes.impl.BasicIC2MachineRecipe;
 import foxiwhitee.FoxIndustrialization.recipes.IRecipeIC2;
 import foxiwhitee.FoxIndustrialization.utils.GuiInfo;
 import foxiwhitee.FoxIndustrialization.utils.MachineTier;

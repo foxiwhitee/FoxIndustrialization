@@ -1,7 +1,7 @@
 package foxiwhitee.FoxIndustrialization.integration.crafttweaker;
 
 import foxiwhitee.FoxIndustrialization.ModRecipes;
-import foxiwhitee.FoxIndustrialization.recipes.UniversalFluidComplexRecipe;
+import foxiwhitee.FoxIndustrialization.recipes.impl.UniversalFluidComplexRecipe;
 import foxiwhitee.FoxLib.utils.helpers.ItemStackUtil;
 import minetweaker.IUndoableAction;
 import minetweaker.MineTweakerAPI;

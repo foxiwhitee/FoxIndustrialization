@@ -825,6 +825,13 @@ public class FIConfig {
     @ConfigValue(category = "WitherKiller", name = "energyNeed", desc = "How much energy is needed to kill the wither?")
     public static double witherKillerEnergyNeed = 500_000;
 
-    @ConfigValue(category = "WitherKiller", name = "іещкфпу", desc = "The maximum amount of energy that the block can hold")
+    @ConfigValue(category = "WitherKiller", name = "storage", desc = "The maximum amount of energy that the block can hold")
     public static int witherKillerStorage = 1_000_000;
+
+
+    @ConfigValue(category = "WitherKiller", name = "storage", desc = "The maximum amount of energy that the block can hold")
+    public static int molecularTransformerStorage = 1_000_000;
+
+    @ConfigValue(category = "WitherKiller", name = "tank", desc = "The maximum amount of fluid that the block can hold in one fluid container")
+    public static int molecularTransformerTank = 64_000;
 }

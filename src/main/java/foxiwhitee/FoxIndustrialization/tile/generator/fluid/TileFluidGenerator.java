@@ -1,11 +1,11 @@
 package foxiwhitee.FoxIndustrialization.tile.generator.fluid;
 
 import foxiwhitee.FoxIndustrialization.tile.TileIC2Inv;
-import foxiwhitee.FoxIndustrialization.utils.InventoryUtils;
 import foxiwhitee.FoxLib.tile.event.TileEvent;
 import foxiwhitee.FoxLib.tile.event.TileEventType;
 import foxiwhitee.FoxLib.tile.inventory.FoxInternalInventory;
 import foxiwhitee.FoxLib.tile.inventory.InvOperation;
+import foxiwhitee.FoxLib.utils.helpers.InventoryUtils;
 import foxiwhitee.FoxLib.utils.helpers.ItemStackUtil;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.inventory.IInventory;

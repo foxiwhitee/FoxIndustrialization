@@ -1,5 +1,6 @@
-package foxiwhitee.FoxIndustrialization.recipes;
+package foxiwhitee.FoxIndustrialization.recipes.impl;
 
+import foxiwhitee.FoxIndustrialization.recipes.IRecipeIC2;
 import foxiwhitee.FoxLib.recipes.IFoxRecipe;
 import foxiwhitee.FoxLib.utils.helpers.OreDictUtil;
 import foxiwhitee.FoxLib.utils.helpers.StackOreDict;

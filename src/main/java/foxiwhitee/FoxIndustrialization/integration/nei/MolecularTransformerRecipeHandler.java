@@ -7,9 +7,10 @@ import codechicken.nei.recipe.GuiRecipe;
 import codechicken.nei.recipe.TemplateRecipeHandler;
 import foxiwhitee.FoxIndustrialization.FICore;
 import foxiwhitee.FoxIndustrialization.ModRecipes;
-import foxiwhitee.FoxIndustrialization.recipes.IUniversalFluidComplexRecipe;
+import foxiwhitee.FoxIndustrialization.recipes.IMolecularTransformerRecipe;
 import foxiwhitee.FoxLib.utils.ProductivityUtil;
 import foxiwhitee.FoxLib.utils.helpers.EnergyUtility;
+import foxiwhitee.FoxLib.utils.helpers.StackOreDict;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureMap;
@@ -17,13 +18,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IIcon;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.oredict.OreDictionary;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UniversalFluidComplexRecipeHandler extends TemplateRecipeHandler {
+public class MolecularTransformerRecipeHandler extends TemplateRecipeHandler {
     private int tick;
 
     @Override
@@ -33,55 +35,48 @@ public class UniversalFluidComplexRecipeHandler extends TemplateRecipeHandler {
 
     @Override
     public String getRecipeName() {
-        return "universalFluidComplex";
+        return "molecularTransformer";
     }
 
     public String getRecipeID() {
-        return "universalFluidComplex";
+        return "molecularTransformer";
     }
 
     public void loadTransferRects() {
-        this.transferRects.add(new TemplateRecipeHandler.RecipeTransferRect(new Rectangle(74, 19, 18, 4), this.getRecipeID()));
+        this.transferRects.add(new RecipeTransferRect(new Rectangle(74, 19, 16, 4), this.getRecipeID()));
     }
 
     @Override
     public void drawBackground(int recipe) {
         GL11.glColor4f(1, 1, 1, 1);
-        GuiDraw.changeTexture(FICore.MODID + ":textures/gui/guiNeiUniversalFluidComplex.png");
+        GuiDraw.changeTexture(FICore.MODID + ":textures/gui/guiNeiMolecularTransformer.png");
 
-        GuiDraw.drawTexturedModalRect(0, 0, 0, 0, 166, 122);
-        if (tick++ >= 19 * 20) {
+        GuiDraw.drawTexturedModalRect(0, 0, 0, 0, 166, 94);
+        if (tick++ >= 17 * 20) {
             tick = 0;
         }
-        GuiDraw.drawTexturedModalRect(74, 19, 166, 0, (int) ProductivityUtil.gauge(19, tick, 19 * 20), 4);
+        GuiDraw.drawTexturedModalRect(75, 18, 166, 0, (int) ProductivityUtil.gauge(17, tick, 17 * 20), 4);
     }
 
     @Override
     public void drawForeground(int recipe) {
         super.drawForeground(recipe);
         GL11.glColor4f(1, 1, 1, 1);
-        GuiDraw.changeTexture(FICore.MODID + ":textures/gui/guiNeiUniversalFluidComplex.png");
+        GuiDraw.changeTexture(FICore.MODID + ":textures/gui/guiNeiMolecularTransformer.png");
 
-        GuiDraw.drawTexturedModalRect(9, 35, 166, 4, 18, 56);
-        GuiDraw.drawTexturedModalRect(31, 35, 166, 4, 18, 56);
-        GuiDraw.drawTexturedModalRect(53, 35, 166, 4, 18, 56);
-        GuiDraw.drawTexturedModalRect(117, 35, 166, 4, 18, 56);
+        GuiDraw.drawTexturedModalRect(9, 9, 166, 4, 18, 56);
     }
 
     @Override
     public void drawExtras(int recipe) {
-        CachedUniversalFluidComplexRecipe r = (CachedUniversalFluidComplexRecipe) arecipes.get(recipe);
+        CachedMolecularTransformerRecipe r = (CachedMolecularTransformerRecipe) arecipes.get(recipe);
 
-        for (int i = 0; i < r.inFluids.size(); i++) {
-            drawFluid(10 + (i * 22), 36, r.inFluids.get(i), 16, 55);
-        }
-
-        if (r.outFluid != null) {
-            drawFluid(118, 36, r.outFluid, 16, 55);
+        if (r.fluid != null) {
+            drawFluid(10, 10, r.fluid, 16, 55);
         }
 
         String energyText = EnumChatFormatting.GRAY + EnergyUtility.formatNumber(r.energy) + " EU";
-        GuiDraw.drawString(energyText, 64, 100, 0x404040, false);
+        GuiDraw.drawString(energyText, 64, 72, 0x404040, false);
     }
 
     @Override
@@ -100,22 +95,13 @@ public class UniversalFluidComplexRecipeHandler extends TemplateRecipeHandler {
         int relX = mouse.x;
         int relY = mouse.y;
 
-        CachedUniversalFluidComplexRecipe r = (CachedUniversalFluidComplexRecipe) arecipes.get(recipe);
+        CachedMolecularTransformerRecipe r = (CachedMolecularTransformerRecipe) arecipes.get(recipe);
 
-        for (int i = 0; i < r.inFluids.size(); i++) {
-            int posX = 9 + (i * 22) + recipeLeft;
-            int posY = 35 + recipeTop;
-
+        int posX = 9 + recipeLeft;
+        int posY = 9 + recipeTop;
+        if (r.fluid != null) {
             if (relX >= posX && relX <= posX + 16 && relY >= posY && relY <= posY + 55) {
-                addFluidTooltip(currentTip, r.inFluids.get(i));
-            }
-        }
-
-        if (r.outFluid != null) {
-            int posX = 118 + recipeLeft;
-            int posY = 35 + recipeTop;
-            if (relX >= posX && relX <= posX + 16 && relY >= posY && relY <= posY + 55) {
-                addFluidTooltip(currentTip, r.outFluid);
+                addFluidTooltip(currentTip, r.fluid);
             }
         }
 
@@ -165,14 +151,14 @@ public class UniversalFluidComplexRecipeHandler extends TemplateRecipeHandler {
         tessellator.draw();
     }
 
-    public CachedUniversalFluidComplexRecipe getCachedRecipe(IUniversalFluidComplexRecipe recipe) {
-        return new CachedUniversalFluidComplexRecipe(recipe.getInputs().toArray(new ItemStack[0]), recipe.getInputsFluid().toArray(new FluidStack[0]), recipe.getOutputs().toArray(new ItemStack[0]), recipe.getOutputFluid(), recipe.getEnergyNeed());
+    public CachedMolecularTransformerRecipe getCachedRecipe(IMolecularTransformerRecipe recipe) {
+        return new CachedMolecularTransformerRecipe(new Object[]{recipe.getFirstInput(), recipe.getSecondInput()}, recipe.getOutput(), recipe.getInputFluid(), recipe.getEnergyNeed());
     }
 
     @Override
     public void loadCraftingRecipes(String outputId, Object... results) {
         if (outputId.equals(this.getRecipeID())) {
-            for(IUniversalFluidComplexRecipe recipe : ModRecipes.universalFluidComplexRecipes) {
+            for(IMolecularTransformerRecipe recipe : ModRecipes.molecularTransformerRecipes) {
                 this.arecipes.add(this.getCachedRecipe(recipe));
             }
         } else {
@@ -182,22 +168,21 @@ public class UniversalFluidComplexRecipeHandler extends TemplateRecipeHandler {
 
     @Override
     public void loadCraftingRecipes(ItemStack result) {
-        for (IUniversalFluidComplexRecipe recipe : ModRecipes.universalFluidComplexRecipes) {
-            for (ItemStack stack : recipe.getOutputs()) {
-                if (stack.stackTagCompound != null &&
-                    NEIServerUtils.areStacksSameType(stack, result) ||
-                    stack.stackTagCompound == null && NEIServerUtils.areStacksSameTypeCrafting(stack, result)) {
-                    this.arecipes.add(this.getCachedRecipe(recipe));
-                }
+        for (IMolecularTransformerRecipe recipe : ModRecipes.molecularTransformerRecipes) {
+            ItemStack stack = recipe.getOutput();
+            if (stack.stackTagCompound != null &&
+                NEIServerUtils.areStacksSameType(stack, result) ||
+                stack.stackTagCompound == null && NEIServerUtils.areStacksSameTypeCrafting(stack, result)) {
+                this.arecipes.add(this.getCachedRecipe(recipe));
             }
         }
     }
 
     @Override
     public void loadUsageRecipes(ItemStack ingredient) {
-        for(IUniversalFluidComplexRecipe recipe : ModRecipes.universalFluidComplexRecipes) {
+        for(IMolecularTransformerRecipe recipe : ModRecipes.molecularTransformerRecipes) {
             if (recipe != null) {
-                CachedUniversalFluidComplexRecipe crecipe = this.getCachedRecipe(recipe);
+                CachedMolecularTransformerRecipe crecipe = this.getCachedRecipe(recipe);
                 if (crecipe.contains(crecipe.getIngredients(), ingredient) || crecipe.contains(crecipe.getOtherStacks(), ingredient)) {
                     this.arecipes.add(crecipe);
                 }
@@ -205,25 +190,29 @@ public class UniversalFluidComplexRecipeHandler extends TemplateRecipeHandler {
         }
     }
 
-    public class CachedUniversalFluidComplexRecipe extends CachedRecipe {
+    public class CachedMolecularTransformerRecipe extends CachedRecipe {
         public List<PositionedStack> inputs = new ArrayList<>();
-        public List<PositionedStack> outputs = new ArrayList<>();
-        public List<FluidStack> inFluids = new ArrayList<>();
-        public FluidStack outFluid;
+        public PositionedStack output;
+        public FluidStack fluid;
         public double energy;
 
-        public CachedUniversalFluidComplexRecipe(ItemStack[] inItems, FluidStack[] fluidsIn, ItemStack[] outItems, FluidStack fluidOut, double energy) {
+        public CachedMolecularTransformerRecipe(Object[] inItems, ItemStack output, FluidStack fluid, double energy) {
             for (int i = 0; i < inItems.length; i++) {
-                if (inItems[i] != null)
-                    inputs.add(new PositionedStack(inItems[i], 13 + (i * 19), 13));
+                if (inItems[i] != null) {
+                    if (inItems[i] instanceof ItemStack) {
+                        inputs.add(new PositionedStack(inItems[i], 33 + (i * 19), 12));
+                    } else if (inItems[i] instanceof StackOreDict ore) {
+                        List<ItemStack> ores = OreDictionary.getOres(ore.getOre());
+                        inputs.add(new PositionedStack(ores, 33 + (i * 19), 12));
+                    } else if (inItems[i] instanceof String str) {
+                        List<ItemStack> ores = OreDictionary.getOres(str);
+                        inputs.add(new PositionedStack(ores, 33 + (i * 19), 12));
+                    }
+                }
             }
-            for (int i = 0; i < outItems.length; i++) {
-                if (outItems[i] != null)
-                    outputs.add(new PositionedStack(outItems[i], 99 + (i * 19), 13));
-            }
+            this.output = new PositionedStack(output, 98, 12);
 
-            for (FluidStack fs : fluidsIn) if (fs != null) inFluids.add(fs);
-            this.outFluid = fluidOut;
+            this.fluid = fluid;
             this.energy = energy;
         }
 
@@ -234,19 +223,7 @@ public class UniversalFluidComplexRecipeHandler extends TemplateRecipeHandler {
 
         @Override
         public PositionedStack getResult() {
-            if (outputs.isEmpty()) {
-                return null;
-            }
-            return outputs.get(0);
-        }
-
-        @Override
-        public List<PositionedStack> getOtherStacks() {
-            List<PositionedStack> others = new ArrayList<>();
-            if (outputs.size() > 1) {
-                for (int i = 1; i < outputs.size(); i++) others.add(outputs.get(i));
-            }
-            return others;
+            return output;
         }
     }
 }

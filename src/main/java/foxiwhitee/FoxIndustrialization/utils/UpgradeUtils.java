@@ -5,6 +5,7 @@ import foxiwhitee.FoxIndustrialization.api.IUpgradableTile;
 import foxiwhitee.FoxIndustrialization.api.IWitherKillerUpgrade;
 import foxiwhitee.FoxIndustrialization.items.ItemFluidGeneratorUpgrade;
 import foxiwhitee.FoxLib.tile.inventory.FoxInternalInventory;
+import foxiwhitee.FoxLib.utils.helpers.InventoryUtils;
 import foxiwhitee.FoxLib.utils.helpers.ItemStackUtil;
 import ic2.core.upgrade.IUpgradeItem;
 import net.minecraft.inventory.IInventory;

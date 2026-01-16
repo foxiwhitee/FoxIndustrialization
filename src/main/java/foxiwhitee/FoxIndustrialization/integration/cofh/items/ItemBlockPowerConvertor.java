@@ -2,8 +2,8 @@ package foxiwhitee.FoxIndustrialization.integration.cofh.items;
 
 import foxiwhitee.FoxIndustrialization.config.FIConfig;
 import foxiwhitee.FoxIndustrialization.integration.cofh.CoFHIntegration;
-import foxiwhitee.FoxIndustrialization.items.block.ModItemBlock;
 import foxiwhitee.FoxLib.config.FoxLibConfig;
+import foxiwhitee.FoxLib.items.ModItemBlock;
 import foxiwhitee.FoxLib.utils.helpers.EnergyUtility;
 import foxiwhitee.FoxLib.utils.helpers.LocalizationUtils;
 import net.minecraft.block.Block;

@@ -29,6 +29,23 @@ public class NEIFIConfig implements IConfigureNEI {
             handler.setHandlerDimensions(122 + 16 + 5, 192, 2);
             GuiRecipeTab.handlerMap.put(handler.getHandlerName(), handler);
         }
+        if (ContentConfig.enableMolecularTransformer) {
+            MolecularTransformerRecipeHandler molecularTransformerRecipeHandler = new MolecularTransformerRecipeHandler();
+            API.registerRecipeHandler(molecularTransformerRecipeHandler);
+            API.registerUsageHandler(molecularTransformerRecipeHandler);
+            API.addRecipeCatalyst(new ItemStack(ModBlocks.molecularTransformer), "foxiwhitee.FoxIndustrialization.integration.nei.MolecularTransformerRecipeHandler");
+
+            HandlerInfo handler = new HandlerInfo(
+                "foxiwhitee.FoxIndustrialization.integration.nei.MolecularTransformerRecipeHandler",
+                FICore.MODNAME,
+                FICore.MODID,
+                true,
+                ""
+            );
+            handler.setItem("foxindustrialization:molecularTransformer", "");
+            handler.setHandlerDimensions(94 + 16 + 5, 192, 2);
+            GuiRecipeTab.handlerMap.put(handler.getHandlerName(), handler);
+        }
     }
 
     @Override

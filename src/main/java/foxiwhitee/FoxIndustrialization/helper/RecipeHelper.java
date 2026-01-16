@@ -1,22 +1,20 @@
 package foxiwhitee.FoxIndustrialization.helper;
 
 import foxiwhitee.FoxIndustrialization.ModRecipes;
-import foxiwhitee.FoxIndustrialization.recipes.BasicIC2MachineRecipe;
+import foxiwhitee.FoxIndustrialization.recipes.IRecipeIC2;
+import foxiwhitee.FoxIndustrialization.recipes.impl.BasicIC2MachineRecipe;
 import foxiwhitee.FoxLib.utils.helpers.StackOreDict;
 import ic2.api.recipe.IRecipeInput;
 import ic2.api.recipe.RecipeInputOreDict;
 import ic2.api.recipe.RecipeOutput;
-import ic2.api.recipe.Recipes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
-import net.minecraftforge.oredict.ShapedOreRecipe;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class RecipeHelper {
-    public static void parseRecipe(List<BasicIC2MachineRecipe> recipes, Map<IRecipeInput, RecipeOutput> map) {
+    public static void parseRecipe(List<IRecipeIC2> recipes, Map<IRecipeInput, RecipeOutput> map) {
         for (Map.Entry<IRecipeInput, RecipeOutput> entry : map.entrySet()) {
             Object input;
             if (entry.getKey() instanceof RecipeInputOreDict r) {

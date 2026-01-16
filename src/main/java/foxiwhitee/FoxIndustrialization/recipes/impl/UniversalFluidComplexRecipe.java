@@ -1,5 +1,6 @@
-package foxiwhitee.FoxIndustrialization.recipes;
+package foxiwhitee.FoxIndustrialization.recipes.impl;
 
+import foxiwhitee.FoxIndustrialization.recipes.IUniversalFluidComplexRecipe;
 import foxiwhitee.FoxLib.utils.helpers.ItemStackUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
@@ -25,7 +26,7 @@ public class UniversalFluidComplexRecipe implements IUniversalFluidComplexRecipe
     @Override
     public List<ItemStack> getOutputs() {
         if (this.outputs == null) {
-            return new ArrayList<ItemStack>();
+            return new ArrayList<>();
         }
         List<ItemStack> outputs = new ArrayList<>(this.outputs.size());
         for (ItemStack output : this.outputs) {
@@ -47,7 +48,7 @@ public class UniversalFluidComplexRecipe implements IUniversalFluidComplexRecipe
     @Override
     public List<ItemStack> getInputs() {
         if (this.inputs == null) {
-            return new ArrayList<ItemStack>();
+            return new ArrayList<>();
         }
         List<ItemStack> inputs = new ArrayList<>(this.inputs.size());
         for (ItemStack input : this.inputs) {
@@ -61,7 +62,7 @@ public class UniversalFluidComplexRecipe implements IUniversalFluidComplexRecipe
     @Override
     public List<FluidStack> getInputsFluid() {
         if (this.inputFluids == null) {
-            return new ArrayList<FluidStack>();
+            return new ArrayList<>();
         }
         List<FluidStack> inputs = new ArrayList<>(this.inputFluids.size());
         for (FluidStack input : this.inputFluids) {
@@ -83,7 +84,7 @@ public class UniversalFluidComplexRecipe implements IUniversalFluidComplexRecipe
     }
 
     public static boolean checkInputsItem(List<ItemStack> stacks, List<ItemStack> ourItems) {
-        List<ItemStack> inputsMissing = new ArrayList<ItemStack>();
+        List<ItemStack> inputsMissing = new ArrayList<>();
         for (ItemStack obj : ourItems) {
             if (obj instanceof ItemStack) {
                 inputsMissing.add(obj.copy());

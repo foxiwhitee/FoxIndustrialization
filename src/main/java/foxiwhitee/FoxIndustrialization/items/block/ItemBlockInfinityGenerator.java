@@ -5,6 +5,7 @@ import foxiwhitee.FoxIndustrialization.ModBlocks;
 import foxiwhitee.FoxIndustrialization.api.IHasSynthesizerIntegration;
 import foxiwhitee.FoxIndustrialization.config.FIConfig;
 import foxiwhitee.FoxLib.config.FoxLibConfig;
+import foxiwhitee.FoxLib.items.ModItemBlock;
 import foxiwhitee.FoxLib.utils.helpers.EnergyUtility;
 import foxiwhitee.FoxLib.utils.helpers.LocalizationUtils;
 import net.minecraft.block.Block;

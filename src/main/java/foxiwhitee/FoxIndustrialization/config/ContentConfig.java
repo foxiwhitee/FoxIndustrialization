@@ -56,6 +56,9 @@ public class ContentConfig {
     @ConfigValue(category = "Content", desc = "Enable Wither Killer?")
     public static boolean enableWitherKiller = true;
 
+    @ConfigValue(category = "Content", desc = "Enable Molecular Transformer?")
+    public static boolean enableMolecularTransformer = true;
+
 
     // Machines Advanced
     @ConfigValue(category = "Content.Machines.Advanced", desc = "Enable Advanced Compressor?")

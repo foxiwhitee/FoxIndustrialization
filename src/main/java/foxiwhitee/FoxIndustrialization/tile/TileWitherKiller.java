@@ -10,6 +10,7 @@ import foxiwhitee.FoxLib.tile.event.TileEvent;
 import foxiwhitee.FoxLib.tile.event.TileEventType;
 import foxiwhitee.FoxLib.tile.inventory.FoxInternalInventory;
 import foxiwhitee.FoxLib.tile.inventory.InvOperation;
+import foxiwhitee.FoxLib.utils.helpers.InventoryUtils;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
